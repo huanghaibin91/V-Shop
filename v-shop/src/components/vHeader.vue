@@ -4,13 +4,13 @@
             V-SHOP
         </h5>
         <div class="inform">
-            <a class="cart" href="#">
+            <a class="cart" href="#" title="购物车">
                 <Icon type="ios-cart"></Icon>
             </a>
-            <a href="#">
+            <a href="#" title="消息通知">
                 <Icon type="email"></Icon>
             </a>
-            <a href="">
+            <a href="" title="待办提醒">
                 <Icon type="android-notifications"></Icon>
             </a>
         </div>
