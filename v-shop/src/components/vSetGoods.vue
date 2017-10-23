@@ -1,42 +1,54 @@
 <template>
-    <Row class="set-goods" type="flex" align="middle">
-        <Col :xs="6" :sm="6" :md="6" :lg="6">
-            商品编码：<span>000000</span>
-        </Col>
-        <Col :xs="6" :sm="6" :md="6" :lg="6">
-            商品名称：<span>限购型黑猫</span>
-        </Col>
-        <Col :xs="3" :sm="3" :md="3" :lg="3">
-            价格：<span>199</span>
-        </Col>
-        <Col :xs="3" :sm="3" :md="3" :lg="3">
-            库存：<span>199</span>
-        </Col :xs="3" :sm="3" :md="3" :lg="3">
-        <Col :xs="3" :sm="3" :md="3" :lg="3">
-            本月销量：<span>199</span>
-        </Col>
-        <Col :xs="3" :sm="3" :md="3" :lg="3">
-            <Button type="primary" size="small" icon="document-text">商品详情</Button>
-        </Col>
-    </Row>
+    <Modal title="更改商品信息" v-model="modal" class-name="set-goods" width="400"> 
+        <Form :model="formTop" :label-width="80"> 
+            <FormItem label="商品名称"> 
+                <Input v-model="formTop.input1"></Input> 
+            </FormItem> 
+            <FormItem label="商品单价"> 
+                <Input v-model="formTop.input2"></Input> 
+            </FormItem> 
+            <FormItem label="商品库存"> 
+                <Input v-model="formTop.input3"></Input> 
+            </FormItem> 
+            <FormItem label="商品分类"> 
+                <Select v-model="formTop.input4" placeholder="请选择商品分类"> 
+                    <Option value="休闲零食">休闲零食</Option> 
+                    <Option value="酒水饮料">酒水饮料</Option> 
+                    <Option value="粮油副食">粮油副食</Option>
+                    <Option value="生鲜水果">生鲜水果</Option>
+                    <Option value="日常洗护">日常洗护</Option>
+                    <Option value="厨卫用品">厨卫用品</Option>
+                </Select> 
+            </FormItem> 
+            <FormItem label="商品保质期" prop="date"> 
+                <DatePicker type="date" placeholder="选择日期" v-model="formTop.input5"></DatePicker> 
+            </FormItem> 
+        </Form>
+    </Modal>
 </template>
 
 <script>
 export default {
-
+    data () {
+        return {
+            modal: false,
+            formTop: {
+                input1: '',
+                input2: '',
+                input3: '',
+                input5: '',
+                input: ''
+            }
+        }
+    }
 }
 </script>
 
-<style scoped>
-    .set-goods {
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px dashed #1c2438;
-    }
-    .set-goods:hover {
-        background-color: #e9eaec;
-    }
-    .set-goods span {
-        font-weight: bold;
+<style>
+    .set-goods .ivu-modal {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>

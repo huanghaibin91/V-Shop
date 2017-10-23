@@ -4,15 +4,21 @@
             V-SHOP
         </h5>
         <div class="inform">
-            <a class="cart" href="#" title="购物车">
-                <Icon type="ios-cart"></Icon>
-            </a>
-            <a href="#" title="消息通知">
-                <Icon type="email"></Icon>
-            </a>
-            <a href="" title="待办提醒">
-                <Icon type="android-notifications"></Icon>
-            </a>
+            <Badge count="0">
+                <a class="cart" href="#" title="购物车">
+                    <Icon type="ios-cart"></Icon>
+                </a>
+            </Badge>
+            <Badge count="3">
+                <a href="#" title="消息通知">
+                    <Icon type="email"></Icon>
+                </a>
+            </Badge>
+            <Badge count="3">
+                <a href="" title="待办提醒">
+                    <Icon type="android-notifications"></Icon>
+                </a>
+            </Badge>
         </div>
     </header>
 </template>
@@ -38,8 +44,11 @@
     .logo, .inform {
         padding: 0 2em;
     }
-    .inform a {
-        padding-right: 1em;
+    .inform>span {
+        margin-right: 1em;
+    }
+    .ivu-badge-count {
+        box-shadow: none;
     }
 </style>
 

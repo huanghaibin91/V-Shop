@@ -1,5 +1,5 @@
 <template>
-    <Card class="goods" :padding="0" style="width:240px"> 
+    <Card class="goods" :padding="0"> 
         <div class="goods-box"> 
             <img src="../assets/00000000.jpg" />
             <p>限购型黑猫</p>
@@ -20,7 +20,9 @@ export default {
 <style scoped>
     .goods {
         cursor: pointer;
+        font-size: 0.5em;
         color: #2b85e4;
+        margin: 5px;
     }
     .goods-box {
         padding: 10px;

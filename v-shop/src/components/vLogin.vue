@@ -1,5 +1,5 @@
 <template>
-    <Modal title="登录" v-model="modalFlag" loading="loading" ok-text="确认登录" width="300" class-name="login-box">
+    <Modal title="欢迎登录" v-model="modalFlag" loading="loading" ok-text="登录" width="300" class-name="login-in">
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
             <FormItem prop="user">
                 <Input type="text" v-model="formInline.user" placeholder="用户名">
@@ -19,7 +19,7 @@
 export default {
     data () {
         return {
-            modalFlag: true,
+            modalFlag: false,
             loading: true,
             formInline: {
                 user: '',
@@ -50,11 +50,16 @@ export default {
 }
 </script>
 
-<style scoped>
-    .ivu-modal-wrap {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+<style>
+    .login-in {
         background: url('../assets/login-bg.jpg') no-repeat center fixed;
     }
+    .login-in .ivu-modal {
+        position: absolute;
+        right: 160px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>
+
+

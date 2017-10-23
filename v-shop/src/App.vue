@@ -4,16 +4,18 @@
       <div class="main">
         <v-aside></v-aside>
         <div class="mian-right">
-          <!-- <v-goods></v-goods> -->
           <!-- <v-search></v-search> -->
-          <v-goods-list></v-goods-list>
-          <!-- <v-set-goods></v-set-goods> -->
-          <!-- <v-goods-detail></v-goods-detail> -->
+          <!-- <v-goods-list></v-goods-list> -->
+          <v-goods-detail></v-goods-detail>
+          <!-- <v-goods-detail-list></v-goods-detail-list> -->
           <!-- <v-goods-storage></v-goods-storage> -->
+          <!-- <v-person-list></v-person-list> -->
         </div>
       </div>
       <v-footer></v-footer>
+      <!-- 弹窗 -->
       <v-login></v-login>
+      <v-set-goods></v-set-goods>
     </div>
 </template>
 
@@ -29,6 +31,8 @@ import vGoodsDetail from './components/vGoodsDetail'
 import vGoodsStorage from './components/vGoodsStorage'
 import vFooter from './components/vFooter'
 import vLogin from './components/vLogin'
+import vGoodsDetailList from './components/vGoodsDetailList'
+import vPersonList from './components/vPersonList'
 
 export default {
   name: 'app',
@@ -41,8 +45,10 @@ export default {
     vGoodsList,
     vSetGoods,
     vGoodsDetail,
+    vGoodsDetailList,
     vGoodsStorage,
-    vLogin
+    vLogin,
+    vPersonList
   },
   data () {
     return {
@@ -55,7 +61,7 @@ export default {
 <style>
 html, body, #app {
   height: 100%;
-  min-width: 700px;
+  min-width: 992px;
 }
 .main {
   height: calc(100% - 80px);
@@ -66,5 +72,6 @@ html, body, #app {
   height: 100%;
   background-color: #f8f8f9;
   padding: 0 10px;
+  overflow-y: scroll;
 }
 </style>

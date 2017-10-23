@@ -8,9 +8,17 @@
         <MenuItem name="1">
             <Icon type="android-list"></Icon> 商品列表
         </MenuItem>
-        <MenuItem name="2">
+        <!-- <MenuItem name="2">
             <Icon type="settings"></Icon> 商品操作
-        </MenuItem>
+        </MenuItem> -->
+        <Submenu name="2">
+            <template slot="title">
+                <Icon type="settings"></Icon>
+                商品操作
+            </template>
+            <MenuItem name="2-1">商品入库</MenuItem>
+            <MenuItem name="2-2">详细信息</MenuItem>
+        </Submenu>
         <MenuItem name="3">
             <Icon type="calculator"></Icon> 收银操作
         </MenuItem>
@@ -31,6 +39,9 @@
 
 <script>
 
+export default {
+    
+}
 
 </script>
 

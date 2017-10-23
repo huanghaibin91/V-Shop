@@ -7,21 +7,67 @@
             </div>
         </div>
         <Tabs type="card" @on-tab-remove="handleTabRemove">
-            <TabPane label="默认" v-if="tab0">标签一的内容</TabPane>
-            <TabPane label="价格" v-if="tab1">标签二的内容</TabPane>
-            <TabPane label="销量" v-if="tab2">标签三的内容</TabPane>
-            <TabPane label="库存" v-if="tab3">标签三的内容</TabPane>
+            <TabPane label="默认" v-if="tab0"  class="goods-list-box">
+                <Row>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                    <Col :xs="8" :sm="6" :md="4" :lg="4" >
+                        <v-goods></v-goods>
+                    </Col>
+                </Row>
+                <Page :total="100" show-elevator class="page"></Page>
+            </TabPane>
+            <TabPane label="价格" v-if="tab1" class="goods-list-box">标签二的内容</TabPane>
+            <TabPane label="销量" v-if="tab2" class="goods-list-box">标签三的内容</TabPane>
+            <TabPane label="库存" v-if="tab3" class="goods-list-box">标签三的内容</TabPane>
         </Tabs>
     </div>
 </template>
 
 <script>
 
-import vSearch from './vSearch'
+import vGoods from './vGoods'
 
 export default {
     components: {
-        vSearch
+        vGoods,
     },
     data () {
             return {
@@ -32,11 +78,11 @@ export default {
                 tab3: true
             }
         },
-        methods: {
-            handleTabRemove (name) {
-                this['tab' + name] = false;
-            }
+    methods: {
+        handleTabRemove (name) {
+            this['tab' + name] = false;
         }
+    }
 }
 </script>
 
@@ -52,5 +98,10 @@ export default {
         max-width: 500px;
         min-width: 250px;
         padding-right: 15px;
+    }
+    .page {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
     }
 </style>
