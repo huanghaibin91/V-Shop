@@ -4,7 +4,7 @@
             V-SHOP
         </h5>
         <div class="inform">
-            <Badge count="0">
+            <Badge count="1">
                 <a class="cart" href="#" title="购物车">
                     <Icon type="ios-cart"></Icon>
                 </a>
@@ -19,6 +19,9 @@
                     <Icon type="android-notifications"></Icon>
                 </a>
             </Badge>
+            <a href="https://github.com/huanghaibin91/V-Shop" target="_black" title="关于项目">
+                <Icon type="social-github"></Icon>
+            </a>
         </div>
     </header>
 </template>
@@ -27,7 +30,7 @@
     
 </script>
 
-<style scoped>
+<style>
     header {
         min-width: 400px;
         height: 50px;

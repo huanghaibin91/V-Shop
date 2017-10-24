@@ -6,10 +6,10 @@
         <div class="mian-right">
           <!-- <v-search></v-search> -->
           <!-- <v-goods-list></v-goods-list> -->
-          <v-goods-detail></v-goods-detail>
+          <!-- <v-goods-detail></v-goods-detail> -->
           <!-- <v-goods-detail-list></v-goods-detail-list> -->
           <!-- <v-goods-storage></v-goods-storage> -->
-          <!-- <v-person-list></v-person-list> -->
+          <v-person-list></v-person-list>
         </div>
       </div>
       <v-footer></v-footer>

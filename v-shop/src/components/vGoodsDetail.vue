@@ -1,24 +1,6 @@
 <template>
     <div class="goods-detail">
-        <h2>限购型黑猫</h2>
-        <div class="goods-message">
-            <div class="message-left">
-                <img src="../assets/00000000.jpg" alt="">
-            </div>
-            <div class="message-right">
-                <div class="goods-message-right">
-                    <p>商品编码：<span>00000000</span></p>
-                    <p>商品单价：<span>199</span>元</p>
-                    <p>商品库存：<span>199</span>件</p>
-                    <p>商品分类：<span>老婆</span></p>
-                    <p>商品保质期：<span>2999-12-12</span></p>
-                </div>
-                <div>
-                    <Button type="warning" icon="trash-b">删除</Button>
-                    <Button type="primary" icon="settings">修改</Button>
-                </div>
-            </div>
-        </div>
+        <Table :columns="column" :data="data" :disabled-hover="true" :border="true"></Table>
         <div>
             <h3>商品销售统计</h3> 
         </div>
@@ -38,42 +20,114 @@ export default {
                 input3: '',
                 input5: '',
                 input: ''
-            }
+            },
+            column: [
+                {
+                    title: '商品图片',
+                    key: 'img',
+                    // align: 'center',
+                    className: 'goods-img',
+                    render: (h, params) => {
+                        return h('img', {
+                            attrs: {
+                                src: params.row.img,
+                            }
+                        });
+                    }
+                },
+                {
+                    title: '详细信息',
+                    key: 'message',
+                    align: 'center',
+                    render: (h, params) => {
+                        return h('Table', {
+                            props: {
+                                columns: this.$data.columns,
+                                data: this.$data.datas,
+                                showHeader: false,
+                                border: true
+                            }
+                        });
+                    }
+                },
+                {
+                    title: '商品操作',
+                    key: 'aciton',
+                    align: 'center',
+                    width: 150,
+                    render: (h, params) => {
+                        return h('Button', {
+                            props: {
+                                type: 'warning',
+                                icon: 'settings',
+                            }
+                        }, '修改商品信息'); 
+                    }
+                }
+            ],
+            data: [
+                {
+                    img: '/static/00000000.jpg',
+                }
+            ],
+            columns: [
+                {
+                    title: '名称',
+                    key: 'name',
+                    render: (h, params) => {
+                        return h('strong', params.row.name);
+                    }
+                },
+                {
+                    title: '信息',
+                    key: 'value'
+                }
+            ],
+            datas: [
+                {   
+                    name: '商品名称',
+                    value: '限购型黑猫'
+                },
+                {
+                    name: '商品编码',
+                    value: '00000000'
+                },
+                {
+                    name: '商品单价',
+                    value: 199
+                },
+                {
+                    name: '商品数量',
+                    value: 199
+                },
+                {
+                    name: '商品分类',
+                    value: '老婆'
+                },
+                {
+                    name: '商品保质期',
+                    value: '9999-09-09'
+                },
+                // {  
+                //     render: (h, params) => {
+                //         return h('Button', {
+                //             props: {
+                //                 type: 'warning',
+                //                 size: 'small',
+                //                 icon: 'eye'
+                //             }
+                //         }, '修改');
+                //     }
+                // }
+            ],
         }
     }
 }
 </script>
 
-<style scoped>
-    .goods-detail {
-        width: 60%;
-        margin: 10px auto;
-    }
-    .goods-message {
-        display: flex;
-        align-items: center;
-    }
-    .goods-message>div {
-        box-sizing: border-box;
-        margin: 20px 0;
-    }
-    .message-left {
-        width: 20%;
-    }
-    .message-left>img {
-        width: 100%;
-        height: 100%;
-    }
-    .message-right {
-        width: 80%;
-        font-size: 1.5em;
-        padding: 20px;
-    }
-    .goods-message-right {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .goods-message-right>p {
-        width: 50%;
+<style>
+    .goods-img div img {
+        max-width: 300px;
+        max-height: 300px;
     }
 </style>
