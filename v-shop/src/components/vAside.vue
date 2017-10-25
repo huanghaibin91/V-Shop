@@ -20,7 +20,7 @@
             <MenuItem name="2-2">详细信息</MenuItem>
         </Submenu>
         <MenuItem name="3">
-            <Icon type="calculator"></Icon> 收银操作
+            <Icon type="calculator"></Icon> 收银记录
         </MenuItem>
         <MenuItem name="4">
             <Icon type="android-mail"></Icon> 消息通知 

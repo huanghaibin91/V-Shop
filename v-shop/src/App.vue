@@ -9,13 +9,18 @@
           <!-- <v-goods-detail></v-goods-detail> -->
           <!-- <v-goods-detail-list></v-goods-detail-list> -->
           <!-- <v-goods-storage></v-goods-storage> -->
-          <v-person-list></v-person-list>
+          <!-- <v-person-list></v-person-list> -->
+          <!-- <v-plan-list></v-plan-list> -->
+          <!-- <v-shopping-cart></v-shopping-cart> -->
+          <v-cash-register></v-cash-register>
         </div>
       </div>
       <v-footer></v-footer>
       <!-- 弹窗 -->
       <v-login></v-login>
       <v-set-goods></v-set-goods>
+      <v-add-person></v-add-person>
+      <v-check-out></v-check-out>
     </div>
 </template>
 
@@ -33,6 +38,11 @@ import vFooter from './components/vFooter'
 import vLogin from './components/vLogin'
 import vGoodsDetailList from './components/vGoodsDetailList'
 import vPersonList from './components/vPersonList'
+import vAddPerson from './components/vAddPerson'
+import vPlanList from './components/vPlanList'
+import vShoppingCart from './components/vShoppingCart'
+import vCheckOut from './components/vCheckOut'
+import vCashRegister from './components/vCashRegister'
 
 export default {
   name: 'app',
@@ -48,7 +58,12 @@ export default {
     vGoodsDetailList,
     vGoodsStorage,
     vLogin,
-    vPersonList
+    vPersonList,
+    vAddPerson,
+    vPlanList,
+    vShoppingCart,
+    vCheckOut,
+    vCashRegister
   },
   data () {
     return {

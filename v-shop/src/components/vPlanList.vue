@@ -1,7 +1,5 @@
 <template>
-    <div class="cash-register">
-
-    </div>
+    
 </template>
 
 <script>
@@ -10,6 +8,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

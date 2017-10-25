@@ -8,6 +8,9 @@
                 <p>库存&nbsp;<span>1000</span></p>
             </div>
         </div>
+        <div class="add-btn" title="加入购物车">
+            <img src="../assets/plus.png" alt="加入购物车">
+        </div>
     </Card>
 </template>
 
@@ -44,5 +47,20 @@ export default {
     }
     .goods-message>p:last-child {
         text-align: right;
+    }
+    .goods .add-btn {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        background-color: #dddee1;
+        opacity: 0.6;
+        z-index: 9;
+        justify-content: center;
+        align-items: center;
+        display: none;
+    }
+    .goods:hover .add-btn {
+        display: flex;
     }
 </style>
