@@ -3,7 +3,7 @@
         <div class="search-box">
             <div class="search-input">
                 <Input v-model="value" placeholder="请输入商品编码或名称..."></Input>
-                <Button type="primary" icon="ios-cart">购物车</Button>
+                <Button @click="goShoppingCart" type="primary" icon="ios-cart">购物车</Button>
             </div>
         </div>
         <Tabs type="card" @on-tab-remove="handleTabRemove">
@@ -81,6 +81,11 @@ export default {
     methods: {
         handleTabRemove (name) {
             this['tab' + name] = false;
+        },
+        goShoppingCart () {
+            this.$router.push({
+                path: '/shoppingCart'
+            });
         }
     }
 }

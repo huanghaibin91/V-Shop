@@ -4,6 +4,7 @@
       <div class="main">
         <v-aside></v-aside>
         <div class="mian-right">
+          <router-view></router-view>
           <!-- <v-search></v-search> -->
           <!-- <v-goods-list></v-goods-list> -->
           <!-- <v-goods-detail></v-goods-detail> -->
@@ -12,7 +13,7 @@
           <!-- <v-person-list></v-person-list> -->
           <!-- <v-plan-list></v-plan-list> -->
           <!-- <v-shopping-cart></v-shopping-cart> -->
-          <v-cash-register></v-cash-register>
+          <!-- <v-cash-register></v-cash-register> -->
         </div>
       </div>
       <v-footer></v-footer>

@@ -1,63 +1,63 @@
 <template>
-    <div class="goods-storage">
-        <h5>商品入库</h5>
-        <Tabs type="card"> 
-            <TabPane label="新商品入库">
-                <Form ref="formValidate" :model="goodsValidate" :rules="ruleValidate" :label-width="100"> 
-                    <FormItem label="商品编码" prop="coding"> 
-                        <Input v-model="goodsValidate.coding" placeholder="请输入商品编码"></Input> 
-                    </FormItem> 
-                    <FormItem label="商品名称" prop="name"> 
-                        <Input v-model="goodsValidate.name" placeholder="请输入商品名称"></Input> 
-                    </FormItem> 
-                    <FormItem label="商品单价" prop="price"> 
-                        <Input v-model="goodsValidate.price" placeholder="请输入商品单价"></Input> 
-                    </FormItem>
-                    <FormItem label="商品数量" prop="number"> 
-                        <Input v-model="goodsValidate.number" placeholder="请输入商品数量"></Input> 
-                    </FormItem>
-                    <FormItem label="商品分类" prop="category"> 
-                        <Select v-model="goodsValidate.category" placeholder="请选择商品分类"> 
-                            <Option value="休闲零食">休闲零食</Option> 
-                            <Option value="酒水饮料">酒水饮料</Option> 
-                            <Option value="粮油副食">粮油副食</Option>
-                            <Option value="生鲜水果">生鲜水果</Option>
-                            <Option value="日常洗护">日常洗护</Option>
-                            <Option value="厨卫用品">厨卫用品</Option>
-                        </Select> 
-                    </FormItem> 
-                    <FormItem label="选择保质期" prop="date"> 
-                        <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate.date"></DatePicker> 
-                    </FormItem> 
-                    <FormItem label="商品图片" prop="desc"> 
-                        
-                    </FormItem> 
-                    <FormItem> 
-                        <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
-                        <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> 
-                    </FormItem> 
-                </Form>
-            </TabPane> 
-            <TabPane label="快捷入库">
-                <Form ref="formValidate" :model="goodsValidate" :rules="ruleValidate" :label-width="100"> 
-                    <FormItem label="商品编码" prop="coding"> 
-                        <Input v-model="goodsValidate.coding" placeholder="请输入商品编码"></Input> 
-                    </FormItem>  
-                    <FormItem label="商品数量" prop="number"> 
-                        <Input v-model="goodsValidate.number" placeholder="请输入商品数量"></Input> 
-                    </FormItem> 
-                    <FormItem label="选择保质期" prop="date"> 
-                        <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate.date"></DatePicker> 
-                    </FormItem> 
-                    <FormItem> 
-                        <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
-                        <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> 
-                    </FormItem> 
-                </Form>
-            </TabPane> 
-        </Tabs>
-        
-    </div>
+    <Row>
+        <Col :sm="{ span: 16, offset: 4 }" :md="{ span: 12, offset: 6 }" :lg="{ span: 12, offset: 6 }">
+            <Tabs :size="small"> 
+                <TabPane label="新商品入库">
+                    <Form ref="formValidate" :model="goodsValidate" :rules="ruleValidate" :label-width="100"> 
+                        <FormItem label="商品编码" prop="coding"> 
+                            <Input v-model="goodsValidate.coding" placeholder="请输入商品编码"></Input> 
+                        </FormItem> 
+                        <FormItem label="商品名称" prop="name"> 
+                            <Input v-model="goodsValidate.name" placeholder="请输入商品名称"></Input> 
+                        </FormItem> 
+                        <FormItem label="商品单价" prop="price"> 
+                            <Input v-model="goodsValidate.price" placeholder="请输入商品单价"></Input> 
+                        </FormItem>
+                        <FormItem label="商品数量" prop="number"> 
+                            <Input v-model="goodsValidate.number" placeholder="请输入商品数量"></Input> 
+                        </FormItem>
+                        <FormItem label="商品分类" prop="category"> 
+                            <Select v-model="goodsValidate.category" placeholder="请选择商品分类"> 
+                                <Option value="休闲零食">休闲零食</Option> 
+                                <Option value="酒水饮料">酒水饮料</Option> 
+                                <Option value="粮油副食">粮油副食</Option>
+                                <Option value="生鲜水果">生鲜水果</Option>
+                                <Option value="日常洗护">日常洗护</Option>
+                                <Option value="厨卫用品">厨卫用品</Option>
+                            </Select> 
+                        </FormItem> 
+                        <FormItem label="选择保质期" prop="date"> 
+                            <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate.date"></DatePicker> 
+                        </FormItem> 
+                        <FormItem label="商品图片" prop="desc"> 
+                            
+                        </FormItem> 
+                        <FormItem> 
+                            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
+                            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> 
+                        </FormItem> 
+                    </Form>
+                </TabPane> 
+                <TabPane label="快捷入库">
+                    <Form ref="formValidate" :model="goodsValidate" :rules="ruleValidate" :label-width="100"> 
+                        <FormItem label="商品编码" prop="coding"> 
+                            <Input v-model="goodsValidate.coding" placeholder="请输入商品编码"></Input> 
+                        </FormItem>  
+                        <FormItem label="商品数量" prop="number"> 
+                            <Input v-model="goodsValidate.number" placeholder="请输入商品数量"></Input> 
+                        </FormItem> 
+                        <FormItem label="选择保质期" prop="date"> 
+                            <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate.date"></DatePicker> 
+                        </FormItem> 
+                        <FormItem> 
+                            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
+                            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> 
+                        </FormItem> 
+                    </Form>
+                </TabPane> 
+            </Tabs>
+        </Col>
+    </Row>
 </template>
 
 <script>
@@ -122,5 +122,5 @@ export default {
 </script>
 
 <style scoped>
-
+    
 </style>
