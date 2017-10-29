@@ -1,23 +1,23 @@
 <template>
     <Row>
         <Col :sm="{ span: 16, offset: 4 }" :md="{ span: 12, offset: 6 }" :lg="{ span: 12, offset: 6 }">
-            <Tabs :size="small"> 
+            <Tabs> 
                 <TabPane label="新商品入库">
-                    <Form ref="formValidate" :model="goodsValidate" :rules="ruleValidate" :label-width="100"> 
+                    <Form ref="goods" :model="goods" :rules="checkGoods" :label-width="100"> 
                         <FormItem label="商品编码" prop="coding"> 
-                            <Input v-model="goodsValidate.coding" placeholder="请输入商品编码"></Input> 
+                            <Input v-model="goods.coding" placeholder="请输入商品编码"></Input> 
                         </FormItem> 
                         <FormItem label="商品名称" prop="name"> 
-                            <Input v-model="goodsValidate.name" placeholder="请输入商品名称"></Input> 
+                            <Input v-model="goods.name" placeholder="请输入商品名称"></Input> 
                         </FormItem> 
                         <FormItem label="商品单价" prop="price"> 
-                            <Input v-model="goodsValidate.price" placeholder="请输入商品单价"></Input> 
+                            <Input v-model="goods.price" placeholder="请输入商品单价"></Input> 
                         </FormItem>
                         <FormItem label="商品数量" prop="number"> 
-                            <Input v-model="goodsValidate.number" placeholder="请输入商品数量"></Input> 
+                            <Input v-model="goods.number" placeholder="请输入商品数量"></Input> 
                         </FormItem>
                         <FormItem label="商品分类" prop="category"> 
-                            <Select v-model="goodsValidate.category" placeholder="请选择商品分类"> 
+                            <Select v-model="goods.category" placeholder="请选择商品分类"> 
                                 <Option value="休闲零食">休闲零食</Option> 
                                 <Option value="酒水饮料">酒水饮料</Option> 
                                 <Option value="粮油副食">粮油副食</Option>
@@ -27,33 +27,37 @@
                             </Select> 
                         </FormItem> 
                         <FormItem label="选择保质期" prop="date"> 
-                            <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate.date"></DatePicker> 
+                            <DatePicker type="date" placeholder="选择日期" v-model="goods.date"></DatePicker> 
                         </FormItem> 
-                        <FormItem label="商品图片" prop="desc"> 
-                            
+                        <FormItem label="商品图片" prop="img"> 
+                            <Button @click="selectImg" type="ghost" icon="ios-cloud-upload-outline">选择商品图片</Button>
+                            <input class="file-btn" type="file" style="visibility: hidden;">
+                            <div class="img-place">
+                                <img src="../assets/00000000.jpg" alt="">
+                            </div>
                         </FormItem> 
                         <FormItem> 
-                            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
-                            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> 
+                            <Button type="primary" @click="handleSubmit('goods')">提交</Button> 
+                            <Button type="ghost" @click="handleReset('goods')" style="margin-left: 10px">重置</Button> 
                         </FormItem> 
                     </Form>
                 </TabPane> 
                 <TabPane label="快捷入库">
-                    <Form ref="formValidate" :model="goodsValidate" :rules="ruleValidate" :label-width="100"> 
+                    <!-- <Form ref="formValidate" :model="goodsValidate2" :rules="ruleValidate2" :label-width="100"> 
                         <FormItem label="商品编码" prop="coding"> 
-                            <Input v-model="goodsValidate.coding" placeholder="请输入商品编码"></Input> 
+                            <Input v-model="goodsValidate2.coding" placeholder="请输入商品编码"></Input> 
                         </FormItem>  
                         <FormItem label="商品数量" prop="number"> 
-                            <Input v-model="goodsValidate.number" placeholder="请输入商品数量"></Input> 
+                            <Input v-model="goodsValidate2.number" placeholder="请输入商品数量"></Input> 
                         </FormItem> 
                         <FormItem label="选择保质期" prop="date"> 
-                            <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate.date"></DatePicker> 
+                            <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate2.date"></DatePicker> 
                         </FormItem> 
                         <FormItem> 
                             <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
-                            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> 
+                            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 10px">重置</Button> 
                         </FormItem> 
-                    </Form>
+                    </Form> -->
                 </TabPane> 
             </Tabs>
         </Col>
@@ -63,8 +67,47 @@
 <script>
 export default {
     data () { 
+        // 验证商品信息规则
+        // 检查编码
+        const checkCoding = (rule, value, callback) => {
+            const reg = /^[0-9]\d*$/g;
+            if (value === '') {
+                callback(new Error('请输入商品编码'));
+            } else {
+                if (reg.test(value)) {
+                    callback();
+                } else {
+                    callback(new Error('商品编码为数字'));
+                }
+            }
+        }
+        // 检查价格
+        const checkPrice = (rule, value, callback) => {
+            const reg = /^(\d+\.\d{1,1}|\d+)$/g;
+            if (value === '') {
+                callback(new Error('请输入商品价格'));
+            } else if (reg.test(value)) {
+                callback();
+            } else {
+                callback(new Error('商品单价应为最多一位小数的数字'));
+            }
+        }
+        // 检查数量
+        const checkNumber = (rule, value, callback) => {
+            const reg = /^[1-9]\d*$/g;
+            if (value === '') {
+                callback(new Error('请输入商品数量'));
+            } else {
+                if (reg.test(value)) {
+                    callback();
+                } else {
+                    callback(new Error('商品数量为整数数字'));
+                }
+            }
+        }
+
         return { 
-            goodsValidate: { 
+            goods: { 
                 coding: '', 
                 name: '', 
                 price: '', 
@@ -73,38 +116,21 @@ export default {
                 date: '', 
                 image: '' 
             }, 
-            ruleValidate: { 
-                coding: [ 
-                    { required: true, message: '邮箱不能为空', trigger: 'blur' }, 
-                    { type: 'email', message: '邮箱格式不正确', trigger: 'blur' } 
-                ],
-                name: [ 
-                    { required: true, message: '商品名称不能为空', trigger: 'blur' } 
-                ],  
-                price: [ 
-                    { required: true, message: '请选择城市', trigger: 'change' } 
-                ], 
-                number: [ 
-                    { required: true, message: '请选择性别', trigger: 'change' } 
-                ], 
-                category: [ 
-                    { required: true, type: 'array', min: 1, message: '至少选择一个爱好', trigger: 'change' }, 
-                    { type: 'array', max: 2, message: '最多选择两个爱好', trigger: 'change' } 
-                ], 
-                date: [ 
-                    { required: true, type: 'date', message: '请选择日期', trigger: 'change' } 
-                ], 
-                time: [ 
-                    { required: true, type: 'date', message: '请选择时间', trigger: 'change' } 
-                ], 
-                desc: [ 
-                    { required: true, message: '请输入个人介绍', trigger: 'blur' }, 
-                    { type: 'string', min: 20, message: '介绍不能少于20字', trigger: 'blur' } 
-                ] 
+            checkGoods: { 
+                coding: { required: true, validator: checkCoding, trigger: 'blur' },
+                name: { required: true, message: '商品名称不能为空', trigger: 'blur' },
+                price: { required: true, validator: checkPrice, trigger: 'blur' },
+                number: { required: true, validator: checkNumber, trigger: 'blur' }, 
+                category: { required: true, message: '请选择一个商品分类', trigger: 'change' }, 
+                date: { required: true, type: 'date', message: '请选择日期', trigger: 'change' } 
             } 
         } 
     }, 
     methods: { 
+        selectImg () {
+            document.querySelector('.file-btn').click();
+        },
+        
         handleSubmit (name) { 
             this.$refs[name].validate((valid) => { 
                 if (valid) { 
@@ -122,5 +148,14 @@ export default {
 </script>
 
 <style scoped>
-    
+    .img-place {
+        width: 300px;
+        height: 300px;
+        margin-top: 10px;
+        border: 1px dashed #dddee1;
+    }
+    .img-place img {
+        width: 100%;
+        height: 100%;
+    }
 </style>

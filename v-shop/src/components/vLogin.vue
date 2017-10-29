@@ -1,5 +1,6 @@
 <template>
-    <Modal title="欢迎登录" v-model="modalFlag" loading="loading" ok-text="登录" width="300" class-name="login-in">
+    <Modal title="欢迎登录" v-model="loginFlag" loading="loading" ok-text="登录" width="300" 
+    class-name="login-in">
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
             <FormItem prop="user">
                 <Input type="text" v-model="formInline.user" placeholder="用户名">
@@ -19,7 +20,6 @@
 export default {
     data () {
         return {
-            modalFlag: false,
             loading: true,
             formInline: {
                 user: '',
@@ -35,6 +35,9 @@ export default {
                 ]
             }
         }
+    },
+    computed: {
+        
     },
     methods: {
         handleSubmit(name) {

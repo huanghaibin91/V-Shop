@@ -5,23 +5,14 @@
         <v-aside></v-aside>
         <div class="mian-right">
           <router-view></router-view>
-          <!-- <v-search></v-search> -->
-          <!-- <v-goods-list></v-goods-list> -->
-          <!-- <v-goods-detail></v-goods-detail> -->
-          <!-- <v-goods-detail-list></v-goods-detail-list> -->
-          <!-- <v-goods-storage></v-goods-storage> -->
-          <!-- <v-person-list></v-person-list> -->
-          <!-- <v-plan-list></v-plan-list> -->
-          <!-- <v-shopping-cart></v-shopping-cart> -->
-          <!-- <v-cash-register></v-cash-register> -->
         </div>
       </div>
       <v-footer></v-footer>
       <!-- 弹窗 -->
-      <v-login></v-login>
-      <v-set-goods></v-set-goods>
-      <v-add-person></v-add-person>
-      <v-check-out></v-check-out>
+      <!-- <v-login></v-login> -->
+      <!-- <v-set-goods></v-set-goods> -->
+      <!-- <v-add-person></v-add-person> -->
+      <!-- <v-check-out></v-check-out> -->
     </div>
 </template>
 
@@ -29,21 +20,11 @@
 
 import vHeader from './components/vHeader'
 import vAside from './components/vAside'
-import vGoods from './components/vGoods'
-import vSearch from './components/vSearch'
-import vGoodsList from './components/vGoodsList'
-import vSetGoods from './components/vSetGoods'
-import vGoodsDetail from './components/vGoodsDetail'
-import vGoodsStorage from './components/vGoodsStorage'
+// import vSetGoods from './components/vSetGoods'
 import vFooter from './components/vFooter'
-import vLogin from './components/vLogin'
-import vGoodsDetailList from './components/vGoodsDetailList'
-import vPersonList from './components/vPersonList'
-import vAddPerson from './components/vAddPerson'
-import vPlanList from './components/vPlanList'
-import vShoppingCart from './components/vShoppingCart'
-import vCheckOut from './components/vCheckOut'
-import vCashRegister from './components/vCashRegister'
+// import vLogin from './components/vLogin'
+// import vAddPerson from './components/vAddPerson'
+// import vCheckOut from './components/vCheckOut'
 
 export default {
   name: 'app',
@@ -51,25 +32,10 @@ export default {
     vHeader,
     vFooter,
     vAside,
-    vGoods,
-    vSearch,
-    vGoodsList,
-    vSetGoods,
-    vGoodsDetail,
-    vGoodsDetailList,
-    vGoodsStorage,
-    vLogin,
-    vPersonList,
-    vAddPerson,
-    vPlanList,
-    vShoppingCart,
-    vCheckOut,
-    vCashRegister
-  },
-  data () {
-    return {
-      value: [20, 50]
-    }
+    // vSetGoods,
+    // vLogin,
+    // vAddPerson,
+    // vCheckOut
   }
 }
 </script>

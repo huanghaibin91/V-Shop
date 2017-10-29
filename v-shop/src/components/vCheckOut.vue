@@ -1,18 +1,18 @@
 <template>
-    <Modal v-model="modal" title="商品结算" width="350" ok-text="返回购物车" cancel-text="返回商品列表" class-name="checkout">
-        <Collapse v-model="value1" accordion>
+    <Modal v-model="checkoutFlag" title="商品结算" width="350" ok-text="返回购物车" cancel-text="返回商品列表" class-name="checkout">
+        <Collapse v-model="collapseFlag" accordion>
             <Panel name="1">
                 现金支付
                 <div slot="content">
-                    <Form :model="formItem" :label-width="50">
+                    <Form :model="checkout" :label-width="50">
                         <FormItem label="应收">
-                            <Input v-model="formItem.input" readonly="true" placeholder="请输入"></Input>
+                            <Input v-model="checkout.total" :readonly="true" placeholder="请输入"></Input>
                         </FormItem>
                         <FormItem label="实收">
-                            <Input v-model="formItem.input" autofocus="true" placeholder="请输入实收金额"></Input>
+                            <Input v-model="checkout.cash" :autofocus="true" placeholder="请输入实收金额"></Input>
                         </FormItem>
                         <FormItem label="找零">
-                            <Input v-model="formItem.input" readonly="true" placeholder="请输入"></Input>
+                            <Input v-model="checkout.change" :readonly="true" placeholder="请输入"></Input>
                         </FormItem> 
                     </Form>
                     <Button type="success" long>确认收款</Button>
@@ -44,9 +44,12 @@
 export default {
     data () {
         return {
-            modal: false,
-            formItem: {
-                input: ''
+            checkoutFlag: false,
+            collapseFlag: false,
+            checkout: {
+                cash: '',
+                total: '',
+                change: ''
             }
         }
     }
