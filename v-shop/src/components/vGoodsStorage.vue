@@ -30,10 +30,10 @@
                             <DatePicker type="date" placeholder="选择日期" v-model="goods.date"></DatePicker> 
                         </FormItem> 
                         <FormItem label="商品图片" prop="img"> 
-                            <Button @click="selectImg" type="ghost" icon="ios-cloud-upload-outline">选择商品图片</Button>
-                            <input class="file-btn" type="file" style="visibility: hidden;">
+                            <Button @click="clickSelectImg" type="ghost" icon="ios-cloud-upload-outline">选择商品图片</Button>
+                            <input @change="selectImg($event)" class="file-btn" type="file" style="visibility: hidden;">
                             <div class="img-place">
-                                <img src="../assets/00000000.jpg" alt="">
+                                <!-- 商品图片位置 -->
                             </div>
                         </FormItem> 
                         <FormItem> 
@@ -127,10 +127,40 @@ export default {
         } 
     }, 
     methods: { 
-        selectImg () {
+        clickSelectImg () {
             document.querySelector('.file-btn').click();
         },
-        
+        selectImg (event) {
+            var info = '',
+                imgPlace = document.querySelector('.img-place'),
+                files = event.target.files,
+                type = 'default',
+                reader = new FileReader();
+            if (/image/.test(files[0].type)){
+                reader.readAsDataURL(files[0]);
+                type = "image";
+            } else {
+                reader.readAsText(files[0]);
+                type = "text";
+            }
+            reader.onerror = function(){
+                imgPlace.innerHTML = "不能读取文件，错误代码 " + reader.error.code;
+            };
+            reader.onload = function(){
+                var html = "";
+                switch(type) {
+                    case "image":
+                        html = "<img style='width: 100%; height: 100%;' src=\"" + reader.result + "\">";
+                        break;
+                    case "text":
+                        html = reader.result;
+                        break;
+                    default:
+                        break;
+                }
+                imgPlace.innerHTML = html;
+            };
+        },
         handleSubmit (name) { 
             this.$refs[name].validate((valid) => { 
                 if (valid) { 
@@ -153,9 +183,6 @@ export default {
         height: 300px;
         margin-top: 10px;
         border: 1px dashed #dddee1;
-    }
-    .img-place img {
-        width: 100%;
-        height: 100%;
+        overflow: hidden;
     }
 </style>

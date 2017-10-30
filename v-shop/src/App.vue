@@ -36,6 +36,18 @@ export default {
     // vLogin,
     // vAddPerson,
     // vCheckOut
+  },
+  mounted: function () {
+    var indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
+    if (!indexedDB) {
+      this.$Notice.warning({
+        title: '警告',
+        desc: '当前浏览器不支持IndexedDB，请使用更高版本的浏览器！',
+        duration: 0
+      })
+    } else {
+      
+    }
   }
 }
 </script>

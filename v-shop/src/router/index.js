@@ -8,6 +8,7 @@ import vGoodsList from '../components/vGoodsList'
 import vShoppingCart from '../components/vShoppingCart'
 import vGoodsStorage from '../components/vGoodsStorage'
 import vGoodsDetailList from '../components/vGoodsDetailList'
+import vGoodsDetail from '../components/vGoodsDetail'
 import vCashRegister from '../components/vCashRegister'
 import vMessageList from '../components/vMessageList'
 import vDataStatistics from '../components/vDataStatistics'
@@ -31,6 +32,10 @@ export default new Router({
     {
       path: '/goodsDetailList',
       component: vGoodsDetailList
+    },
+    {
+      path: '/goodsDetail',
+      component: vGoodsDetail
     },
     {
       path: '/cashRegister',

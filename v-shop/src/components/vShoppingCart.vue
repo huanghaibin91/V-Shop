@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2>购 物 车</h2>
         <Table border :columns="column" :data="data"></Table>
         <div class="checkout-box">
             <div class="total-price">
@@ -10,10 +11,10 @@
             </div>
         </div>
         <!-- 结算弹窗 -->
-        <Modal v-model="checkoutFlag" title="商品结算" width="350" ok-text="返回购物车" cancel-text="返回商品列表" class-name="checkout">
+        <Modal v-model="checkoutFlag" title="商品结算" width="350" ok-text="返回购物车" cancel-text="返回商品列表" :styles="{top: '20px'}">
             <Collapse v-model="collapseFlag" accordion>
                 <Panel name="1">
-                    现金支付
+                    &nbsp;现金支付
                     <div slot="content">
                         <Form :model="cashCheckout" :label-width="50">
                             <FormItem label="应收">
@@ -30,19 +31,19 @@
                     </div>
                 </Panel>
                 <Panel name="2">
-                    支付宝支付
+                    &nbsp;支付宝支付
                     <p slot="content">
                         暂未完成
                     </p>
                 </Panel>
                 <Panel name="3">
-                    微信支付
+                    &nbsp;微信支付
                     <p slot="content">
                         暂未完成
                     </p>
                 </Panel>
                 <Panel name="4">
-                    银行卡 / 信用卡支付
+                    &nbsp;银行卡 / 信用卡支付
                     <p slot="content">
                         暂未完成
                     </p>
@@ -125,6 +126,9 @@ export default {
 </script>
 
 <style scoped>
+    h2 {
+        padding: 10px 0;
+    }
     .checkout-box {
         height: 48px;
         border: 1px solid #e9eaec;

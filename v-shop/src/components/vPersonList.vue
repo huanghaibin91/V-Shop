@@ -7,16 +7,19 @@
             <Table :columns="columns" :data="data"></Table>
         </div>
         <!-- 添加员工弹窗 -->
-        <Modal title="添加员工" v-model="addPersonFlag" class-name="set-goods" width="400"> 
-            <Form :model="newPerson" :label-width="80"> 
+        <Modal title="添加员工" v-model="addPersonFlag" :styles="{top: '20px'}" width="400"> 
+            <Form :model="newPerson" :label-width="100"> 
                 <FormItem label="员工姓名"> 
-                    <Input v-model="newPerson.name"></Input> 
+                    <Input v-model="newPerson.name" placeholder="请输入员工姓名"></Input> 
                 </FormItem> 
                 <FormItem label="员工工号"> 
-                    <Input v-model="newPerson.name"></Input> 
+                    <Input v-model="newPerson.name" placeholder="请输入员工工号"></Input> 
                 </FormItem> 
                 <FormItem label="登录密码"> 
-                    <Input type="password" v-model="newPerson.password"></Input> 
+                    <Input type="password" v-model="newPerson.password" placeholder="请输入登录密码"></Input> 
+                </FormItem> 
+                <FormItem label="确认登录密码"> 
+                    <Input type="password" v-model="newPerson.password2" placeholder="再次输入密码"></Input> 
                 </FormItem> 
                 <FormItem label="权限设置"> 
                     <Select v-model="newPerson.jurisdiction" placeholder="请设置权限"> 
@@ -26,10 +29,10 @@
                     </Select> 
                 </FormItem>
                 <FormItem label="联系电话"> 
-                    <Input v-model="newPerson.telephone"></Input> 
+                    <Input v-model="newPerson.telephone" placeholder="请输入联系电话"></Input> 
                 </FormItem> 
                 <FormItem label="家庭住址"> 
-                    <Input v-model="newPerson.address"></Input> 
+                    <Input v-model="newPerson.address" placeholder="请输入家庭住址"></Input> 
                 </FormItem>
                 <FormItem label="头像设置"> 
                     <Button @click="selectImg" type="ghost" icon="ios-cloud-upload-outline">选择用户头像</Button>
@@ -52,6 +55,7 @@ export default {
                 name: '',
                 number: '',
                 password: '',
+                password2: '',
                 jurisdiction: '',
                 telephone: '',
                 address: '',

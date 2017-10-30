@@ -46,6 +46,13 @@ export default {
                                 type: 'warning',
                                 size: 'small',
                                 icon: 'eye'
+                            },
+                            on: {
+                                click: () => {
+                                    this.$router.push({
+                                        path: '/goodsDetail'
+                                    })
+                                }
                             }
                         }, '查看详情')
                     }
