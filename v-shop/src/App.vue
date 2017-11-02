@@ -8,11 +8,6 @@
         </div>
       </div>
       <v-footer></v-footer>
-      <!-- 弹窗 -->
-      <!-- <v-login></v-login> -->
-      <!-- <v-set-goods></v-set-goods> -->
-      <!-- <v-add-person></v-add-person> -->
-      <!-- <v-check-out></v-check-out> -->
     </div>
 </template>
 
@@ -20,11 +15,9 @@
 
 import vHeader from './components/vHeader'
 import vAside from './components/vAside'
-// import vSetGoods from './components/vSetGoods'
 import vFooter from './components/vFooter'
-// import vLogin from './components/vLogin'
-// import vAddPerson from './components/vAddPerson'
-// import vCheckOut from './components/vCheckOut'
+
+import IndexedDB from './indexedDB/IndexedDB'
 
 export default {
   name: 'app',
@@ -32,22 +25,9 @@ export default {
     vHeader,
     vFooter,
     vAside,
-    // vSetGoods,
-    // vLogin,
-    // vAddPerson,
-    // vCheckOut
   },
   mounted: function () {
-    var indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB;
-    if (!indexedDB) {
-      this.$Notice.warning({
-        title: '警告',
-        desc: '当前浏览器不支持IndexedDB，请使用更高版本的浏览器！',
-        duration: 0
-      })
-    } else {
-      
-    }
+    
   }
 }
 </script>

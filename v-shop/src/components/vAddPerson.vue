@@ -5,7 +5,7 @@
                 <Input v-model="person.name"></Input> 
             </FormItem> 
             <FormItem label="员工工号"> 
-                <Input v-model="person.name"></Input> 
+                <Input v-model="person.coding"></Input> 
             </FormItem> 
             <FormItem label="登录密码"> 
                 <Input type="password" v-model="person.password"></Input> 
@@ -41,7 +41,7 @@ export default {
             modal: false,
             person: {
                 name: '',
-                number: '',
+                coding: '',
                 password: '',
                 jurisdiction: '',
                 telephone: '',

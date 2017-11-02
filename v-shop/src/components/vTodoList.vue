@@ -1,9 +1,9 @@
 <template>
     <div class="todolist">
         <div class="add-box">
-            <Input v-model="value" placeholder="请输入待办事件内容..." style="width: 400px"></Input>
-            <DatePicker type="datetime" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间（不含秒）" style="width: 200px"></DatePicker>
-            <Button type="primary" icon="plus">添加新事件</Button>
+            <Input v-model="todo.content" placeholder="请输入待办事件内容..." style="width: 400px"></Input>
+            <DatePicker v-model="todo.time" type="datetime" format="yyyy-MM-dd HH:mm" placeholder="选择日期和时间（不含秒）" style="width: 200px"></DatePicker>
+            <Button @click.native="addTodo" type="primary" icon="plus">添加新事件</Button>
         </div>
         <div class="todo-list">
             <Table :columns="todoTable" :data="todoList"></Table>
@@ -15,6 +15,11 @@
 export default {
     data () {
         return {
+            todo: {
+                time: '',
+                content: '',
+                state: '待完成'
+            },
             todoTable: [
                 {
                     title: '预定时间',
@@ -40,18 +45,44 @@ export default {
                                 type: 'warning',
                                 icon: 'trash-b',
                                 size: 'small'
+                            },
+                            on: {
+                                click: () => {
+                                    this.deleteTodo(params.index);
+                                }
                             }
                         }, '删除');
                     }
                 },
             ],
-            todoList: [
-                {
-                    time: '2017-10-31 12:00',
-                    content: '盘点店内商品库存',
+            todoList: [],
+        }
+    },
+    methods: {
+        addTodo () {
+            var year = this.todo.time.getFullYear();
+            var month = this.todo.time.getMonth() + 1;
+            var day = this.todo.time.getDate();
+            var hour = this.todo.time.getHours();
+            var min = this.todo.time.getMinutes();
+            function addZero(val) {
+                if (val < 10) {
+                    val = '0' + val;
+                } 
+                return val;
+            }
+            this.todo.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
+            if (this.todo.time && this.todo.content) {
+                this.todoList.push(this.todo);
+                this.todo = {
+                    time: '',
+                    content: '',
                     state: '待完成'
-                }
-            ]
+                };
+            }
+        },
+        deleteTodo (index) {
+            this.todoList.splice(index, 1);
         }
     }
 }
