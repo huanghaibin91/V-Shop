@@ -3,21 +3,21 @@
         <Col :sm="{ span: 16, offset: 4 }" :md="{ span: 12, offset: 6 }" :lg="{ span: 12, offset: 6 }">
             <Tabs> 
                 <TabPane label="新商品入库">
-                    <Form ref="goods" :model="goods" :rules="checkGoods" :label-width="100"> 
+                    <Form ref="newGoods" :model="newGoods" :rules="checkNewGoods" :label-width="100"> 
                         <FormItem label="商品编码" prop="coding"> 
-                            <Input v-model="goods.coding" placeholder="请输入商品编码"></Input> 
+                            <Input v-model="newGoods.coding" placeholder="请输入商品编码"></Input> 
                         </FormItem> 
                         <FormItem label="商品名称" prop="name"> 
-                            <Input v-model="goods.name" placeholder="请输入商品名称"></Input> 
+                            <Input v-model="newGoods.name" placeholder="请输入商品名称"></Input> 
                         </FormItem> 
                         <FormItem label="商品单价" prop="price"> 
-                            <Input v-model="goods.price" placeholder="请输入商品单价"></Input> 
+                            <Input v-model="newGoods.price" placeholder="请输入商品单价"></Input> 
                         </FormItem>
                         <FormItem label="商品数量" prop="number"> 
-                            <Input v-model="goods.number" placeholder="请输入商品数量"></Input> 
+                            <Input v-model="newGoods.number" placeholder="请输入商品数量"></Input> 
                         </FormItem>
                         <FormItem label="商品分类" prop="category"> 
-                            <Select v-model="goods.category" placeholder="请选择商品分类"> 
+                            <Select v-model="newGoods.category" placeholder="请选择商品分类"> 
                                 <Option value="休闲零食">休闲零食</Option> 
                                 <Option value="酒水饮料">酒水饮料</Option> 
                                 <Option value="粮油副食">粮油副食</Option>
@@ -27,7 +27,7 @@
                             </Select> 
                         </FormItem> 
                         <FormItem label="选择保质期" prop="date"> 
-                            <DatePicker type="date" placeholder="选择日期" v-model="goods.date"></DatePicker> 
+                            <DatePicker type="date" placeholder="选择日期" v-model="newGoods.date"></DatePicker> 
                         </FormItem> 
                         <FormItem label="商品图片" prop="img"> 
                             <Button @click="clickSelectImg" type="ghost" icon="ios-cloud-upload-outline">选择商品图片</Button>
@@ -37,27 +37,27 @@
                             </div>
                         </FormItem> 
                         <FormItem> 
-                            <Button type="primary" @click="handleSubmit('goods')">提交</Button> 
-                            <Button type="ghost" @click="handleReset('goods')" style="margin-left: 10px">重置</Button> 
+                            <Button type="primary" @click="submitNewGoods">提交</Button> 
+                            <Button type="ghost" @click="resetNewGoods" style="margin-left: 10px">重置</Button> 
                         </FormItem> 
                     </Form>
                 </TabPane> 
                 <TabPane label="快捷入库">
-                    <!-- <Form ref="formValidate" :model="goodsValidate2" :rules="ruleValidate2" :label-width="100"> 
+                    <Form ref="oldGoods" :model="oldGoods" :rules="checkOldGoods" :label-width="100"> 
                         <FormItem label="商品编码" prop="coding"> 
-                            <Input v-model="goodsValidate2.coding" placeholder="请输入商品编码"></Input> 
+                            <Input v-model="oldGoods.coding" placeholder="请输入商品编码"></Input> 
                         </FormItem>  
                         <FormItem label="商品数量" prop="number"> 
-                            <Input v-model="goodsValidate2.number" placeholder="请输入商品数量"></Input> 
+                            <Input v-model="oldGoods.number" placeholder="请输入商品数量"></Input> 
                         </FormItem> 
                         <FormItem label="选择保质期" prop="date"> 
-                            <DatePicker type="date" placeholder="选择日期" v-model="goodsValidate2.date"></DatePicker> 
+                            <DatePicker type="date" placeholder="选择日期" v-model="oldGoods.date"></DatePicker> 
                         </FormItem> 
                         <FormItem> 
-                            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button> 
-                            <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 10px">重置</Button> 
+                            <Button type="primary" @click="submitOldGoods">提交</Button> 
+                            <Button type="ghost" @click="resetOldGoods" style="margin-left: 10px">重置</Button> 
                         </FormItem> 
-                    </Form> -->
+                    </Form>
                 </TabPane> 
             </Tabs>
         </Col>
@@ -68,15 +68,42 @@
 export default {
     data () { 
         // 验证商品信息规则
-        // 检查编码
-        const checkCoding = (rule, value, callback) => {
+        // 检查新商品编码
+        const checkNewCoding = (rule, value, callback) => {
             const reg = /^[0-9]\d*$/g;
             if (value === '') {
                 callback(new Error('请输入商品编码'));
             } else {
                 if (reg.test(value)) {
+                    const goods = this.$store.state.goods.goodsList;
+                    for (let i = 0, len = goods.length; i < len; i++) {
+                        if (goods[i].coding === value) {
+                            callback(new Error('商品编码已存在，请使用便捷入库添加已有商品'));
+                        }
+                    }
                     callback();
                 } else {
+                    console.log(this);
+                    callback(new Error('商品编码为数字'));
+                }
+            }
+        }
+        // 检查旧商品编码
+        const checkOldCoding = (rule, value, callback) => {
+            const reg = /^[0-9]\d*$/g;
+            if (value === '') {
+                callback(new Error('请输入商品编码'));
+            } else {
+                if (reg.test(value)) {
+                    const goods = this.$store.state.goods.goodsList;
+                    for (let i = 0, len = goods.length; i < len; i++) {
+                        if (goods[i].coding === value) {
+                            callback();
+                        }
+                    }
+                    callback(new Error('商品编码不存在，请使用新商品入库添加新商品'));
+                } else {
+                    console.log(this);
                     callback(new Error('商品编码为数字'));
                 }
             }
@@ -107,23 +134,34 @@ export default {
         }
 
         return { 
-            goods: { 
+            newGoods: { 
                 coding: '', 
                 name: '', 
                 price: '', 
                 number: '', 
                 category: '', 
                 date: '', 
-                image: '' 
+                image: '',
+                sales: 0
             }, 
-            checkGoods: { 
-                coding: { required: true, validator: checkCoding, trigger: 'blur' },
+            checkNewGoods: { 
+                coding: { required: true, validator: checkNewCoding, trigger: 'blur' },
                 name: { required: true, message: '商品名称不能为空', trigger: 'blur' },
                 price: { required: true, validator: checkPrice, trigger: 'blur' },
                 number: { required: true, validator: checkNumber, trigger: 'blur' }, 
                 category: { required: true, message: '请选择一个商品分类', trigger: 'change' }, 
                 date: { required: true, type: 'date', message: '请选择日期', trigger: 'change' } 
-            } 
+            },
+            checkOldGoods: {
+                coding: { required: true, validator: checkOldCoding, trigger: 'blur' },
+                number: { required: true, validator: checkNumber, trigger: 'blur' }, 
+                date: { required: true, type: 'date', message: '请选择日期', trigger: 'change' } 
+            },
+            oldGoods: {
+                coding: '',
+                number: '',
+                date: ''
+            }
         } 
     }, 
     methods: { 
@@ -154,6 +192,7 @@ export default {
                         break;
                     case "text":
                         html = reader.result;
+                        this.newGoods.image = reader.result;
                         break;
                     default:
                         break;
@@ -161,18 +200,32 @@ export default {
                 imgPlace.innerHTML = html;
             };
         },
-        handleSubmit (name) { 
-            this.$refs[name].validate((valid) => { 
+        submitNewGoods () { 
+            this.$refs['newGoods'].validate((valid) => { 
                 if (valid) { 
-                    this.$Message.success('提交成功!'); 
+                    this.$store.commit('addNewGoods', this.newGoods);
+                    this.$refs['newGoods'].resetFields(); 
+                } else { 
+                    this.$Message.error('表单验证失败!'); 
+                } 
+            });
+        }, 
+        resetNewGoods () { 
+            this.$refs['newGoods'].resetFields(); 
+        },
+        submitOldGoods () { 
+            this.$refs['oldGoods'].validate((valid) => { 
+                if (valid) { 
+                    this.$store.commit('addOldGoods', this.OldGoods);
+                    this.$refs['oldGoods'].resetFields();  
                 } else { 
                     this.$Message.error('表单验证失败!'); 
                 } 
             }) 
         }, 
-        handleReset (name) { 
-            this.$refs[name].resetFields(); 
-        } 
+        resetOldGoods () { 
+            this.$refs['oldGoods'].resetFields(); 
+        }
     }
 }
 </script>

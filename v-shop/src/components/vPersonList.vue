@@ -23,9 +23,9 @@
                 </FormItem> 
                 <FormItem label="权限设置"> 
                     <Select v-model="newPerson.jurisdiction" placeholder="请设置权限"> 
-                        <Option value="三级">三级</Option> 
-                        <Option value="二级">二级</Option> 
-                        <Option value="一级">一级</Option>
+                        <Option value="3">三级</Option> 
+                        <Option value="2">二级</Option> 
+                        <Option value="1">一级</Option>
                     </Select> 
                 </FormItem>
                 <FormItem label="联系电话"> 
@@ -59,7 +59,7 @@ export default {
                 jurisdiction: '',
                 telephone: '',
                 address: '',
-                portrait: ''
+                avatar: ''
             },
             // 表格设置
             columns: [

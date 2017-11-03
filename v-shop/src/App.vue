@@ -27,7 +27,41 @@ export default {
     vAside,
   },
   mounted: function () {
+    var _this = this;
+    var vshopDB = null;
+    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+      name: 'vshop',
+      key: 'name'
+    }, function (db) {
+      var vshopDB = db;
+      IndexedDB.getData(vshopDB, 'vshop', 'users', function (result) {
+        if (result) {
+          
+        }
+      });
+      IndexedDB.getData(vshopDB, 'vshop', 'goods', function (result) {
+        if (result) {
+          
+        }
+      });
+      IndexedDB.getData(vshopDB, 'vshop', 'shoppingCart', function (result) {
+        if (result) {
+          
+        }
+      });
+      IndexedDB.getData(vshopDB, 'vshop', 'cashRegister', function (result) {
+        if (result) {
+          
+        }
+      });
+      IndexedDB.getData(vshopDB, 'vshop', 'messages', function (result) {
+        if (result) {
+          
+        }
+      });
+    });
     
+    // IndexedDB.deleteDB('vshopDB');
   }
 }
 </script>

@@ -24,8 +24,8 @@ export default {
             if (newStore) {
                 if (!db.objectStoreNames.contains(newStore.name)) {
                     db.createObjectStore(newStore.name, {
-                        keyPath: newStore.keym,
-                        autoIncrement: true
+                        keyPath: newStore.key,
+                        // autoIncrement: true
                     });
                 }
             }
