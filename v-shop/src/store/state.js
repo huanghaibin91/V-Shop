@@ -5,8 +5,9 @@ export default {
             {
                 name: 'Admin',
                 coding: '000',
+                position: '管理员',
                 password: 'admin',
-                jurisdiction: 1,
+                jurisdiction: '一级',
                 telephone: '###########',
                 address: '############',
                 avatar: 'http://img.qq1234.org/uploads/allimg/150128/20123A027-5.jpg'

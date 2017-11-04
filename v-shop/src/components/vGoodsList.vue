@@ -13,13 +13,13 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>限购型黑猫</p>
+                                <p>{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
                                 </div>
                             </div>
-                            <div @click="addShoppingCart" class="add-btn" title="加入购物车">
+                            <div @click="addShoppingCart(goods)" class="add-btn" title="加入购物车">
                                 <img src="../assets/plus.png" alt="加入购物车">
                             </div>
                         </Card>
@@ -33,13 +33,13 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>限购型黑猫</p>
+                                <p>{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
                                 </div>
                             </div>
-                            <div @click="addShoppingCart" class="add-btn" title="加入购物车">
+                            <div @click="addShoppingCart(goods)" class="add-btn" title="加入购物车">
                                 <img src="../assets/plus.png" alt="加入购物车">
                             </div>
                         </Card>
@@ -53,13 +53,13 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>限购型黑猫</p>
+                                <p>{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
                                 </div>
                             </div>
-                            <div @click="addShoppingCart" class="add-btn" title="加入购物车">
+                            <div @click="addShoppingCart(goods)" class="add-btn" title="加入购物车">
                                 <img src="../assets/plus.png" alt="加入购物车">
                             </div>
                         </Card>
@@ -73,13 +73,13 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>限购型黑猫</p>
+                                <p>{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
                                 </div>
                             </div>
-                            <div @click="addShoppingCart" class="add-btn" title="加入购物车">
+                            <div @click="addShoppingCart(goods)" class="add-btn" title="加入购物车">
                                 <img src="../assets/plus.png" alt="加入购物车">
                             </div>
                         </Card>
@@ -99,9 +99,6 @@ export default {
             value: '',
             allGoodsList: this.$store.state.goods.goodsList,
             goodsList: this.$store.state.goods.goodsList,
-            // priceGoodsList: this.$store.state.goods.goodsList,
-            // goodsList: this.$store.state.goods.goodsList,
-            // goodsList: this.$store.state.goods.goodsList,
             defaultTab: true,
             priceTab: true,
             salesTab: true,
@@ -159,7 +156,14 @@ export default {
             });
         },
         addShoppingCart (goods) {
+            let shoppingCartList = this.$store.state.shoppingCart.shoppingCartList;
+            for (let i = 0, len = shoppingCartList.length; i < len; i++) {
+                if (shoppingCartList[i].coding === goods.coding) {
+                    return this.$Message.error('商品已加入购物车中');
+                }
+            }
             this.$store.commit('addShoppingCart', goods);
+            this.$Message.success('商品加入购物车');
         }
     }
 }
@@ -183,7 +187,7 @@ export default {
         display: flex;
         justify-content: center;
     }
-     .goods {
+    .goods {
         cursor: pointer;
         font-size: 0.5em;
         color: #2b85e4;

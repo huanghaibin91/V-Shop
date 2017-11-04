@@ -11,10 +11,10 @@
                             <Input v-model="newGoods.name" placeholder="请输入商品名称"></Input> 
                         </FormItem> 
                         <FormItem label="商品单价" prop="price"> 
-                            <Input v-model="newGoods.price" placeholder="请输入商品单价"></Input> 
+                            <Input v-model.number="newGoods.price" placeholder="请输入商品单价"></Input> 
                         </FormItem>
                         <FormItem label="商品数量" prop="number"> 
-                            <Input v-model="newGoods.number" placeholder="请输入商品数量"></Input> 
+                            <Input v-model.number="newGoods.number" placeholder="请输入商品数量"></Input> 
                         </FormItem>
                         <FormItem label="商品分类" prop="category"> 
                             <Select v-model="newGoods.category" placeholder="请选择商品分类"> 
@@ -48,7 +48,7 @@
                             <Input v-model="oldGoods.coding" placeholder="请输入商品编码"></Input> 
                         </FormItem>  
                         <FormItem label="商品数量" prop="number"> 
-                            <Input v-model="oldGoods.number" placeholder="请输入商品数量"></Input> 
+                            <Input v-model.number="oldGoods.number" placeholder="请输入商品数量"></Input> 
                         </FormItem> 
                         <FormItem label="选择保质期" prop="date"> 
                             <DatePicker type="date" placeholder="选择日期" v-model="oldGoods.date"></DatePicker> 
@@ -83,7 +83,6 @@ export default {
                     }
                     callback();
                 } else {
-                    console.log(this);
                     callback(new Error('商品编码为数字'));
                 }
             }
@@ -169,7 +168,8 @@ export default {
             document.querySelector('.file-btn').click();
         },
         selectImg (event) {
-            var info = '',
+            let _this = this,
+                info = '',
                 imgPlace = document.querySelector('.img-place'),
                 files = event.target.files,
                 type = 'default',
@@ -185,14 +185,14 @@ export default {
                 imgPlace.innerHTML = "不能读取文件，错误代码 " + reader.error.code;
             };
             reader.onload = function(){
-                var html = "";
+                let html = "";
                 switch(type) {
                     case "image":
                         html = "<img style='width: 100%; height: 100%;' src=\"" + reader.result + "\">";
+                        _this.newGoods.image = reader.result;
                         break;
                     case "text":
                         html = reader.result;
-                        this.newGoods.image = reader.result;
                         break;
                     default:
                         break;
@@ -201,10 +201,21 @@ export default {
             };
         },
         submitNewGoods () { 
+            let _this = this;
             this.$refs['newGoods'].validate((valid) => { 
                 if (valid) { 
                     this.$store.commit('addNewGoods', this.newGoods);
-                    this.$refs['newGoods'].resetFields(); 
+                    this.$Message.success('新商品入库成功');
+                    this.newGoods = {
+                        coding: '', 
+                        name: '', 
+                        price: '', 
+                        number: '', 
+                        category: '休闲零食', 
+                        date: new Date(), 
+                        image: '',
+                        sales: 0
+                    };
                 } else { 
                     this.$Message.error('表单验证失败!'); 
                 } 
@@ -216,8 +227,13 @@ export default {
         submitOldGoods () { 
             this.$refs['oldGoods'].validate((valid) => { 
                 if (valid) { 
-                    this.$store.commit('addOldGoods', this.OldGoods);
-                    this.$refs['oldGoods'].resetFields();  
+                    this.$store.commit('addOldGoods', this.oldGoods);
+                    this.$Message.success('快捷入库成功');
+                    this.oldGoods = {
+                        coding: '',
+                        number: '',
+                        date: new Date()
+                    }
                 } else { 
                     this.$Message.error('表单验证失败!'); 
                 } 

@@ -13,10 +13,10 @@
                     <Input v-model="setGoods.name"></Input> 
                 </FormItem> 
                 <FormItem label="商品单价"> 
-                    <Input v-model="setGoods.price"></Input> 
+                    <Input v-model.number="setGoods.price"></Input> 
                 </FormItem> 
                 <FormItem label="商品库存"> 
-                    <Input v-model="setGoods.number"></Input> 
+                    <Input v-model.number="setGoods.number"></Input> 
                 </FormItem> 
                 <FormItem label="商品分类"> 
                     <Select v-model="setGoods.category" placeholder="请选择商品分类"> 

@@ -136,23 +136,28 @@ export default {
         },
         loginSubmit () {
             const users = this.$store.state.users.userList;
+            let loginFlag = true;
             this.$refs.login.validate((valid) => { 
                 if (valid) { 
                     for (let i = 0, len = users.length; i < len; i++) {
                         if (users[i].coding === this.user.coding) {
                             if (users[i].password === this.user.password) {
-                                this.loginFlag = false;
-                                this.$refs['login'].resetFields();
                                 // 将当前用户信息更改为users[i]
                                 this.$store.commit('setCurrUser', users[i]);
+                                this.$Message.success('登录成功');
+                                this.loginFlag = false;
+                                loginFlag = false;
+                                this.$refs['login'].resetFields();
                             } else {
                                 this.$Message.error('密码输入错误！'); 
                                 this.user.password = '';
+                                loginFlag = false;
                             }
-                        } else {
-                            this.$Message.error('账号不存在！'); 
-                            this.$refs['login'].resetFields();
                         }
+                    }
+                    if (loginFlag) {
+                        this.$Message.error('账号不存在！'); 
+                        this.$refs['login'].resetFields();
                     }
                 } else { 
                     this.$Message.error('表单验证失败！'); 
