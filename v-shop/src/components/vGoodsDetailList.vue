@@ -2,19 +2,12 @@
     <div class="goods-list">
         <div class="search-box">
             <div class="search-input">
-                <Input v-model="value" placeholder="请输入商品编码或名称..."></Input>
-                <Button type="primary" icon="search">搜索</Button>
+                <Input v-model="searchValue" placeholder="请输入商品编码或名称..."></Input>
+                <Button @click="searchGoods" type="primary" icon="search">搜索</Button>
             </div>
         </div>
-        <Tabs type="card" @on-tab-remove="handleTabRemove">
-            <TabPane label="默认" v-if="tab0"  class="goods-list-box">
-                <Table :columns="columns" :data="data"></Table>
-                <Page :total="100" show-elevator class="page"></Page>
-            </TabPane>
-            <TabPane label="价格" v-if="tab1" class="goods-list-box">标签二的内容</TabPane>
-            <TabPane label="销量" v-if="tab2" class="goods-list-box">标签三的内容</TabPane>
-            <TabPane label="库存" v-if="tab3" class="goods-list-box">标签三的内容</TabPane>
-        </Tabs>
+        <Table :columns="goodsTable" :data="goodsList"></Table>
+        <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
     </div>
 </template>
 
@@ -22,12 +15,8 @@
 export default {
     data () {
         return {
-            value: '',
-            tab0: true,
-            tab1: true,
-            tab2: true,
-            tab3: true,
-            columns: [
+            searchValue: '',
+            goodsTable: [
                 {
                     title: '商品编码',
                     key: 'coding'
@@ -58,73 +47,38 @@ export default {
                     }
                 }
             ],
-            data: [
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫限购型黑猫限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                },
-                {
-                    coding: '00000000',
-                    name: '限购型黑猫'
-                }
-            ]
+            allGoodsList: this.$store.state.goods.goodsList,
+            goodsList: this.$store.state.goods.goodsList,
+            pageFlag: false
+        }
+    },
+    watch: {
+        searchValue: function (val) {
+            this.goodsList = this.allGoodsList.filter(function (goods) {
+                if (goods.name.includes(val) || goods.coding.includes(val)) {
+                    return goods;
+                }  
+            });
+        }
+    },
+    computed: {
+        pageTotal: function () {
+            let page = Math.ceil(this.goodsList / 20);
+            if (page > 1) {
+                this.pageFlag = true;
+            } else {
+                this.pageFlag = false;
+            }
+            return page;
         }
     },
     methods: {
-        handleTabRemove (name) {
-            this['tab' + name] = false;
+        searchGoods: function () {
+            this.goodsList = this.allGoodsList.filter(function (goods) {
+                if (goods.name.includes(this.searchValue) || goods.coding.includes(this.searchValue)) {
+                    return goods;
+                }  
+            });
         }
     }
 }

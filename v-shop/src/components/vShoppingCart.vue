@@ -3,7 +3,7 @@
         <h2>购 物 车</h2>
         <Table @on-selection-change="selectionChange" :columns="shoppingCartTable" :data="allShoppingCartList"></Table>
         <div class="checkout-box">
-            <div>
+            <div class="checkout-count">
                 <span>共：<span>{{ checkoutCount.count }}</span>&nbsp;件</span>
             </div>
             <div class="total-price">
@@ -21,16 +21,16 @@
                     <div slot="content">
                         <Form :model="cashCheckout" :label-width="50">
                             <FormItem label="应收">
-                                <Input v-model.number="cashCheckout.total" :readonly="true" placeholder="请输入"></Input>
+                                <Input v-model.number="checkoutCount.total" :readonly="true" placeholder="商品总金额"></Input>
                             </FormItem>
                             <FormItem label="实收">
-                                <Input v-model.number="cashCheckout.cash" :autofocus="true" placeholder="请输入实收金额"></Input>
+                                <Input v-model.number="cash" :autofocus="true" placeholder="请输入实收金额"></Input>
                             </FormItem>
                             <FormItem label="找零">
-                                <Input v-model.number="cashCheckout.change" :readonly="true" placeholder="请输入"></Input>
+                                <Input v-model.number="cashChange" :readonly="true" placeholder="现金找零数目"></Input>
                             </FormItem> 
                         </Form>
-                        <Button type="success" long>确认收款</Button>
+                        <Button @click="submitCashCheckout" type="success" long>确认收款</Button>
                     </div>
                 </Panel>
                 <Panel>
@@ -61,11 +61,8 @@ export default {
     data () {
         return {
             checkoutFlag: false,
-            cashCheckout: {
-                total: '',
-                cash: '',
-                change: ''
-            },
+            cash: '',
+            cashChange: '',
             // 操作表格
             shoppingCartTable: [
                 {
@@ -79,8 +76,14 @@ export default {
                     align: 'center'
                 },
                 {
+                    title: '商品单价',
+                    key: 'price',
+                    align: 'center'
+                },
+                {
                     title: '商品数量',
                     key: 'count',
+                    width: 150,
                     align: 'center',
                     render: (h, params) => {
                         return h('InputNumber', {
@@ -94,16 +97,17 @@ export default {
                                     params.row.total = params.row.price * params.row.count;
                                     this.allShoppingCartList[params.index].count = num;
                                     this.allShoppingCartList[params.index].total = params.row.price * params.row.count;
+                                    for (let i = 0, len = this.checkoutCount.goodsList.length; i < len; i++) {
+                                        if (this.checkoutCount.goodsList[i].coding === params.row.coding) {
+                                            this.checkoutCount.goodsList[i].count = num;
+                                            this.checkoutCount.goodsList[i].total = params.row.price * params.row.count;
+                                        }
+                                    }
                                     this.countCheckoutGoods();
                                 }
                             }
                         })
                     }
-                },
-                {
-                    title: '商品单价',
-                    key: 'price',
-                    align: 'center'
                 },
                 {
                     title: '商品金额',
@@ -158,31 +162,57 @@ export default {
             return obj;
         }
     },
+    watch: {
+        cash: function (value) {
+            this.cashChange = this.cash - this.checkoutCount.total;
+        }
+    },
     methods: {
         changeCheckoutFlag  () {
-            // this.checkoutFlag = true;
-            this.coutCheckoutGoods();
-            console.log(this.checkoutCount); // 这里正确
+            this.checkoutFlag = true;
+            this.countCheckoutGoods();
+            // console.log(this.checkoutCount.total);
         },
         // 统计待结算商品
-        coutCheckoutGoods () {
+        countCheckoutGoods () {
             let goodsList = this.checkoutCount.goodsList;
             this.checkoutCount.count = 0;
             this.checkoutCount.total = 0;
             for (let i = 0, len = goodsList.length; i < len; i++) {
                 this.checkoutCount.count += goodsList[i].count;
-                this.checkoutCount.total += goodsList[i].total;                
+                this.checkoutCount.total += goodsList[i].total;            
             }
         },
         selectionChange (selection) {
             this.checkoutCount.goodsList = selection;
-            // for (let i = 0, len = selection.length; i < len; i++) {
-            //     this.checkoutCount.count += selection[i].count;
-            //     this.checkoutCount.total += selection[i].total;                
-            // }
-            // console.log(this.allShoppingCartList);
-            // console.log(this.checkoutCount);
-
+            this.countCheckoutGoods();
+            // console.log(this.checkoutCount.total);
+        },
+        // 现金结算
+        submitCashCheckout () {
+            var cashRegister = this.checkoutCount;
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            function addZero(val) {
+                if (val < 10) {
+                    val = '0' + val;
+                } 
+                return val;
+            }
+            cashRegister.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
+            cashRegister.cashier = this.$store.state.currUser.name;
+            cashRegister.mode = '现金';
+            this.$store.commit('addCashRegister', cashRegister);
+            this.$Message.success('商品结算成功');
+            // 删除购物车已结算物品
+            
+            this.cash = '';
+            this.cashChange = '';
+            this.checkoutFlag = false;
         }
     }
 }

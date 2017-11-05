@@ -36,9 +36,15 @@ export default {
     // 添加商品到购物车
     addShoppingCart (state, goods) {
         state.shoppingCart.shoppingCartList.push(goods);
+        state.shoppingCart.number += 1;
     },
     // 删除购物车商品
     deleteShoppingCart (state, index) {
         state.shoppingCart.shoppingCartList.splice(index, 1);
+        state.shoppingCart.number -= 1;
+    },
+    // 提交收银记录
+    addCashRegister (state, cashRegiter) {
+        state.cashRegister.cashRegisterList.unshift(cashRegiter);
     }
 }

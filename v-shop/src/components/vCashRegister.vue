@@ -1,17 +1,17 @@
 <template>
     <div class="cash-register">
         <div class="search-box">
-            <Select v-model="personList" :clearable="true" placeholder="请选择收银员" style="width:200px"> 
-                <Option v-for="person in personList" :value="person.name" :key="person.name">
-                    {{ person.name }}
+            <Select v-model="user" :clearable="true" placeholder="请选择收银员" style="width:200px"> 
+                <Option v-for="user in userList" :value="user.name" :key="user.coding">
+                    {{ user.name }}
                 </Option> 
             </Select>
             <DatePicker type="daterange" :options="datarange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></DatePicker> 
             <Button type="primary" icon="search">搜索</Button>
         </div>
         <div class="checkout-list">
-            <Table :columns="checkoutTable" :data="checkoutList"></Table>
-            <Page :total="100" show-elevator class="page"></Page>
+            <Table :columns="cashRegisterTable" :data="cashRegisterList"></Table>
+            <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
         </div>
     </div>
 </template>
@@ -26,17 +26,8 @@ export default {
     },
     data () {
         return {
-            personList: [
-                {
-                    name: '小张'
-                },
-                {
-                    name: '小赵'
-                },
-                {
-                    name: '小李'
-                }
-            ],
+            user: '',
+            userList: this.$store.state.users.userList,
             datarange: {
                 shortcuts: [
                     {
@@ -68,12 +59,12 @@ export default {
                     }
                 ]
             },
-            checkoutTable: [
+            cashRegisterTable: [
                 { 
                     type: 'expand', 
                     width: 50, 
                     render: (h, params) => { 
-                        return h(expandRow, { 
+                        return h(expandRow, {
                             props: { 
                                 row: params.row 
                             }
@@ -83,7 +74,7 @@ export default {
                 {
                     title: '收银时间',
                     align: 'center',
-                    key: 'date'
+                    key: 'time'
                 },
                 {
                     title: '收银员',
@@ -93,7 +84,7 @@ export default {
                 {
                     title: '收银金额',
                     align: 'center',                 
-                    key: 'sum'
+                    key: 'total'
                 },
                 {
                     title: '付款方式',
@@ -101,14 +92,25 @@ export default {
                     key: 'mode'
                 }
             ],
-            checkoutList: [
-                {
-                    date: '2017-10-29 22:25',
-                    cashier: '小张',
-                    mode: '现金',
-                    sum: '200'
-                }
-            ]
+            cashRegisterList: this.$store.state.cashRegister.cashRegisterList,
+            pageFlag: false
+        }
+    },
+    computed: {
+        pageTotal: function () {
+            let page = Math.ceil(this.cashRegisterList / 20);
+            if (page > 1) {
+                this.pageFlag = true;
+            } else {
+                this.pageFlag = false;
+            }
+            return page;
+        }
+    },
+    methods: {
+        consoleMessage () {
+            console.log(this.cashRegisterList);
+            console.log(this.$store.cashRegister.cashRegisterList);
         }
     }
 }
@@ -128,5 +130,9 @@ export default {
         margin: 10px 0;
         display: flex;
         justify-content: center;
+    }
+    .ivu-table-expanded-cell {
+        padding: 0px;
+        margin: 0px;
     }
 </style>

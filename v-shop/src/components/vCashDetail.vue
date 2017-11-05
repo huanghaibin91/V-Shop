@@ -1,61 +1,43 @@
 <template>
-    <div class="cash-detail">
-        <Row>
-            <Col span="6">
-                编码：<span>00000000</span>
-            </Col>
-            <Col span="6">
-                名称：<span>限购型黑猫</span>
-            </Col>
-            <Col span="4">
-                单件：<span>9999</span>
-            </Col>
-            <Col span="4">
-                数量：<span>1</span>
-            </Col>
-            <Col span="4">
-                合计：<span>9999</span>
-            </Col>
-        </Row>
-        <Row>
-            <Col span="6">
-                编码：<span>00000000</span>
-            </Col>
-            <Col span="6">
-                名称：<span>限购型黑猫</span>
-            </Col>
-            <Col span="4">
-                单件：<span>9999</span>
-            </Col>
-            <Col span="4">
-                数量：<span>1</span>
-            </Col>
-            <Col span="4">
-                合计：<span>9999</span>
-            </Col>
-        </Row>
-        <Row>
-            <Col span="6">
-                编码：<span>00000000</span>
-            </Col>
-            <Col span="6">
-                名称：<span>限购型黑猫</span>
-            </Col>
-            <Col span="4">
-                单件：<span>9999</span>
-            </Col>
-            <Col span="4">
-                数量：<span>1</span>
-            </Col>
-            <Col span="4">
-                合计：<span>9999</span>
-            </Col>
-        </Row>
-    </div>
+    <Table size="small" :columns="cashDetailTable" :data="row.goodsList"></Table>
 </template>
 
 <script>
 export default {
+    props: {
+        row: Object
+    },
+    data () {
+        return {
+            cashDetailTable: [
+                {
+                    title: '商品编码',
+                    key: 'coding',
+                    align: 'center'
+                },
+                {
+                    title: '商品名称',
+                    key: 'name',
+                    align: 'center'
+                },
+                {
+                    title: '商品单价',
+                    key: 'price',
+                    align: 'center'
+                },
+                {
+                    title: '数量',
+                    key: 'count',
+                    align: 'center'
+                },
+                {
+                    title: '合计',
+                    key: 'total',
+                    align: 'center'
+                }
+            ]
+        }
+    }
 
 }
 </script>

@@ -31,6 +31,7 @@ export default {
     },
     shoppingCart: {
         name: 'shoppingCart',
+        number: 0,
         shoppingCartList: []
     },
     cashRegister: {
