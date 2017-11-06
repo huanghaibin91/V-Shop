@@ -1,5 +1,5 @@
 <template>
-    <Table size="small" :columns="cashDetailTable" :data="row.goodsList"></Table>
+    <Table @click.native="add" size="small" :columns="cashDetailTable" :data="row.goodsList"></Table>
 </template>
 
 <script>
@@ -37,8 +37,12 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        add () {
+            console.log(this.row);
+        }
     }
-
 }
 </script>
 

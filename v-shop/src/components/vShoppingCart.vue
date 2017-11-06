@@ -4,10 +4,10 @@
         <Table @on-selection-change="selectionChange" :columns="shoppingCartTable" :data="allShoppingCartList"></Table>
         <div class="checkout-box">
             <div class="checkout-count">
-                <span>共：<span>{{ checkoutCount.count }}</span>&nbsp;件</span>
+                <span>共：<span>{{ checkoutCount.allCount }}</span>&nbsp;件</span>
             </div>
             <div class="total-price">
-                <span>合计：<span>{{ checkoutCount.total }}</span>&nbsp;元</span>
+                <span>合计：<span>{{ checkoutCount.allTotal }}</span>&nbsp;元</span>
             </div>
             <div class="checkout-btn">
                 <Button @click.native="changeCheckoutFlag" type="error">确认结算</Button>
@@ -19,9 +19,9 @@
                 <Panel>
                     &nbsp;现金支付
                     <div slot="content">
-                        <Form :model="cashCheckout" :label-width="50">
+                        <Form :label-width="50">
                             <FormItem label="应收">
-                                <Input v-model.number="checkoutCount.total" :readonly="true" placeholder="商品总金额"></Input>
+                                <Input v-model.number="total" :readonly="true" placeholder="商品总金额"></Input>
                             </FormItem>
                             <FormItem label="实收">
                                 <Input v-model.number="cash" :autofocus="true" placeholder="请输入实收金额"></Input>
@@ -60,7 +60,11 @@
 export default {
     data () {
         return {
+            // 切换结算弹窗
             checkoutFlag: false,
+            // 结算的总金额
+            total: 0,
+            // 现金结算
             cash: '',
             cashChange: '',
             // 操作表格
@@ -141,52 +145,86 @@ export default {
     computed: {
         // 购物车中所有商品
         allShoppingCartList: function () {
-            let goodsList = this.$store.state.shoppingCart.shoppingCartList;
-            goodsList.forEach(function(element) {
-                element._checked = true;
-                element.count = 1;
-                element.total = element.price;
-            }, this);
+            let shoppingCartList = this.$store.state.shoppingCart.shoppingCartList;
+            let goodsList = [];
+            shoppingCartList.forEach(function(element) {
+                let goods = new Object();
+                goods = {
+                    _checked: true,
+                    count: 1,      
+                    total: element.price,          
+                    name: element.name,
+                    coding: element.coding,
+                    price: element.price,
+                };
+                goodsList.push(goods);
+            });
             return goodsList;
         },
-        // 结算商品统计
+        // 待结算商品统计
         checkoutCount: function () {
-            let obj = {};
-            obj.goodsList = this.allShoppingCartList;
-            obj.total = 0;
-            obj.count = 0;
+            let obj = new Object();
+            obj.goodsList = [];
+            this.allShoppingCartList.forEach(function (element) {
+                let goods = new Object();
+                goods = {
+                    name: element.name,
+                    coding: element.coding,
+                    count: element.count,
+                    price: element.price,
+                    total: element.total,
+                };
+                obj.goodsList.push(goods);
+            });
+            obj.allTotal = 0;
+            obj.allCount = 0;
             for (let i = 0, len = obj.goodsList.length; i < len; i++) {
-                obj.count += obj.goodsList[i].count;
-                obj.total += obj.goodsList[i].total;                
+                obj.allTotal += obj.goodsList[i].total;  
+                obj.allCount += obj.goodsList[i].count;              
             }
             return obj;
         }
     },
     watch: {
+        // 监听输入现金金额
         cash: function (value) {
-            this.cashChange = this.cash - this.checkoutCount.total;
+            this.cashChange = this.cash - this.total;
         }
     },
     methods: {
+        // 弹出结算框
         changeCheckoutFlag  () {
-            this.checkoutFlag = true;
             this.countCheckoutGoods();
-            // console.log(this.checkoutCount.total);
+            this.checkoutFlag = true;
         },
         // 统计待结算商品
         countCheckoutGoods () {
             let goodsList = this.checkoutCount.goodsList;
-            this.checkoutCount.count = 0;
-            this.checkoutCount.total = 0;
+            this.checkoutCount.allCount = 0;
+            this.checkoutCount.allTotal = 0;
+            this.total = 0;
             for (let i = 0, len = goodsList.length; i < len; i++) {
-                this.checkoutCount.count += goodsList[i].count;
-                this.checkoutCount.total += goodsList[i].total;            
+                this.checkoutCount.allCount += goodsList[i].count;
+                this.checkoutCount.allTotal += goodsList[i].total;
+                this.total += goodsList[i].total;             
             }
         },
+        // 选择要结算商品
         selectionChange (selection) {
-            this.checkoutCount.goodsList = selection;
+            var _this = this;
+            this.checkoutCount.goodsList = [];
+            selection.forEach(function (element) {
+                let goods = new Object();
+                goods = {
+                    name: element.name,
+                    coding: element.coding,
+                    count: element.count,
+                    price: element.price,
+                    total: element.total,
+                };
+                _this.checkoutCount.goodsList.push(goods);
+            });
             this.countCheckoutGoods();
-            // console.log(this.checkoutCount.total);
         },
         // 现金结算
         submitCashCheckout () {
@@ -209,7 +247,8 @@ export default {
             this.$store.commit('addCashRegister', cashRegister);
             this.$Message.success('商品结算成功');
             // 删除购物车已结算物品
-            
+            this.$store.commit('deleteCheckoutGoods', this.checkoutCount.goodsList);
+            // 重置现金找零计算
             this.cash = '';
             this.cashChange = '';
             this.checkoutFlag = false;

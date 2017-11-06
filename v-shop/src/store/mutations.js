@@ -43,6 +43,22 @@ export default {
         state.shoppingCart.shoppingCartList.splice(index, 1);
         state.shoppingCart.number -= 1;
     },
+    // 删除已结算商品，同时减去库存
+    deleteCheckoutGoods (state, goodsList) {
+        for (let i = 0, len = goodsList.length; i < len; i++) {
+            for (let j = state.shoppingCart.shoppingCartList.length - 1; j >= 0; j--) {
+                if (goodsList[i].coding === state.shoppingCart.shoppingCartList[j].coding) {
+                    state.shoppingCart.shoppingCartList.splice(j, 1);
+                    state.shoppingCart.number -= 1;
+                }
+            }
+            for (let z = 0, len = state.goods.goodsList.length; z < len; z++) {
+                if (goodsList[i].coding === state.goods.goodsList[z].coding) {
+                    state.goods.goodsList[z].number -= goodsList[i].count;
+                }
+            }
+        }
+    },
     // 提交收银记录
     addCashRegister (state, cashRegiter) {
         state.cashRegister.cashRegisterList.unshift(cashRegiter);

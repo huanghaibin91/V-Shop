@@ -5,6 +5,14 @@
                 <Input v-model="value" placeholder="请输入商品编码或名称..."></Input>
                 <Button @click="goShoppingCart" type="primary" icon="ios-cart">购物车</Button>
             </div>
+            <div @click="quickSearch" class="quick-search">
+                <Button class="snacks" size="small" type="ghost">休闲零食</Button>
+                <Button class="drink" size="small" type="ghost">酒水饮料</Button>
+                <Button class="food" size="small" type="ghost">粮油副食</Button>
+                <Button class="fruit" size="small" type="ghost">生鲜水果</Button>
+                <Button class="toiletries" size="small" type="ghost">日常洗护</Button>
+                <Button class="kitchen" size="small" type="ghost">厨卫用品</Button>
+            </div>
         </div>
         <Tabs type="card" @on-click="changeTab">
             <TabPane label="默认" v-if="defaultTab"  class="goods-list-box">
@@ -25,7 +33,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="价格" v-if="priceTab" class="goods-list-box">
                 <Row>
@@ -45,7 +53,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="销量" v-if="priceTab" class="goods-list-box">
                 <Row>
@@ -65,7 +73,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="库存" v-if="numberTab" class="goods-list-box">
                 <Row>
@@ -85,7 +93,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
         </Tabs>
     </div>
@@ -98,15 +106,17 @@ export default {
         return {
             value: '',
             allGoodsList: this.$store.state.goods.goodsList,
-            goodsList: this.$store.state.goods.goodsList,
+            goodsList: this.$store.state.goods.goodsList.slice(0, 24),
             defaultTab: true,
             priceTab: true,
             salesTab: true,
             numberTab: true,
+
             pageFlag: true
         }
     },
     watch: {
+        // 监听搜索栏输入
         value: function (val) {
             this.goodsList = this.allGoodsList.filter(function (goods) {
                 if (goods.name.includes(val) || goods.coding.includes(val)) {
@@ -117,7 +127,7 @@ export default {
     },
     computed: {
         pageTotal: function () {
-            let page = Math.ceil(this.goodsList / 24);
+            let page = this.allGoodsList.length;
             if (page > 1) {
                 this.pageFlag = true;
             } else {
@@ -127,6 +137,11 @@ export default {
         }
     },
     methods: {
+        // 快捷搜索
+        quickSearch (event) {
+            console.log(event.target);
+        },
+        // 切换Tab
         changeTab (name) {
             switch(name) {
                 case 0:
@@ -150,11 +165,21 @@ export default {
                 default: break;
             }
         },
+        // 切换分页
+        changePage (num) {
+            if (num === 1) {
+                this.goodsList = this.allGoodsList.slice(0, 24);
+            } else {
+                this.goodsList = this.allGoodsList.slice((num - 1) * 24, num * 24);
+            }
+        },
+        // 转去购物车
         goShoppingCart () {
             this.$router.push({
                 path: '/shoppingCart'
             });
         },
+        // 添加商品进购物车
         addShoppingCart (goods) {
             let shoppingCartList = this.$store.state.shoppingCart.shoppingCartList;
             for (let i = 0, len = shoppingCartList.length; i < len; i++) {
@@ -181,6 +206,13 @@ export default {
         max-width: 500px;
         min-width: 250px;
         padding-right: 15px;
+    }
+    .quick-search {
+        padding: 10px 10px 0px 10px;
+        text-align: center;
+    }
+    .quick-search button {
+        margin: 0px 5px;
     }
     .page {
         margin: 10px 0;

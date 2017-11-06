@@ -11,7 +11,7 @@
         </div>
         <div class="checkout-list">
             <Table :columns="cashRegisterTable" :data="cashRegisterList"></Table>
-            <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
+            <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
         </div>
     </div>
 </template>
@@ -92,13 +92,14 @@ export default {
                     key: 'mode'
                 }
             ],
-            cashRegisterList: this.$store.state.cashRegister.cashRegisterList,
+            allCashRegisterList: this.$store.state.cashRegister.cashRegisterList,
+            cashRegisterList: this.$store.state.cashRegister.cashRegisterList.slice(0, 20),
             pageFlag: false
         }
     },
     computed: {
         pageTotal: function () {
-            let page = Math.ceil(this.cashRegisterList / 20);
+            let page = this.allCashRegisterList.length;
             if (page > 1) {
                 this.pageFlag = true;
             } else {
@@ -108,10 +109,14 @@ export default {
         }
     },
     methods: {
-        consoleMessage () {
-            console.log(this.cashRegisterList);
-            console.log(this.$store.cashRegister.cashRegisterList);
-        }
+        // 切换分页
+        changePage (num) {
+            if (num === 1) {
+                this.goodsList = this.allGoodsList.slice(0, 20);
+            } else {
+                this.goodsList = this.allGoodsList.slice((num - 1) * 20, num * 20);
+            }
+        },
     }
 }
 </script>
