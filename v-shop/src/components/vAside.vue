@@ -49,7 +49,7 @@
             <p style="text-align: center;">第一次登录，可以使用账号：000，密码：admin，登录</p>
             <div slot="footer">
                 <Button @click.native="cancelLogin" type="text">取消</Button>
-                <Button @click.native.enter="loginSubmit" type="primary">确认</Button>
+                <Button @click.native="loginSubmit" type="primary">确认</Button>
             </div>
         </Modal>
     </div>

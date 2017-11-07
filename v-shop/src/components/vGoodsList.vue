@@ -6,12 +6,12 @@
                 <Button @click="goShoppingCart" type="primary" icon="ios-cart">购物车</Button>
             </div>
             <div @click="quickSearch" class="quick-search">
-                <Button class="snacks" size="small" type="ghost">休闲零食</Button>
-                <Button class="drink" size="small" type="ghost">酒水饮料</Button>
-                <Button class="food" size="small" type="ghost">粮油副食</Button>
-                <Button class="fruit" size="small" type="ghost">生鲜水果</Button>
-                <Button class="toiletries" size="small" type="ghost">日常洗护</Button>
-                <Button class="kitchen" size="small" type="ghost">厨卫用品</Button>
+                <button class="snacks">休闲零食</button>
+                <button class="drink">酒水饮料</button>
+                <button class="food">粮油副食</button>
+                <button class="fruit">生鲜水果</button>
+                <button class="toiletries">日常洗护</button>
+                <button class="kitchen">厨卫用品</button>
             </div>
         </div>
         <Tabs type="card" @on-click="changeTab">
@@ -111,7 +111,6 @@ export default {
             priceTab: true,
             salesTab: true,
             numberTab: true,
-
             pageFlag: true
         }
     },
@@ -128,7 +127,7 @@ export default {
     computed: {
         pageTotal: function () {
             let page = this.allGoodsList.length;
-            if (page > 1) {
+            if (page / 24 > 1) {
                 this.pageFlag = true;
             } else {
                 this.pageFlag = false;
@@ -139,26 +138,71 @@ export default {
     methods: {
         // 快捷搜索
         quickSearch (event) {
-            console.log(event.target);
+            let cls = event.target.className;
+            switch (cls) {
+                case 'snacks':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '休闲零食') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                case 'drink':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '酒水饮料') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                case 'food':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '粮油副食') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                case 'fruit':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '生鲜水果') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                case 'toiletries':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '日常洗护') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                case 'kitchen':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '厨卫用品') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                default: break;
+            }
         },
         // 切换Tab
         changeTab (name) {
             switch(name) {
                 case 0:
-                    this.goodsList = this.$store.state.goods.goodsList;
+                    this.allGoodsList = this.$store.state.goods.goodsList;
                     break;
                 case 1:
-                    this.goodsList = this.goodsList.sort(function (a, b) {
+                    this.allGoodsList = this.allGoodsList.sort(function (a, b) {
                         return b.price - a.price;
                     });
                     break;
                 case 2:
-                    this.goodsList = this.goodsList.sort(function (a, b) {
+                    this.allGoodsList = this.allGoodsList.sort(function (a, b) {
                         return b.sales - a.sales;
                     });
                     break;
                 case 3:
-                    this.goodsList = this.goodsList.sort(function (a, b) {
+                    this.allGoodsList = this.allGoodsList.sort(function (a, b) {
                         return b.number - a.number;
                     });
                     break;
@@ -212,7 +256,17 @@ export default {
         text-align: center;
     }
     .quick-search button {
+        padding: 1px 3px;
         margin: 0px 5px;
+        color: #495060;
+        background-color: white;
+        border: 1px solid #dddee1;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .quick-search button:hover {
+        border: 1px solid #5cadff;
+        color: #5cadff;
     }
     .page {
         margin: 10px 0;
@@ -221,7 +275,7 @@ export default {
     }
     .goods {
         cursor: pointer;
-        font-size: 0.5em;
+        /* font-size: 0.5em; */
         color: #2b85e4;
         margin: 5px;
     }

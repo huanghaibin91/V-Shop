@@ -1,4 +1,5 @@
 export default {
+    // 用户列表
     users: {
         name: 'users',
         userList: [
@@ -14,8 +15,19 @@ export default {
             }
         ]
     },
+    // 商品列表
     goods: {
         name: 'goods',
+        detailGoods: {
+            name: '限购型黑猫',
+            coding: '0',
+            price: 9999,
+            number: 9999,
+            category: '老婆',
+            date: '9999-09-09',
+            image: 'static/00000000.jpg',
+            sales: 0 
+        },
         goodsList: [
             {
                 name: '限购型黑猫',
@@ -830,18 +842,31 @@ export default {
             
         ]
     },
+    // 购物车列表
     shoppingCart: {
         name: 'shoppingCart',
         number: 0,
         shoppingCartList: []
     },
+    // 收银记录列表
     cashRegister: {
         name: 'cashRegister',
         cashRegisterList: []
     },
+    // 消息通知列表
     messages: {
         name: 'messages',
+        number: 0,
+        // 保质期
+        dateLimit: 30,
+        // 库存
+        numberLimit: 3,
         messageList: []
+    },
+    // 待办事件列表
+    todo: {
+        name: 'todo',
+        todoList: []
     },
     // 当前用户
     currUser: {

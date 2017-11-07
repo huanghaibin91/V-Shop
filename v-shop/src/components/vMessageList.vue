@@ -1,16 +1,16 @@
 <template>
-    <Table :columns="columns" :data="data"></Table>
+    <Table :columns="messageTable" :data="messageList"></Table>
 </template>
 
 <script>
 export default {
     data () {
         return {
-            columns: [
+            messageTable: [
                 {
                     title: '日期',
                     key: 'date',
-                    width: '300px',
+                    width: '200px',
                     align: 'center'
                 },
                 {
@@ -33,12 +33,7 @@ export default {
                     }
                 }
             ],
-            data: [
-                {
-                    date: '2017-10-26',
-                    content: '限购型黑猫仅剩一件，请注意补货'
-                }
-            ]
+            messageList: this.$store.state.messages.messageList
         }
     }
 }

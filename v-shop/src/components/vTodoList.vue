@@ -55,7 +55,7 @@ export default {
                     }
                 },
             ],
-            todoList: [],
+            todoList: this.$store.state.todo.todoList,
         }
     },
     methods: {
@@ -73,16 +73,20 @@ export default {
             }
             this.todo.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
             if (this.todo.time && this.todo.content) {
-                this.todoList.push(this.todo);
+                this.$store.commit('addNewTodo', this.todo);
+                this.$Message.success('待办事件添加成功');
                 this.todo = {
                     time: '',
                     content: '',
                     state: '待完成'
                 };
+            } else {
+                this.$Message.error('待办事件添加出错');
             }
         },
         deleteTodo (index) {
-            this.todoList.splice(index, 1);
+            this.$store.commit('deleteTodo', index);
+            this.$Message.success('待办事件删除成功');
         }
     }
 }

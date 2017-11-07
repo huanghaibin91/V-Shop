@@ -7,7 +7,7 @@
             </div>
         </div>
         <Table :columns="goodsTable" :data="goodsList"></Table>
-        <Page v-if="pageFlag" :total="pageTotal" show-elevator class="page"></Page>
+        <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
     </div>
 </template>
 
@@ -38,6 +38,7 @@ export default {
                             },
                             on: {
                                 click: () => {
+                                    this.$store.commit('getDetailGoods', params.row);
                                     this.$router.push({
                                         path: '/goodsDetail'
                                     })
@@ -48,8 +49,8 @@ export default {
                 }
             ],
             allGoodsList: this.$store.state.goods.goodsList,
-            goodsList: this.$store.state.goods.goodsList,
-            pageFlag: false
+            goodsList: this.$store.state.goods.goodsList.slice(0, 20),
+            pageFlag: true
         }
     },
     watch: {
@@ -63,8 +64,8 @@ export default {
     },
     computed: {
         pageTotal: function () {
-            let page = Math.ceil(this.goodsList / 20);
-            if (page > 1) {
+            let page = this.allGoodsList.length;
+            if (page / 20 > 1) {
                 this.pageFlag = true;
             } else {
                 this.pageFlag = false;
@@ -73,12 +74,21 @@ export default {
         }
     },
     methods: {
+        // 搜索商品
         searchGoods: function () {
             this.goodsList = this.allGoodsList.filter(function (goods) {
                 if (goods.name.includes(this.searchValue) || goods.coding.includes(this.searchValue)) {
                     return goods;
                 }  
             });
+        },
+        // 切换分页
+        changePage (num) {
+            if (num === 1) {
+                this.goodsList = this.allGoodsList.slice(0, 20);
+            } else {
+                this.goodsList = this.allGoodsList.slice((num - 1) * 20, num * 20);
+            }
         }
     }
 }
