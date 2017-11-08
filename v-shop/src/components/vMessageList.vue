@@ -1,5 +1,8 @@
 <template>
-    <Table :columns="messageTable" :data="messageList"></Table>
+    <div>
+        <h3>消息通知</h3>
+        <Table :columns="messageTable" :data="messageList"></Table>
+    </div>
 </template>
 
 <script>
@@ -28,6 +31,11 @@ export default {
                                 type: 'warning',
                                 size: 'small',
                                 icon: 'trash-b'
+                            },
+                            on: {
+                                click: () => {
+                                    this.$store.commit('deleteMessage', params.index);
+                                }
                             }
                         }, '删除')
                     }
@@ -39,6 +47,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    h3 {
+        padding: 10px;
+    }
 </style>

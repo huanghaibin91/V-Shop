@@ -82,9 +82,14 @@ export default {
                     key: 'cashier'
                 },
                 {
+                    title: '合计数量',
+                    align: 'center',
+                    key: 'allCount'
+                },
+                {
                     title: '收银金额',
                     align: 'center',                 
-                    key: 'total'
+                    key: 'allTotal'
                 },
                 {
                     title: '付款方式',

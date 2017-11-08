@@ -194,6 +194,9 @@ export default {
 </script>
 
 <style>
+    h3 {
+        padding: 10px;
+    } 
     .goods-img div img {
         max-width: 300px;
         max-height: 300px;

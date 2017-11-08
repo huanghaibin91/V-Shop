@@ -23,6 +23,7 @@ export default {
             todoTable: [
                 {
                     title: '预定时间',
+                    width: 200,
                     align: 'center',
                     key: 'time'
                 },
@@ -33,11 +34,13 @@ export default {
                 },
                 {
                     title: '事件状态',
+                    width: 150,
                     align: 'center',
                     key: 'state'
                 },
                 {
                     title: '操作',
+                    width: 150,
                     align: 'center',
                     render: (h, params) => {
                         return h('Button', {
@@ -60,11 +63,12 @@ export default {
     },
     methods: {
         addTodo () {
-            var year = this.todo.time.getFullYear();
-            var month = this.todo.time.getMonth() + 1;
-            var day = this.todo.time.getDate();
-            var hour = this.todo.time.getHours();
-            var min = this.todo.time.getMinutes();
+            let _this = this;
+            let year = this.todo.time.getFullYear();
+            let month = this.todo.time.getMonth() + 1;
+            let day = this.todo.time.getDate();
+            let hour = this.todo.time.getHours();
+            let min = this.todo.time.getMinutes();
             function addZero(val) {
                 if (val < 10) {
                     val = '0' + val;
@@ -74,6 +78,23 @@ export default {
             this.todo.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
             if (this.todo.time && this.todo.content) {
                 this.$store.commit('addNewTodo', this.todo);
+                // 启动定时器
+                let timer = null;
+                let content = this.todo.content;
+                let time = this.todo.time;
+                let planTime = new Date(this.todo.time).getTime();
+                timer = setInterval(function () {
+                    let newTime = new Date().getTime();
+                    if (planTime - newTime <= 0) {
+                        _this.$store.commit('changeTodoState', time);
+                        _this.$Notice.warning({ 
+                            title: '待办事件提醒', 
+                            desc: content,
+                            duration: 0
+                        });
+                        clearInterval(timer);
+                    }
+                }, 1000);
                 this.$Message.success('待办事件添加成功');
                 this.todo = {
                     time: '',
@@ -92,7 +113,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     .add-box {
         display: flex;
         justify-content: center;
@@ -101,5 +122,8 @@ export default {
     }
     .add-box>div {
         margin-right: 2em;
+    }
+    .state-change span {
+        color: red;
     }
 </style>

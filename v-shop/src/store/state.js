@@ -855,12 +855,13 @@ export default {
     },
     // 消息通知列表
     messages: {
+        today: '2017-11-8',
         name: 'messages',
         number: 0,
         // 保质期
-        dateLimit: 30,
+        limitDate: 30,
         // 库存
-        numberLimit: 3,
+        limitNumber: 3,
         messageList: []
     },
     // 待办事件列表

@@ -2,8 +2,17 @@
     <div>
         <Menu theme="dark" class="aside" active-name="goods-list" @on-select="changeMenuItem" width="200px" accordion>
             <MenuItem name='person' class="person">
-                <Avatar :src="this.$store.state.currUser.avatar" icon="person" size="large" />
-                <p>{{ this.$store.state.currUser.name }}</p>
+                <div class="account">
+                    <Avatar :src="this.$store.state.currUser.avatar" icon="person" size="large" />
+                    <p>{{ this.$store.state.currUser.name }}</p>
+                </div>
+                <div v-if="currUserFlag" class="change-account">
+                    <Button @click.native="logoutAccount" type="primary">退出</Button>
+                    <Button @click.native="changeAccount" type="primary">切换账号</Button>
+                </div>
+                <div v-else class="change-account">
+                    <Button @click.native="changeAccount" type="primary">账号登录</Button>
+                </div>
             </MenuItem>
             <MenuItem name="goods-list">
                 <Icon type="android-list"></Icon> 商品列表
@@ -84,11 +93,20 @@ export default {
             }
         }
     },
+    computed: {
+        currUserFlag: function () {
+            if (this.$store.state.currUser.coding) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
     methods: {
         changeMenuItem (name) {
             switch(name) {
                 case 'person':
-                    this.loginFlag = true;
+                    // this.loginFlag = true;
                     break;
                 case 'goods-list':
                     this.$router.push({
@@ -111,6 +129,7 @@ export default {
                     });
                     break;
                 case 'message-list':
+                    this.$store.commit('resetMessageNumber');
                     this.$router.push({
                         path: '/messageList'
                     });
@@ -166,6 +185,21 @@ export default {
         },
         cancelLogin () {
             this.loginFlag = false;
+        },
+        // 退出登录
+        logoutAccount () {
+            this.$Modal.confirm({
+                title: '退出账号登录',
+                content: '<h3>确认是否退出当前账号？</h3><p>未登录状态操作受限，只可进行基本的查看操作。<p>',
+                onOk: () => {
+                    this.$store.commit('logoutAccount');
+                    this.$Message.error('当前用户已退出'); 
+                }
+            });
+        },
+        // 切换账号
+        changeAccount () {
+            this.loginFlag = true;
         }
     }
 }
@@ -177,11 +211,29 @@ export default {
         height: 100%;
         overflow-y: scroll;
     }
-    .person {
+    .person:hover .change-account {
+        display: block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .person .change-account {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-color: rgba(73, 80, 96, 0.8);
+        display: none;
+    }
+    .change-account button {
+        margin: 5px;
+    }
+    .account {
         display: flex;
         align-items: center;
     }
-    .person p {
+    .account p {
         margin-left: 2em;
     }
     .login-in {

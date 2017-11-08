@@ -1,5 +1,7 @@
 <template>
-    
+    <div class="data-statistics">
+
+    </div>
 </template>
 
 <script>

@@ -9,8 +9,8 @@
                     <Icon type="ios-cart"></Icon>
                 </router-link>
             </Badge>
-            <Badge :count="1" overflow-count="99">
-                <router-link @click.native="add" to="/messageList" href="#" title="消息通知">
+            <Badge @click.native="resetMessageNumber" :count="this.$store.state.messages.number" overflow-count="99">
+                <router-link to="/messageList" href="#" title="消息通知">
                     <Icon type="email"></Icon>
                 </router-link>
             </Badge>
@@ -28,7 +28,11 @@
                 
             }
         },
-        
+        methods: {
+            resetMessageNumber () {
+                this.$store.commit('resetMessageNumber');
+            }
+        }
     }
 </script>
 

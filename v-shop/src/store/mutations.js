@@ -3,6 +3,13 @@ export default {
     setCurrUser (state, user) {
         state.currUser = user;
     },
+    // 当前用户退出登录
+    logoutAccount (state) {
+        state.currUser = {
+            name: '未登录',
+            avatar: ''
+        };
+    },
     // 添加新用户
     addNewUser (state, user) {
         state.users.userList.push(user);
@@ -79,17 +86,91 @@ export default {
             for (let z = 0, len = state.goods.goodsList.length; z < len; z++) {
                 if (goodsList[i].coding === state.goods.goodsList[z].coding) {
                     state.goods.goodsList[z].number -= goodsList[i].count;
+                    if (state.goods.goodsList[z].number < state.messages.limitNumber) {
+                        let message = new Object();
+                        let date = new Date();
+                        let year = date.getFullYear();
+                        let month = date.getMonth() + 1;
+                        let day = date.getDate();
+                        let hour = date.getHours();
+                        let min = date.getMinutes();
+                        function addZero(val) {
+                            if (val < 10) {
+                                val = '0' + val;
+                            } 
+                            return val;
+                        }
+                        message.date = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
+                        message.content = '商品：' + state.goods.goodsList[z].name + '，编码：' + state.goods.goodsList[z].coding + '，仅剩 ' + state.goods.goodsList[z].number + ' 件，请尽快补充！';
+                        state.messages.messageList.unshift(message);
+                        state.messages.number += 1;
+                    }
                 }
             }
         }
     },
     // 检查商品库存
     checkGoodsNumber (state) {
-
+        for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
+            if (state.goods.goodsList[i].number < state.messages.limitNumber) {
+                let message = new Object();
+                let date = new Date();
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let hour = date.getHours();
+                let min = date.getMinutes();
+                function addZero(val) {
+                    if (val < 10) {
+                        val = '0' + val;
+                    } 
+                    return val;
+                }
+                message.date = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
+                message.content = '商品：' + state.goods.goodsList[z].name + '，编码：' + state.goods.goodsList[z].coding + '，仅剩 ' + state.goods.goodsList[z].number + ' 件，请尽快补充！';
+                state.messages.messageList.unshift(message);
+                state.messages.number += 1;
+            }
+        }
     },
     // 检查商品保质期
     checkGoodsDate (state) {
-
+        let date = new Date();
+        let nowTime = date.getTime();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let min = date.getMinutes();
+        function addZero(val) {
+            if (val < 10) {
+                val = '0' + val;
+            } 
+            return val;
+        }
+        let today = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
+        if (today !== state.messages.today) {
+            for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
+                let goodsTime = state.goods.goodsList[i].date.getTime();
+                let dateRange = Math.floor((goodsTime - nowTime) / 1000 / 60 / 60 / 24);
+                if (dateRange <= state.messages.limitDate) {
+                    let message = new Object();
+                    message.date = today;
+                    message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' +  + ' 天，请尽快销售或处理！';
+                    state.messages.messageList.unshift(message);
+                    state.messages.number += 1;
+                }
+            }
+            state.message.today = today;
+        }
+    },
+    // 重置新消息数字
+    resetMessageNumber (state) {
+        state.messages.number = 0;
+    },
+    // 删除消息通知
+    deleteMessage (state, index) {
+        state.messages.messageList.splice(index, 1);
     },
     // 提交收银记录
     addCashRegister (state, cashRegiter) {
@@ -102,5 +183,16 @@ export default {
     // 删除待办事件
     deleteTodo (state, index) {
         state.todo.todoList.splice(index, 1);
+    },
+    // 改变待办事件状态
+    changeTodoState (state, time) {
+        for (let i = 0, len = state.todo.todoList.length; i < len; i++) {
+            if (state.todo.todoList[i].time === time) {
+                state.todo.todoList[i].state = '已到期';
+                state.todo.todoList[i].cellClassName = {
+                    state: 'state-change'
+                };
+            }
+        }
     }
 }
