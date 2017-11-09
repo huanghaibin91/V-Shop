@@ -74,7 +74,7 @@ export default {
         state.shoppingCart.shoppingCartList.splice(index, 1);
         state.shoppingCart.number -= 1;
     },
-    // 删除已结算商品，同时减去库存
+    // 删除已结算商品，同时减去库存，加上销量
     deleteCheckoutGoods (state, goodsList) {
         for (let i = 0, len = goodsList.length; i < len; i++) {
             for (let j = state.shoppingCart.shoppingCartList.length - 1; j >= 0; j--) {
@@ -86,6 +86,7 @@ export default {
             for (let z = 0, len = state.goods.goodsList.length; z < len; z++) {
                 if (goodsList[i].coding === state.goods.goodsList[z].coding) {
                     state.goods.goodsList[z].number -= goodsList[i].count;
+                    state.goods.goodsList[z].sales[new Date().getMonth()] += goodsList[i].count;
                     if (state.goods.goodsList[z].number < state.messages.limitNumber) {
                         let message = new Object();
                         let date = new Date();
@@ -151,7 +152,7 @@ export default {
         let today = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
         if (today !== state.messages.today) {
             for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
-                let goodsTime = state.goods.goodsList[i].date.getTime();
+                let goodsTime = new Date(state.goods.goodsList[i].date).getTime();
                 let dateRange = Math.floor((goodsTime - nowTime) / 1000 / 60 / 60 / 24);
                 if (dateRange <= state.messages.limitDate) {
                     let message = new Object();
@@ -161,7 +162,7 @@ export default {
                     state.messages.number += 1;
                 }
             }
-            state.message.today = today;
+            state.messages.today = today;
         }
     },
     // 重置新消息数字

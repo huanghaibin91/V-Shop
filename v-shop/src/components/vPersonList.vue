@@ -232,19 +232,27 @@ export default {
                 if (valid) { 
                     var user = this.newUser;
                     delete user.password2;
-                    this.$store.commit('addNewUser', user);
-                    this.$Message.success('添加新员工成功');
-                    this.newUser = {
-                        name: '',
-                        coding: '',
-                        position: '',
-                        password: '',
-                        password2: '',
-                        jurisdiction: '三级',
-                        telephone: '',
-                        address: '',
-                        avatar: ''
-                    };
+                    if (this.$store.state.currUser.coding) {
+                        if (this.$store.state.currUser.jurisdiction === '一级') {
+                            this.$store.commit('addNewUser', user);
+                            this.$Message.success('添加新员工成功');
+                            this.newUser = {
+                                name: '',
+                                coding: '',
+                                position: '',
+                                password: '',
+                                password2: '',
+                                jurisdiction: '三级',
+                                telephone: '',
+                                address: '',
+                                avatar: ''
+                            };
+                        } else {
+                            this.$Message.error('当前用户没有添加新员工权限');
+                        }
+                    } else {
+                        this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+                    }
                 } else { 
                     this.$Message.error('表单验证失败!'); 
                 } 

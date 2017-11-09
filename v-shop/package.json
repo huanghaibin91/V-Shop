@@ -13,6 +13,8 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "echarts": "^3.8.0",
+    "highcharts": "^6.0.2",
     "iview": "^2.5.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

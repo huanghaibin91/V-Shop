@@ -26,7 +26,8 @@ export default {
             category: '老婆',
             date: '9999-09-09',
             image: 'static/00000000.jpg',
-            sales: 0 
+            // 年月销量
+            sales: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         },
         goodsList: [
             {
@@ -37,7 +38,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             },
             {
                 name: '限购型黑猫',
@@ -47,7 +48,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -57,7 +58,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -67,7 +68,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -77,7 +78,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -87,7 +88,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -97,7 +98,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -107,7 +108,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -117,7 +118,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -127,7 +128,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -137,7 +138,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -147,7 +148,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -157,7 +158,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -167,7 +168,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -177,7 +178,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -187,7 +188,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -197,7 +198,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -207,7 +208,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -217,7 +218,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -227,7 +228,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -237,7 +238,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -247,7 +248,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -257,7 +258,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -267,7 +268,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -277,7 +278,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -287,7 +288,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -297,7 +298,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -307,7 +308,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -317,7 +318,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -327,7 +328,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -337,7 +338,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -347,7 +348,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -357,7 +358,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -367,7 +368,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -377,7 +378,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -387,7 +388,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -397,7 +398,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -407,7 +408,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -417,7 +418,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -427,7 +428,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -437,7 +438,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -447,7 +448,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -457,7 +458,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -467,7 +468,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -477,7 +478,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -487,7 +488,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -497,7 +498,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -507,7 +508,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -517,7 +518,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -527,7 +528,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -537,7 +538,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -547,7 +548,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -557,7 +558,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -567,7 +568,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -577,7 +578,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -587,7 +588,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -597,7 +598,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -607,7 +608,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -617,7 +618,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -627,7 +628,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -637,7 +638,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -647,7 +648,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -657,7 +658,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -667,7 +668,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -677,7 +678,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -687,7 +688,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -697,7 +698,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -707,7 +708,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -717,7 +718,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -727,7 +728,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -737,7 +738,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -747,7 +748,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -757,7 +758,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -767,7 +768,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -777,7 +778,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -787,7 +788,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -797,7 +798,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -807,7 +808,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -817,7 +818,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -827,7 +828,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             {
                 name: '限购型黑猫',
@@ -837,7 +838,7 @@ export default {
                 category: '老婆',
                 date: '9999-09-09',
                 image: 'static/00000000.jpg',
-                sales: 0 
+                sales: [0,0,0,0,0,0,0,0,0,0,0,0] 
             },
             
         ]
@@ -850,12 +851,14 @@ export default {
     },
     // 收银记录列表
     cashRegister: {
+        year: '2017',
+        month: 10,
         name: 'cashRegister',
         cashRegisterList: []
     },
     // 消息通知列表
     messages: {
-        today: '2017-11-8',
+        today: '2017-11-08',
         name: 'messages',
         number: 0,
         // 保质期

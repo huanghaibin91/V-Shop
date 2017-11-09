@@ -12,6 +12,7 @@
                 <button class="fruit">生鲜水果</button>
                 <button class="toiletries">日常洗护</button>
                 <button class="kitchen">厨卫用品</button>
+                <button class="another">其它品类</button>
             </div>
         </div>
         <Tabs type="card" @on-click="changeTab">
@@ -178,6 +179,13 @@ export default {
                 case 'kitchen':
                     this.goodsList = this.allGoodsList.filter(function (goods) {
                         if (goods.category === '厨卫用品') {
+                            return goods;
+                        }  
+                    });
+                    break;
+                case 'another':
+                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                        if (goods.category === '其它品类') {
                             return goods;
                         }  
                     });

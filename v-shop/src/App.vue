@@ -27,6 +27,7 @@ export default {
     vAside,
   },
   mounted: function () {
+    // 本地存储数据库IdexedDB
     var _this = this;
     var vshopDB = null;
     IndexedDB.openDB('vshopDB', 1, vshopDB, {
@@ -62,6 +63,9 @@ export default {
     });
     
     // IndexedDB.deleteDB('vshopDB');
+    
+    // 检查商品保质期
+    this.$store.commit('checkGoodsDate');
   }
 }
 </script>

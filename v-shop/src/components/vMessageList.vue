@@ -34,7 +34,11 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.$store.commit('deleteMessage', params.index);
+                                    if (this.$store.state.currUser.coding) {
+                                        this.$store.commit('deleteMessage', params.index);
+                                    } else {
+                                        this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+                                    }
                                 }
                             }
                         }, '删除')

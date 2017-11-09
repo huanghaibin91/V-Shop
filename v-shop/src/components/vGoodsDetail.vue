@@ -3,6 +3,7 @@
         <Table :columns="goodsDetailTable" :data="detailGoods" :disabled-hover="true" :border="true"></Table>
         <div>
             <h3>商品销售统计</h3> 
+            <div id="sales-chart"></div>
         </div>
         <div>
             <h3>商品操作历史记录</h3>
@@ -41,6 +42,18 @@
 </template>
 
 <script>
+
+import Highcharts from 'highcharts/highstock'
+import HighchartsMore from 'highcharts/highcharts-more'
+import HighchartsDrilldown from 'highcharts/modules/drilldown'
+import Highcharts3D from 'highcharts/highcharts-3d'
+import Highmaps from 'highcharts/modules/map'
+
+HighchartsMore(Highcharts) 
+HighchartsDrilldown(Highcharts)
+Highcharts3D(Highcharts)
+Highmaps(Highcharts)
+
 export default {
     data () {
         // 检查价格
@@ -171,23 +184,94 @@ export default {
                     name: '商品保质期',
                     value: this.$store.state.goods.detailGoods.date
                 }
-            ]
+            ],
+            chart: null
         }
+    },
+    mounted () {
+        let _this = this;
+        this.chart = new Highcharts.Chart(document.getElementById('sales-chart'), {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    '一月',
+                    '二月',
+                    '三月',
+                    '四月',
+                    '五月',
+                    '六月',
+                    '七月',
+                    '八月',
+                    '九月',
+                    '十月',
+                    '十一月',
+                    '十二月'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '月销量 (件)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} 件</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {
+                    name: _this.$store.state.goods.detailGoods.name,
+                    data: _this.$store.state.goods.detailGoods.sales
+                }
+            ]
+        });
     },
     methods: {
         changeGoodsDetailFlag () {
             this.setGoodsFlag = true;
         },
         submitChangeGoods () {
-            this.$store.commit('changeGoods', this.setGoods);
-            this.$Message.success('修改商品信息成功');
-            this.setGoodsFlag = false;
+            if (this.$store.state.currUser.coding) {
+                if (this.$store.state.currUser.jurisdiction === '一级') {
+                    this.$store.commit('changeGoods', this.setGoods);
+                    this.$Message.success('修改商品信息成功');
+                    this.setGoodsFlag = false;
+                } else {
+                    this.$Message.error('当前用户没有修改商品信息权限');
+                }
+            } else {
+                this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+            }
         },
         deleteGoods () {
-            this.$store.commit('deleteGoods');
-            this.$router.push({
-                path: '/goodsDetailList'
-            });
+            if (this.$store.state.currUser.coding) {
+                if (this.$store.state.currUser.jurisdiction === '一级') {
+                    this.$store.commit('deleteGoods');
+                    this.$router.push({
+                        path: '/goodsDetailList'
+                    });
+                } else {
+                    this.$Message.error('当前用户没有修改商品信息权限');
+                }
+            } else {
+                this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+            }
         }
     }
 }

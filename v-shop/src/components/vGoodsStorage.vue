@@ -24,6 +24,7 @@
                                 <Option value="生鲜水果">生鲜水果</Option>
                                 <Option value="日常洗护">日常洗护</Option>
                                 <Option value="厨卫用品">厨卫用品</Option>
+                                <Option value="其它品类">其它品类</Option>
                             </Select> 
                         </FormItem> 
                         <FormItem label="选择保质期" prop="date"> 
@@ -141,7 +142,7 @@ export default {
                 category: '', 
                 date: '', 
                 image: '',
-                sales: 0
+                sales: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }, 
             checkNewGoods: { 
                 coding: { required: true, validator: checkNewCoding, trigger: 'blur' },
@@ -201,21 +202,24 @@ export default {
             };
         },
         submitNewGoods () { 
-            let _this = this;
             this.$refs['newGoods'].validate((valid) => { 
                 if (valid) { 
-                    this.$store.commit('addNewGoods', this.newGoods);
-                    this.$Message.success('新商品入库成功');
-                    this.newGoods = {
-                        coding: '', 
-                        name: '', 
-                        price: '', 
-                        number: '', 
-                        category: '休闲零食', 
-                        date: new Date(), 
-                        image: '',
-                        sales: 0
-                    };
+                    if (this.$store.state.currUser.coding) {
+                        this.$store.commit('addNewGoods', this.newGoods);
+                        this.$Message.success('新商品入库成功');
+                        this.newGoods = {
+                            coding: '', 
+                            name: '', 
+                            price: '', 
+                            number: '', 
+                            category: '休闲零食', 
+                            date: new Date(), 
+                            image: '',
+                            sales: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        };
+                    } else {
+                        this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+                    }
                 } else { 
                     this.$Message.error('表单验证失败!'); 
                 } 
@@ -227,12 +231,16 @@ export default {
         submitOldGoods () { 
             this.$refs['oldGoods'].validate((valid) => { 
                 if (valid) { 
-                    this.$store.commit('addOldGoods', this.oldGoods);
-                    this.$Message.success('快捷入库成功');
-                    this.oldGoods = {
-                        coding: '',
-                        number: '',
-                        date: new Date()
+                    if (this.$store.state.currUser.coding) {
+                        this.$store.commit('addOldGoods', this.oldGoods);
+                        this.$Message.success('快捷入库成功');
+                        this.oldGoods = {
+                            coding: '',
+                            number: '',
+                            date: new Date()
+                        }
+                    } else {
+                        this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
                     }
                 } else { 
                     this.$Message.error('表单验证失败!'); 

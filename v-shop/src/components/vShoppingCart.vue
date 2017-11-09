@@ -97,7 +97,6 @@ export default {
                             },
                             on: {
                                 'on-change': (num) => {
-                                    console.log(params.row);
                                     params.row.count = num;
                                     params.row.total = params.row.price * params.row.count;
                                     this.allShoppingCartList[params.index].count = num;
@@ -158,6 +157,7 @@ export default {
                     number: element.number,
                     coding: element.coding,
                     price: element.price,
+                    category: element.category 
                 };
                 goodsList.push(goods);
             });
@@ -175,6 +175,7 @@ export default {
                     count: element.count,
                     price: element.price,
                     total: element.total,
+                    category: element.category 
                 };
                 obj.goodsList.push(goods);
             });
