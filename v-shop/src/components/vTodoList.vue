@@ -12,6 +12,9 @@
 </template>
 
 <script>
+
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     data () {
         return {
@@ -78,6 +81,15 @@ export default {
             this.todo.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
             if (this.todo.time && this.todo.content) {
                 this.$store.commit('addNewTodo', this.todo);
+                // let _this = this;
+                // let vshopDB = null;
+                // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                //     name: 'vshop',
+                //     key: 'name'
+                // }, function (db) {
+                //     let vshopDB = db;
+                //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.todo]);
+                // });
                 // 启动定时器
                 let timer = null;
                 let content = this.todo.content;
@@ -108,6 +120,15 @@ export default {
         deleteTodo (index) {
             this.$store.commit('deleteTodo', index);
             this.$Message.success('待办事件删除成功');
+            // let _this = this;
+            // let vshopDB = null;
+            // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+            //     name: 'vshop',
+            //     key: 'name'
+            // }, function (db) {
+            //     let vshopDB = db;
+            //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.todo]);
+            // });
         }
     }
 }

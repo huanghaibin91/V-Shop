@@ -54,6 +54,9 @@
 </template>
 
 <script>
+
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     data () {
         // 检查员工工号
@@ -247,6 +250,15 @@ export default {
                                 address: '',
                                 avatar: ''
                             };
+                            // let _this = this;
+                            // let vshopDB = null;
+                            // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                            //     name: 'vshop',
+                            //     key: 'name'
+                            // }, function (db) {
+                            //     let vshopDB = db;
+                            //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.users]);
+                            // });
                         } else {
                             this.$Message.error('当前用户没有添加新员工权限');
                         }

@@ -1,13 +1,14 @@
 <template>
     <div class="cash-register">
-        <div class="search-box">
+        <div class="cash-search-box">
             <Select v-model="user" :clearable="true" placeholder="请选择收银员" style="width:200px"> 
                 <Option v-for="user in userList" :value="user.name" :key="user.coding">
                     {{ user.name }}
                 </Option> 
+                <Option value="所有用户">所有用户</Option>
             </Select>
-            <DatePicker type="daterange" :options="datarange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></DatePicker> 
-            <Button type="primary" icon="search">搜索</Button>
+            <DatePicker type="daterange" v-model="date" :options="daterange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></DatePicker> 
+            <Button @click.native="searchCashRegister" type="primary" icon="search">搜索</Button>
         </div>
         <div class="checkout-list">
             <Table :columns="cashRegisterTable" :data="cashRegisterList"></Table>
@@ -27,8 +28,9 @@ export default {
     data () {
         return {
             user: '',
+            date: '',
             userList: this.$store.state.users.userList,
-            datarange: {
+            daterange: {
                 shortcuts: [
                     {
                         text: '最近一周',
@@ -114,6 +116,22 @@ export default {
         }
     },
     methods: {
+        // 搜索收银记录
+        searchCashRegister () {
+            if (this.user === '' || this.user === '所有用户') {
+                if (this.date.length === 0) {
+                    
+                } else {
+
+                }
+            } else {
+                if (this.date.length === 0) {
+                    
+                } else {
+
+                }
+            }
+        },
         // 切换分页
         changePage (num) {
             if (num === 1) {
@@ -126,14 +144,14 @@ export default {
 }
 </script>
 
-<style scoped>
-    .search-box {
+<style>
+    .cash-search-box {
         padding: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .search-box>div {
+    .cash-search-box>div {
         margin-right: 2em;
     }
     .page {
@@ -141,8 +159,8 @@ export default {
         display: flex;
         justify-content: center;
     }
-    .ivu-table-expanded-cell {
-        padding: 0px;
+    td.ivu-table-expanded-cell {
+        padding: 10px;
         margin: 0px;
     }
 </style>

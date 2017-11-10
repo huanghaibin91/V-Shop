@@ -6,6 +6,7 @@
                 <Button @click="goShoppingCart" type="primary" icon="ios-cart">购物车</Button>
             </div>
             <div @click="quickSearch" class="quick-search">
+                <button class="allgoods">全部商品</button>
                 <button class="snacks">休闲零食</button>
                 <button class="drink">酒水饮料</button>
                 <button class="food">粮油副食</button>
@@ -102,6 +103,8 @@
 
 <script>
 
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     data () {
         return {
@@ -141,6 +144,8 @@ export default {
         quickSearch (event) {
             let cls = event.target.className;
             switch (cls) {
+                case 'allgoods':
+                    this.goodsList = this.allGoodsList;
                 case 'snacks':
                     this.goodsList = this.allGoodsList.filter(function (goods) {
                         if (goods.category === '休闲零食') {
@@ -241,6 +246,15 @@ export default {
             }
             this.$store.commit('addShoppingCart', goods);
             this.$Message.success('商品加入购物车');
+            // let _this = this;
+            // let vshopDB = null;
+            // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+            //     name: 'vshop',
+            //     key: 'name'
+            // }, function (db) {
+            //     let vshopDB = db;
+            //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
+            // });
         }
     }
 }

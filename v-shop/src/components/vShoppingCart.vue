@@ -14,7 +14,7 @@
             </div>
         </div>
         <!-- 结算弹窗 -->
-        <Modal v-model="checkoutFlag" title="商品结算" width="350" ok-text="返回购物车" cancel-text="返回商品列表" :styles="{top: '20px'}">
+        <Modal v-model="checkoutFlag" title="商品结算" width="350" @on-cancel="gobackGoodsList" ok-text="返回购物车" cancel-text="返回商品列表" :styles="{top: '20px'}">
             <Collapse accordion>
                 <Panel>
                     &nbsp;现金支付
@@ -57,6 +57,9 @@
 </template>
 
 <script>
+
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     data () {
         return {
@@ -200,6 +203,12 @@ export default {
             this.countCheckoutGoods();
             this.checkoutFlag = true;
         },
+        // 返回商品列表
+        gobackGoodsList () {
+            this.$router.push({
+                path: '/'
+            });
+        },
         // 统计待结算商品
         countCheckoutGoods () {
             let goodsList = this.checkoutCount.goodsList;
@@ -247,14 +256,27 @@ export default {
             cashRegister.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
             cashRegister.cashier = this.$store.state.currUser.name;
             cashRegister.mode = '现金';
-            this.$store.commit('addCashRegister', cashRegister);
-            this.$Message.success('商品结算成功');
-            // 删除购物车已结算物品
-            this.$store.commit('deleteCheckoutGoods', this.checkoutCount.goodsList);
-            // 重置现金找零计算
-            this.cash = '';
-            this.cashChange = '';
-            this.checkoutFlag = false;
+            if (this.$store.state.currUser.coding) {
+                this.$store.commit('addCashRegister', cashRegister);
+                this.$Message.success('商品结算成功');
+                // 删除购物车已结算物品
+                this.$store.commit('deleteCheckoutGoods', this.checkoutCount.goodsList);
+                // 重置现金找零计算
+                this.cash = '';
+                this.cashChange = '';
+                this.checkoutFlag = false;
+                // let _this = this;
+                // let vshopDB = null;
+                // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                //     name: 'vshop',
+                //     key: 'name'
+                // }, function (db) {
+                //     let vshopDB = db;
+                //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
+                // });
+            } else {
+                this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+            }
         }
     }
 }

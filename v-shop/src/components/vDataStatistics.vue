@@ -1,11 +1,21 @@
 <template>
     <div class="data-statistics">
-        <div>
-
+        <h2>数据统计</h2>
+        <div class="month-turnover-box">
+            <div class="month-turnover">
+                <h2>
+                    本月营业额 <br>
+                    {{ monthTurnover }}
+                </h2>
+            </div>
+            <div id="sales-category-chart"></div>
         </div>
-        <div id="sales-category-chart">
-
-        </div>
+        <!-- <h3>本月各类商品销售占比</h3> -->
+        <!-- <div id="sales-category-chart"></div> -->
+        <h3>本月销售前二十商品</h3>
+        <div id="ranking-twenty-chart"></div>
+        <h3>年度销售统计</h3>
+        <div id="year-turnover-chart"></div>
     </div>
 </template>
 
@@ -26,6 +36,8 @@ export default {
     data () {
         return {
             categoryChart: null,
+            rankingTwentyChart: null,
+            yearTurnoverChart: null,
             cashRegisterList: this.$store.state.cashRegister.cashRegisterList
         }
     },
@@ -38,7 +50,7 @@ export default {
                 plotShadow: false
             },
             title: {
-                text: '本月各类商品销售占比'
+                text: '本月各类商品销售占比图'
             },
             tooltip: {
                 headerFormat: '{series.name}<br>',
@@ -67,6 +79,116 @@ export default {
                         ['厨卫用品', _this.categoryTurnover[5] / _this.monthTurnover * 100],
                         ['其它品类', _this.categoryTurnover[6] / _this.monthTurnover * 100]
                     ]
+                }
+            ]
+        });
+        this. rankingTwentyChart = new Highcharts.Chart(document.getElementById('ranking-twenty-chart'), {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: '本月销售前二十商品统计图'
+            },
+            xAxis: {
+                categories: _this.rankingTwentyName,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '本月销售金额 (元)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' 元'
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true,
+                        allowOverlap: true
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -40,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                shadow: true
+            },
+            credits: {
+                enabled: false
+            },
+            series: [
+                {
+                    name: '销售金额',
+                    data: _this.rankingTwentyTotal
+                }, 
+                // {
+                //     name: '销售数量',
+                //     data: _this.rankingTwentyCount
+                // }
+            ]
+        });
+        this.yearTurnoverChart = new Highcharts.Chart(document.getElementById('year-turnover-chart'), {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '年度销售统计图'
+            },
+            xAxis: {
+                categories: [
+                    '一月',
+                    '二月',
+                    '三月',
+                    '四月',
+                    '五月',
+                    '六月',
+                    '七月',
+                    '八月',
+                    '九月',
+                    '十月',
+                    '十一月',
+                    '十二月'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '月销量 (件)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} 元</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                {
+                    name: '本月营业额',
+                    data: _this.yearTurnover
                 }
             ]
         });
@@ -131,6 +253,7 @@ export default {
                         let flag = true;
                         for (let z = 0, len = arr.length; i < len;  i++) {
                             if (this.cashRegisterList[i].goodsList[j].coding === arr[z].coding) {
+                                arr[z].count += this.cashRegisterList[i].goodsList[j].count;
                                 arr[z].total += this.cashRegisterList[i].goodsList[j].total;
                                 flag = false;
                                 break;
@@ -139,7 +262,8 @@ export default {
                         if (flag) {
                             let obj = new Object();
                             obj.coding = this.cashRegisterList[i].goodsList[j].coding;
-                            obj.name = this.cashRegisterList[i].goodsList[j].coding;
+                            obj.name = this.cashRegisterList[i].goodsList[j].name;
+                            obj.count = this.cashRegisterList[i].goodsList[j].count;
                             obj.total = this.cashRegisterList[i].goodsList[j].total;
                             arr.push(obj);
                         }
@@ -170,13 +294,24 @@ export default {
             });
             return arr;
         },
+        rankingTwentyCount () {
+            let arr = [];
+            let rankingTwenty = this.rankingTwenty;
+            rankingTwenty.sort(function (a, b) {
+                return b.total - a.total; 
+            });
+            rankingTwenty.slice(0, 20).forEach(function (element) {
+                arr.push(element.count);
+            });
+            return arr;
+        },
         // 年度每月营业额
         yearTurnover () {
             let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             let nowYear = new Date().getFullYear();
             for (let i = 0, len = this.cashRegisterList.length; i < len; i++) {
                 if (new Date(this.cashRegisterList[i].time).getFullYear() === nowYear) {
-                    switch (this.cashRegisterList[i].time.getMonth()) {
+                    switch (new Date(this.cashRegisterList[i].time).getMonth()) {
                         case 0:
                             arr[0] += this.cashRegisterList[i].allTotal;
                             break;
@@ -223,6 +358,27 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    h2 {
+        padding: 10px;
+        text-align: center;
+    }
+    h3 {
+        padding: 10px;
+    }
+    .month-turnover-box {
+        display: flex;
+        height: 400px;
+        align-content: center;
+        background-color: white;
+    }
+    .month-turnover {
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #sales-category-chart {
+        width: 70%;
+    }
 </style>

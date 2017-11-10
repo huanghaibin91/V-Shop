@@ -1,5 +1,5 @@
 <template>
-    <Table size="small" :columns="cashDetailTable" :data="row.goodsList"></Table>
+    <Table size="small" border :columns="cashDetailTable" :data="row.goodsList"></Table>
 </template>
 
 <script>

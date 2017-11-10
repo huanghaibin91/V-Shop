@@ -1,4 +1,8 @@
 export default {
+    // 将IndexedDB中数据写入vuex
+    getData (state, data) {
+        state[data.name] = data.result;
+    },
     // 设置当前用户
     setCurrUser (state, user) {
         state.currUser = user;
@@ -157,7 +161,7 @@ export default {
                 if (dateRange <= state.messages.limitDate) {
                     let message = new Object();
                     message.date = today;
-                    message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' +  + ' 天，请尽快销售或处理！';
+                    message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' + dateRange + ' 天，请尽快销售或处理！';
                     state.messages.messageList.unshift(message);
                     state.messages.number += 1;
                 }
@@ -172,6 +176,14 @@ export default {
     // 删除消息通知
     deleteMessage (state, index) {
         state.messages.messageList.splice(index, 1);
+    },
+    // 设置消息通知
+    changeMessage (state, newLimit) {
+        for (let limit in newLimit) {
+            if (newLimit[limit]) {
+                state.messages[limit] = newLimit[limit];
+            }
+        }
     },
     // 提交收银记录
     addCashRegister (state, cashRegiter) {

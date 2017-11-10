@@ -43,6 +43,8 @@
 
 <script>
 
+import IndexedDB from '../indexedDB/IndexedDB'
+
 import Highcharts from 'highcharts/highstock'
 import HighchartsMore from 'highcharts/highcharts-more'
 import HighchartsDrilldown from 'highcharts/modules/drilldown'
@@ -182,7 +184,7 @@ export default {
                 },
                 {
                     name: '商品保质期',
-                    value: this.$store.state.goods.detailGoods.date
+                    // value: this.$store.state.goods.detailGoods.date.getFullYear() + '-' + (this.$store.state.goods.detailGoods.date.getMonth() + 1) + '-' + this.$store.state.goods.detailGoods.date.getDate()
                 }
             ],
             chart: null
@@ -252,6 +254,15 @@ export default {
                     this.$store.commit('changeGoods', this.setGoods);
                     this.$Message.success('修改商品信息成功');
                     this.setGoodsFlag = false;
+                    // let _this = this;
+                    // let vshopDB = null;
+                    // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                    //     name: 'vshop',
+                    //     key: 'name'
+                    // }, function (db) {
+                    //     let vshopDB = db;
+                    //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                    // });
                 } else {
                     this.$Message.error('当前用户没有修改商品信息权限');
                 }
@@ -266,6 +277,15 @@ export default {
                     this.$router.push({
                         path: '/goodsDetailList'
                     });
+                    // let _this = this;
+                    // let vshopDB = null;
+                    // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                    //     name: 'vshop',
+                    //     key: 'name'
+                    // }, function (db) {
+                    //     let vshopDB = db;
+                    //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                    // });
                 } else {
                     this.$Message.error('当前用户没有修改商品信息权限');
                 }

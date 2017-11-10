@@ -66,6 +66,9 @@
 </template>
 
 <script>
+
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     data () { 
         // 验证商品信息规则
@@ -217,6 +220,15 @@ export default {
                             image: '',
                             sales: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         };
+                        // let _this = this;
+                        // let vshopDB = null;
+                        // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                        //     name: 'vshop',
+                        //     key: 'name'
+                        // }, function (db) {
+                        //     let vshopDB = db;
+                        //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                        // });
                     } else {
                         this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
                     }
@@ -239,6 +251,15 @@ export default {
                             number: '',
                             date: new Date()
                         }
+                        // let _this = this;
+                        // let vshopDB = null;
+                        // IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                        //     name: 'vshop',
+                        //     key: 'name'
+                        // }, function (db) {
+                        //     let vshopDB = db;
+                        //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                        // });
                     } else {
                         this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
                     }
