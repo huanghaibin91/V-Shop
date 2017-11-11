@@ -5,6 +5,7 @@
             <Button @click.native="changeSetMessageFlag" type="primary" icon="settings" size="small">消息通知设置</Button>
         </h3>
         <Table :columns="messageTable" :data="messageList"></Table>
+        <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
         <!-- 消息通知设置弹窗 -->
         <Modal title="设置消息通知" v-model="setMessageFlag" width="300"> 
             <Form ref="newLimit" :model="setMessage" :label-width="80"> 
@@ -31,6 +32,7 @@ export default {
     data () {
         return {
             setMessageFlag: false,
+            pageFlag: false,
             setMessage: {
                 limitNumber: '',
                 limitDate: ''
@@ -62,15 +64,15 @@ export default {
                                 click: () => {
                                     if (this.$store.state.currUser.coding) {
                                         this.$store.commit('deleteMessage', params.index);
-                                        // let _this = this;
-                                        // let vshopDB = null;
-                                        // IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                                        //     name: 'vshop',
-                                        //     key: 'name'
-                                        // }, function (db) {
-                                        //     let vshopDB = db;
-                                        //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.messages]);
-                                        // });
+                                        let _this = this;
+                                        let vshopDB = null;
+                                        IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                                            name: 'vshop',
+                                            key: 'name'
+                                        }, function (db) {
+                                            let vshopDB = db;
+                                            IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.messages]);
+                                        });
                                     } else {
                                         this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
                                     }
@@ -80,28 +82,44 @@ export default {
                     }
                 }
             ],
-            messageList: this.$store.state.messages.messageList
+            allMessageList: this.$store.state.messages.messageList,
+            // messageList: this.$store.state.messages.messageList
+        }
+    },
+    computed: {
+        messageList: function () {
+            return this.allMessageList.slice(0, 20);
+        },
+        pageTotal: function () {
+            let page = this.allMessageList.length;
+            if (page / 20 > 1) {
+                this.pageFlag = true;
+            } else {
+                this.pageFlag = false;
+            }
+            return page;
         }
     },
     methods: {
         changeSetMessageFlag () {
             this.setMessageFlag = true;
         },
+        // 提交设置消息通知
         submitChangeMessage () {
             if (this.$store.state.currUser.coding) {
                 if (this.$store.state.currUser.jurisdiction === '一级') {
                     this.$store.commit('changeMessage', this.setMessage);
                     this.$Message.success('设置新消息通知限制成功');
                     this.setMessageFlag = false;
-                    // let _this = this;
-                    // let vshopDB = null;
-                    // IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                    //     name: 'vshop',
-                    //     key: 'name'
-                    // }, function (db) {
-                    //     let vshopDB = db;
-                    //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.messages]);
-                    // });
+                    let _this = this;
+                    let vshopDB = null;
+                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                        name: 'vshop',
+                        key: 'name'
+                    }, function (db) {
+                        let vshopDB = db;
+                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.messages]);
+                    });
                 } else {
                     this.$Message.error('当前用户没有修改商品信息权限');
                 }
@@ -109,9 +127,18 @@ export default {
                 this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
             }
         },
+        // 重置表单
         resetChangeMessage () {
             this.$refs['newLimit'].resetFields(); 
-        }
+        },
+        // 切换分页
+        changePage (num) {
+            if (num === 1) {
+                this.messageList = this.allMessageList.slice(0, 20);
+            } else {
+                this.messageList = this.allMessageList.slice((num - 1) * 20, num * 20);
+            }
+        },
     }
 }
 </script>
@@ -122,5 +149,13 @@ export default {
     }
     h3 button {
         margin-left: 20px;
+    }
+    .warning {
+        color: red;
+    }
+    .page {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
     }
 </style>

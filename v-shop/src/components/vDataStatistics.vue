@@ -3,10 +3,10 @@
         <h2>数据统计</h2>
         <div class="month-turnover-box">
             <div class="month-turnover">
-                <h2>
+                <h1>
                     本月营业额 <br>
-                    {{ monthTurnover }}
-                </h2>
+                    <span>{{ monthTurnover }}</span>
+                </h1>
             </div>
             <div id="sales-category-chart"></div>
         </div>
@@ -359,9 +359,14 @@ export default {
 </script>
 
 <style scoped>
+    h1 {
+        text-align: center;
+    }
+    h1 span {
+        color: #ff9900;
+    }
     h2 {
         padding: 10px;
-        text-align: center;
     }
     h3 {
         padding: 10px;

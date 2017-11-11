@@ -137,6 +137,15 @@ export default {
                             on: {
                                 click: () => {
                                     this.$store.commit('deleteShoppingCart', params.index);
+                                    let _this = this;
+                                    let vshopDB = null;
+                                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                                        name: 'vshop',
+                                        key: 'name'
+                                    }, function (db) {
+                                        let vshopDB = db;
+                                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
+                                    });
                                 }
                             }
                         }, '删除');
@@ -265,15 +274,17 @@ export default {
                 this.cash = '';
                 this.cashChange = '';
                 this.checkoutFlag = false;
-                // let _this = this;
-                // let vshopDB = null;
-                // IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                //     name: 'vshop',
-                //     key: 'name'
-                // }, function (db) {
-                //     let vshopDB = db;
-                //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
-                // });
+                let _this = this;
+                let vshopDB = null;
+                IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                    name: 'vshop',
+                    key: 'name'
+                }, function (db) {
+                    let vshopDB = db;
+                    IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
+                    IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                    IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.cashRegister]);
+                });
             } else {
                 this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
             }

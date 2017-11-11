@@ -72,6 +72,8 @@ export default {
           data.name = 'goods';
           data.result = result;
           _this.$store.commit('getData', data);
+          // 检查商品保质期
+          _this.$store.commit('checkGoodsDate');
         } else {
           let goods = {
             name: 'goods',
@@ -138,6 +140,35 @@ export default {
           data.name = 'todo';
           data.result = result;
           _this.$store.commit('getData', data);
+          // 启动定时器
+          for (let i = 0, len = _this.$store.state.todo.todoList.length; i < len; i++) {
+            if (_this.$store.state.todo.todoList[i].state === '未完成') {
+              let timer = null;
+              let content = _this.$store.state.todo.todoList[i].content;
+              let time = _this.$store.state.todo.todoList[i].time;
+              let planTime = new Date(_this.$store.state.todo.todoList[i].time).getTime();
+              timer = setInterval(function () {
+                  let newTime = new Date().getTime();
+                  if (planTime - newTime <= 0) {
+                      _this.$store.commit('changeTodoState', time);
+                      let vshopDB = null;
+                      IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                          name: 'vshop',
+                          key: 'name'
+                      }, function (db) {
+                          let vshopDB = db;
+                          IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.todo]);
+                      });
+                      _this.$Notice.warning({ 
+                          title: '待办事件提醒', 
+                          desc: content,
+                          duration: 0
+                      });
+                      clearInterval(timer);
+                  }
+              }, 1000);
+            }
+          }
         } else {
           let todo = {
             name: 'todo',
@@ -149,20 +180,7 @@ export default {
     });
     
     // IndexedDB.deleteDB('vshopDB');
-    
-    // 检查商品保质期
-    this.$store.commit('checkGoodsDate');
-  },
-  beforeDestroy () {
-    let _this = this;
-    let vshopDB = null;
-    IndexedDB.openDB('vshopDB', 1, vshopDB, {
-        name: 'vshop',
-        key: 'name'
-    }, function (db) {
-        let vshopDB = db;
-        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.users]);
-    });
+  
   }
 }
 </script>

@@ -103,6 +103,7 @@ export default {
         }
     },
     methods: {
+        // 点击侧边栏
         changeMenuItem (name) {
             switch(name) {
                 case 'person':
@@ -153,6 +154,7 @@ export default {
                     break;
             }
         },
+        // 提交登录
         loginSubmit () {
             const users = this.$store.state.users.userList;
             let loginFlag = true;
@@ -183,6 +185,7 @@ export default {
                 } 
             });
         },
+        // 取消登录
         cancelLogin () {
             this.loginFlag = false;
         },

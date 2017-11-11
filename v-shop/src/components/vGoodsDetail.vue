@@ -5,9 +5,9 @@
             <h3>商品销售统计</h3> 
             <div id="sales-chart"></div>
         </div>
-        <div>
+        <!-- <div>
             <h3>商品操作历史记录</h3>
-        </div>
+        </div> -->
         <Modal title="更改商品信息" v-model="setGoodsFlag" :styles="{top: '20px'}" width="400"> 
             <Form :model="setGoods" :rules="checkSetGoods" :label-width="80"> 
                 <FormItem label="商品名称" prop="name"> 
@@ -99,6 +99,8 @@ export default {
                 {
                     title: '商品图片',
                     key: 'img',
+                    align: 'center',
+                    width: 300,
                     className: 'goods-img',
                     render: (h, params) => {
                         return h('img', {
@@ -151,6 +153,7 @@ export default {
             goodsTable: [
                 {
                     title: '名称',
+                    width: 150,
                     key: 'name',
                     render: (h, params) => {
                         return h('strong', params.row.name);
@@ -184,7 +187,7 @@ export default {
                 },
                 {
                     name: '商品保质期',
-                    // value: this.$store.state.goods.detailGoods.date.getFullYear() + '-' + (this.$store.state.goods.detailGoods.date.getMonth() + 1) + '-' + this.$store.state.goods.detailGoods.date.getDate()
+                    value: this.$store.state.goods.detailGoods.date.getFullYear() + '-' + (this.$store.state.goods.detailGoods.date.getMonth() + 1) + '-' + this.$store.state.goods.detailGoods.date.getDate()
                 }
             ],
             chart: null
@@ -254,15 +257,15 @@ export default {
                     this.$store.commit('changeGoods', this.setGoods);
                     this.$Message.success('修改商品信息成功');
                     this.setGoodsFlag = false;
-                    // let _this = this;
-                    // let vshopDB = null;
-                    // IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                    //     name: 'vshop',
-                    //     key: 'name'
-                    // }, function (db) {
-                    //     let vshopDB = db;
-                    //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
-                    // });
+                    let _this = this;
+                    let vshopDB = null;
+                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                        name: 'vshop',
+                        key: 'name'
+                    }, function (db) {
+                        let vshopDB = db;
+                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                    });
                 } else {
                     this.$Message.error('当前用户没有修改商品信息权限');
                 }
@@ -277,15 +280,15 @@ export default {
                     this.$router.push({
                         path: '/goodsDetailList'
                     });
-                    // let _this = this;
-                    // let vshopDB = null;
-                    // IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                    //     name: 'vshop',
-                    //     key: 'name'
-                    // }, function (db) {
-                    //     let vshopDB = db;
-                    //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
-                    // });
+                    let _this = this;
+                    let vshopDB = null;
+                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                        name: 'vshop',
+                        key: 'name'
+                    }, function (db) {
+                        let vshopDB = db;
+                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.goods]);
+                    });
                 } else {
                     this.$Message.error('当前用户没有修改商品信息权限');
                 }

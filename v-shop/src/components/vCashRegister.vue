@@ -100,11 +100,14 @@ export default {
                 }
             ],
             allCashRegisterList: this.$store.state.cashRegister.cashRegisterList,
-            cashRegisterList: this.$store.state.cashRegister.cashRegisterList.slice(0, 20),
+            // cashRegisterList: this.$store.state.cashRegister.cashRegisterList.slice(0, 20),
             pageFlag: false
         }
     },
     computed: {
+        cashRegisterList: function () {
+            return this.allCashRegisterList.slice(0, 20);
+        },
         pageTotal: function () {
             let page = this.allCashRegisterList.length;
             if (page > 1) {
@@ -118,26 +121,45 @@ export default {
     methods: {
         // 搜索收银记录
         searchCashRegister () {
+            let _this = this;
             if (this.user === '' || this.user === '所有用户') {
                 if (this.date.length === 0) {
-                    
+                    this.allCashRegisterList = this.$store.state.cashRegister.cashRegisterList;
                 } else {
-
+                    this.allCashRegisterList = this.$store.state.cashRegister.cashRegisterList.filter(function (element) {
+                        let subTime = _this.date[0].getTime();
+                        let supTime = _this.date[1].getTime();
+                        let cashTime = new Date(element.time).getTime();
+                        if (subTime <= cashTime && cashTime <= supTime) {
+                            return element;
+                        }
+                    });
                 }
             } else {
                 if (this.date.length === 0) {
-                    
+                    this.allCashRegisterList = this.$store.state.cashRegister.cashRegisterList.filter(function (element) {
+                        if (element.cashier === _this.user) {
+                            return element;
+                        }
+                    });
                 } else {
-
+                    this.allCashRegisterList = this.$store.state.cashRegister.cashRegisterList.filter(function (element) {
+                        let subTime = _this.date[0].getTime();
+                        let supTime = _this.date[1].getTime();
+                        let cashTime = new Date(element.time).getTime();
+                        if (element.cashier === _this.user && subTime <= cashTime && cashTime <= supTime) {
+                            return element;
+                        }
+                    });
                 }
             }
         },
         // 切换分页
         changePage (num) {
             if (num === 1) {
-                this.goodsList = this.allGoodsList.slice(0, 20);
+                this.cashRegisterList = this.allCashRegisterList.slice(0, 20);
             } else {
-                this.goodsList = this.allGoodsList.slice((num - 1) * 20, num * 20);
+                this.gcashRegisterList = this.allCashRegisterList.slice((num - 1) * 20, num * 20);
             }
         },
     }
@@ -162,5 +184,10 @@ export default {
     td.ivu-table-expanded-cell {
         padding: 10px;
         margin: 0px;
+    }
+    .page {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
     }
 </style>

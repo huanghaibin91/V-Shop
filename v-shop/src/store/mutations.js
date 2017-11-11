@@ -1,3 +1,5 @@
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     // 将IndexedDB中数据写入vuex
     getData (state, data) {
@@ -20,7 +22,9 @@ export default {
     },
     // 删除用户
     deleteUser (state, index) {
-        state.users.userList.splice(index, 1);
+        if (state.users.userList[index].coding !== '000') {
+            state.users.userList.splice(index, 1);
+        }
     },
     // 新商品入库
     addNewGoods (state, goods) {
@@ -156,9 +160,10 @@ export default {
         let today = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
         if (today !== state.messages.today) {
             for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
-                let goodsTime = new Date(state.goods.goodsList[i].date).getTime();
+                let goodsTime = state.goods.goodsList[i].date.getTime();
                 let dateRange = Math.floor((goodsTime - nowTime) / 1000 / 60 / 60 / 24);
                 if (dateRange <= state.messages.limitDate) {
+                    console.log('error');
                     let message = new Object();
                     message.date = today;
                     message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' + dateRange + ' 天，请尽快销售或处理！';
@@ -167,6 +172,14 @@ export default {
                 }
             }
             state.messages.today = today;
+            let vshopDB = null;
+            IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                name: 'vshop',
+                key: 'name'
+            }, function (db) {
+                let vshopDB = db;
+                IndexedDB.putData(vshopDB, 'vshop', [state.messages]);
+            });
         }
     },
     // 重置新消息数字

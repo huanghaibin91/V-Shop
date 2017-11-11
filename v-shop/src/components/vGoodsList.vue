@@ -23,7 +23,7 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>{{ goods.name }}</p>
+                                <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
@@ -43,7 +43,7 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>{{ goods.name }}</p>
+                                <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
@@ -63,7 +63,7 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>{{ goods.name }}</p>
+                                <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
@@ -83,7 +83,7 @@
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
                                 <img :src="goods.image" />
-                                <p>{{ goods.name }}</p>
+                                <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
                                     <p>库存&nbsp;<span>{{ goods.number }}</span></p>
@@ -110,7 +110,7 @@ export default {
         return {
             value: '',
             allGoodsList: this.$store.state.goods.goodsList,
-            goodsList: this.$store.state.goods.goodsList.slice(0, 24),
+            // goodsList: this.$store.state.goods.goodsList.slice(0, 24),
             defaultTab: true,
             priceTab: true,
             salesTab: true,
@@ -121,7 +121,7 @@ export default {
     watch: {
         // 监听搜索栏输入
         value: function (val) {
-            this.goodsList = this.allGoodsList.filter(function (goods) {
+            this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                 if (goods.name.includes(val) || goods.coding.includes(val)) {
                     return goods;
                 }  
@@ -129,6 +129,9 @@ export default {
         }
     },
     computed: {
+        goodsList: function () {
+            return this.allGoodsList.slice(0, 24);
+        },
         pageTotal: function () {
             let page = this.allGoodsList.length;
             if (page / 24 > 1) {
@@ -145,51 +148,52 @@ export default {
             let cls = event.target.className;
             switch (cls) {
                 case 'allgoods':
-                    this.goodsList = this.allGoodsList;
+                    this.allGoodsList = this.$store.state.goods.goodsList;
+                    break;
                 case 'snacks':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '休闲零食') {
                             return goods;
                         }  
                     });
                     break;
                 case 'drink':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '酒水饮料') {
                             return goods;
                         }  
                     });
                     break;
                 case 'food':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '粮油副食') {
                             return goods;
                         }  
                     });
                     break;
                 case 'fruit':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '生鲜水果') {
                             return goods;
                         }  
                     });
                     break;
                 case 'toiletries':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '日常洗护') {
                             return goods;
                         }  
                     });
                     break;
                 case 'kitchen':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '厨卫用品') {
                             return goods;
                         }  
                     });
                     break;
                 case 'another':
-                    this.goodsList = this.allGoodsList.filter(function (goods) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                         if (goods.category === '其它品类') {
                             return goods;
                         }  
@@ -205,17 +209,17 @@ export default {
                     this.allGoodsList = this.$store.state.goods.goodsList;
                     break;
                 case 1:
-                    this.allGoodsList = this.allGoodsList.sort(function (a, b) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
                         return b.price - a.price;
                     });
                     break;
                 case 2:
-                    this.allGoodsList = this.allGoodsList.sort(function (a, b) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
                         return b.sales - a.sales;
                     });
                     break;
                 case 3:
-                    this.allGoodsList = this.allGoodsList.sort(function (a, b) {
+                    this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
                         return b.number - a.number;
                     });
                     break;
@@ -246,15 +250,15 @@ export default {
             }
             this.$store.commit('addShoppingCart', goods);
             this.$Message.success('商品加入购物车');
-            // let _this = this;
-            // let vshopDB = null;
-            // IndexedDB.openDB('vshopDB', 1, vshopDB, {
-            //     name: 'vshop',
-            //     key: 'name'
-            // }, function (db) {
-            //     let vshopDB = db;
-            //     IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
-            // });
+            let _this = this;
+            let vshopDB = null;
+            IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                name: 'vshop',
+                key: 'name'
+            }, function (db) {
+                let vshopDB = db;
+                IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
+            });
         }
     }
 }
@@ -297,7 +301,6 @@ export default {
     }
     .goods {
         cursor: pointer;
-        /* font-size: 0.5em; */
         color: #2b85e4;
         margin: 5px;
     }
@@ -306,6 +309,9 @@ export default {
     }
     .goods-box img {
         width: 100%;
+    }
+    .goods-name {
+        min-height: 42px;
     }
     .goods-message {
         display: flex;
