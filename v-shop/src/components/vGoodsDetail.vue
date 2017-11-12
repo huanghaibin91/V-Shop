@@ -251,6 +251,7 @@ export default {
         changeGoodsDetailFlag () {
             this.setGoodsFlag = true;
         },
+        // 提交修改商品信息
         submitChangeGoods () {
             if (this.$store.state.currUser.coding) {
                 if (this.$store.state.currUser.jurisdiction === '一级') {
@@ -273,6 +274,7 @@ export default {
                 this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
             }
         },
+        // 删除商品
         deleteGoods () {
             if (this.$store.state.currUser.coding) {
                 if (this.$store.state.currUser.jurisdiction === '一级') {

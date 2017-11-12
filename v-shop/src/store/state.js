@@ -38,7 +38,7 @@ export default {
     // 消息通知列表
     messages: {
         name: 'messages',
-        today: '2017-11-08',
+        today: '2017-11-12',
         name: 'messages',
         number: 0,
         // 保质期

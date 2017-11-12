@@ -168,6 +168,7 @@ export default {
         } 
     }, 
     methods: { 
+        // 选择商品图片
         clickSelectImg () {
             document.querySelector('.file-btn').click();
         },
@@ -204,6 +205,7 @@ export default {
                 imgPlace.innerHTML = html;
             };
         },
+        // 提交新商品入库
         submitNewGoods () { 
             this.$refs['newGoods'].validate((valid) => { 
                 if (valid) { 
@@ -237,9 +239,11 @@ export default {
                 } 
             });
         }, 
+        // 重置
         resetNewGoods () { 
             this.$refs['newGoods'].resetFields(); 
         },
+        // 提交快捷入库
         submitOldGoods () { 
             this.$refs['oldGoods'].validate((valid) => { 
                 if (valid) { 
@@ -268,6 +272,7 @@ export default {
                 } 
             }) 
         }, 
+        // 重置
         resetOldGoods () { 
             this.$refs['oldGoods'].resetFields(); 
         }

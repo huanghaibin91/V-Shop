@@ -95,7 +95,7 @@ export default {
                 if (goodsList[i].coding === state.goods.goodsList[z].coding) {
                     state.goods.goodsList[z].number -= goodsList[i].count;
                     state.goods.goodsList[z].sales[new Date().getMonth()] += goodsList[i].count;
-                    if (state.goods.goodsList[z].number < state.messages.limitNumber) {
+                    if (state.goods.goodsList[z].number <= state.messages.limitNumber) {
                         let message = new Object();
                         let date = new Date();
                         let year = date.getFullYear();
@@ -113,6 +113,15 @@ export default {
                         message.content = '商品：' + state.goods.goodsList[z].name + '，编码：' + state.goods.goodsList[z].coding + '，仅剩 ' + state.goods.goodsList[z].number + ' 件，请尽快补充！';
                         state.messages.messageList.unshift(message);
                         state.messages.number += 1;
+                        let vshopDB = null;
+                        IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                            name: 'vshop',
+                            key: 'name'
+                        }, function (db) {
+                            let vshopDB = db;
+                            IndexedDB.putData(vshopDB, 'vshop', [state.messages]);
+                            console.log(state.messages);
+                        });
                     }
                 }
             }
@@ -121,7 +130,7 @@ export default {
     // 检查商品库存
     checkGoodsNumber (state) {
         for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
-            if (state.goods.goodsList[i].number < state.messages.limitNumber) {
+            if (state.goods.goodsList[i].number <= state.messages.limitNumber) {
                 let message = new Object();
                 let date = new Date();
                 let year = date.getFullYear();
@@ -139,6 +148,14 @@ export default {
                 message.content = '商品：' + state.goods.goodsList[z].name + '，编码：' + state.goods.goodsList[z].coding + '，仅剩 ' + state.goods.goodsList[z].number + ' 件，请尽快补充！';
                 state.messages.messageList.unshift(message);
                 state.messages.number += 1;
+                let vshopDB = null;
+                IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                    name: 'vshop',
+                    key: 'name'
+                }, function (db) {
+                    let vshopDB = db;
+                    IndexedDB.putData(vshopDB, 'vshop', [state.messages]);
+                });
             }
         }
     },
@@ -163,7 +180,6 @@ export default {
                 let goodsTime = state.goods.goodsList[i].date.getTime();
                 let dateRange = Math.floor((goodsTime - nowTime) / 1000 / 60 / 60 / 24);
                 if (dateRange <= state.messages.limitDate) {
-                    console.log('error');
                     let message = new Object();
                     message.date = today;
                     message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' + dateRange + ' 天，请尽快销售或处理！';

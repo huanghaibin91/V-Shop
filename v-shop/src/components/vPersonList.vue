@@ -202,6 +202,7 @@ export default {
         changeUserFlag () {
             this.addUserFlag = true;
         },
+        // 选择用户头像
         clickSelectImg () {
             document.querySelector('.file-btn').click();
         },
@@ -238,6 +239,7 @@ export default {
                 imgPlace.innerHTML = html;
             };
         },
+        // 提交新用户
         submitAddUser () {
             let _this = this;
             this.$refs['newUser'].validate((valid) => { 
@@ -279,6 +281,7 @@ export default {
                 } 
             });
         },
+        // 重置
         resetAddUser () {
             this.$refs['newUser'].resetFields(); 
         }

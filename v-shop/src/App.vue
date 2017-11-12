@@ -29,13 +29,30 @@ export default {
   },
   data () {
     return {
-
+      // 
     }
   },
   mounted: function () {
     // 本地存储数据库IdexedDB
     let _this = this;
     let vshopDB = null;
+    // 当前时间
+    let date = new Date();
+    let nowTime = date.getTime();
+    let year = date.getFullYear();
+    let nowMonth = date.getMonth();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let min = date.getMinutes();
+    function addZero(val) {
+        if (val < 10) {
+            val = '0' + val;
+        } 
+        return val;
+    }
+    let today = year + '-' + addZero(month) + '-' + addZero(day);
+    // 打开IndexedDB数据库
     IndexedDB.openDB('vshopDB', 1, vshopDB, {
       name: 'vshop',
       key: 'name'
@@ -107,9 +124,8 @@ export default {
         } else {
           let cashRegister = {
             name: 'cashRegister',
-            year: '2017',
-            month: 10,
-            name: 'cashRegister',
+            year: year,
+            month: nowMonth,
             cashRegisterList: []
           };
           IndexedDB.putData(vshopDB, 'vshop', [cashRegister]);
@@ -124,8 +140,7 @@ export default {
         } else {
           let messages = {
             name: 'messages',
-            today: '2017-11-08',
-            name: 'messages',
+            today: today,
             number: 0,
             limitDate: 30,
             limitNumber: 3,

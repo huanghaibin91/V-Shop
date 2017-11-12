@@ -10,8 +10,6 @@
             </div>
             <div id="sales-category-chart"></div>
         </div>
-        <!-- <h3>本月各类商品销售占比</h3> -->
-        <!-- <div id="sales-category-chart"></div> -->
         <h3>本月销售前二十商品</h3>
         <div id="ranking-twenty-chart"></div>
         <h3>年度销售统计</h3>
@@ -208,9 +206,10 @@ export default {
         // 各类商品营业额
         categoryTurnover: function () {
             let arr = [0, 0, 0, 0, 0, 0, 0];
+            let nowYear = new Date().getFullYear();
             let nowMonth = new Date().getMonth();
             for (let i = 0, len = this.cashRegisterList.length; i < len; i++) {
-                if (new Date(this.cashRegisterList[i].time).getMonth() === nowMonth) {
+                if (new Date(this.cashRegisterList[i].time).getFullYear() === nowYear && new Date(this.cashRegisterList[i].time).getMonth() === nowMonth) {
                     for (let j = 0, len = this.cashRegisterList[i].goodsList.length; j < len; j++) {
                         switch (this.cashRegisterList[i].goodsList[j].category) {
                             case '休闲零食':
@@ -241,17 +240,17 @@ export default {
             }
             return arr;
         },
-        // 各类商品本月销售占比
 
         // 本月销售排名前二十商品
         rankingTwenty () {
             let arr = [];
+            let nowYear = new Date().getFullYear();
             let nowMonth = new Date().getMonth();
             for (let i = 0, len = this.cashRegisterList.length; i < len; i++) {
-                if (new Date(this.cashRegisterList[i].time).getMonth() === nowMonth) {
+                if (new Date(this.cashRegisterList[i].time).getFullYear() === nowYear && new Date(this.cashRegisterList[i].time).getMonth() === nowMonth) {
                     for (let j = 0, len = this.cashRegisterList[i].goodsList.length; j < len; j++) {
                         let flag = true;
-                        for (let z = 0, len = arr.length; i < len;  i++) {
+                        for (let z = 0, len = arr.length; z < len;  z++) {
                             if (this.cashRegisterList[i].goodsList[j].coding === arr[z].coding) {
                                 arr[z].count += this.cashRegisterList[i].goodsList[j].count;
                                 arr[z].total += this.cashRegisterList[i].goodsList[j].total;
@@ -272,6 +271,7 @@ export default {
             }
             return arr;
         },
+        // 本月销售排名前二十商品名称
         rankingTwentyName () {
             let arr = [];
             let rankingTwenty = this.rankingTwenty;
@@ -283,6 +283,7 @@ export default {
             });
             return arr;
         },
+        // 本月销售排名前二十商品销售额
         rankingTwentyTotal () {
             let arr = [];
             let rankingTwenty = this.rankingTwenty;
@@ -294,6 +295,7 @@ export default {
             });
             return arr;
         },
+        // 本月销售排名前二十商品销售数量
         rankingTwentyCount () {
             let arr = [];
             let rankingTwenty = this.rankingTwenty;

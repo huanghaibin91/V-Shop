@@ -29,6 +29,7 @@
             }
         },
         methods: {
+            // 重置消息通知
             resetMessageNumber () {
                 this.$store.commit('resetMessageNumber');
             }

@@ -110,7 +110,6 @@ export default {
         return {
             value: '',
             allGoodsList: this.$store.state.goods.goodsList,
-            // goodsList: this.$store.state.goods.goodsList.slice(0, 24),
             defaultTab: true,
             priceTab: true,
             salesTab: true,
@@ -215,7 +214,8 @@ export default {
                     break;
                 case 2:
                     this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
-                        return b.sales - a.sales;
+                        let nowMonth = new Date().getMonth();
+                        return b.sales[nowMonth] - a.sales[nowMonth];
                     });
                     break;
                 case 3:
@@ -311,7 +311,8 @@ export default {
         width: 100%;
     }
     .goods-name {
-        min-height: 42px;
+        height: 42px;
+        overflow: hidden;
     }
     .goods-message {
         display: flex;
