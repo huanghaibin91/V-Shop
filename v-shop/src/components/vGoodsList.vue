@@ -35,7 +35,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="价格" v-if="priceTab" class="goods-list-box">
                 <Row>
@@ -55,7 +55,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="销量" v-if="priceTab" class="goods-list-box">
                 <Row>
@@ -75,7 +75,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="库存" v-if="numberTab" class="goods-list-box">
                 <Row>
@@ -95,7 +95,7 @@
                         </Card>
                     </Col>
                 </Row>
-                <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
+                <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
         </Tabs>
     </div>
@@ -109,12 +109,13 @@ export default {
     data () {
         return {
             value: '',
-            allGoodsList: this.$store.state.goods.goodsList,
+            // allGoodsList: this.$store.state.goods.goodsList,
             defaultTab: true,
             priceTab: true,
             salesTab: true,
             numberTab: true,
-            pageFlag: true
+            // 分页
+            currPage: 1,
         }
     },
     watch: {
@@ -128,23 +129,36 @@ export default {
         }
     },
     computed: {
+        allGoodsList: function () {
+            return this.$store.state.goods.goodsList;
+        },
+        pageFlag: function () {
+            if (this.allGoodsList.length > 24) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         goodsList: function () {
-            return this.allGoodsList.slice(0, 24);
+            let goodsList = [];
+            let i = (this.currPage - 1) * 24;
+            while (i < this.currPage * 24) {
+                if (this.allGoodsList[i]) {
+                    goodsList.push(this.allGoodsList[i]);
+                }
+                i++;
+            }
+            return goodsList;
         },
         pageTotal: function () {
-            let page = this.allGoodsList.length;
-            if (page / 24 > 1) {
-                this.pageFlag = true;
-            } else {
-                this.pageFlag = false;
-            }
-            return page;
+            return this.allGoodsList.length;
         }
     },
     methods: {
         // 快捷搜索
         quickSearch (event) {
             let cls = event.target.className;
+            this.currPage = 1;
             switch (cls) {
                 case 'allgoods':
                     this.allGoodsList = this.$store.state.goods.goodsList;
@@ -203,6 +217,7 @@ export default {
         },
         // 切换Tab
         changeTab (name) {
+            this.currPage = 1;
             switch(name) {
                 case 0:
                     this.allGoodsList = this.$store.state.goods.goodsList;
@@ -228,11 +243,7 @@ export default {
         },
         // 切换分页
         changePage (num) {
-            if (num === 1) {
-                this.goodsList = this.allGoodsList.slice(0, 24);
-            } else {
-                this.goodsList = this.allGoodsList.slice((num - 1) * 24, num * 24);
-            }
+            this.currPage = num;
         },
         // 转去购物车
         goShoppingCart () {

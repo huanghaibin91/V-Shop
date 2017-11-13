@@ -32,7 +32,7 @@ export default {
       // 
     }
   },
-  mounted: function () {
+  created: function () {
     // 本地存储数据库IdexedDB
     let _this = this;
     let vshopDB = null;

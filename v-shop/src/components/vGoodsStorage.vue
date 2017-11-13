@@ -222,6 +222,7 @@ export default {
                             image: '',
                             sales: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                         };
+                        document.querySelector('.img-place').innerHTML = '';
                         let _this = this;
                         let vshopDB = null;
                         IndexedDB.openDB('vshopDB', 1, vshopDB, {

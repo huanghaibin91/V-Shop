@@ -388,4 +388,7 @@ export default {
     #sales-category-chart {
         width: 70%;
     }
+    #ranking-twenty-chart {
+        height: 600px;
+    }
 </style>

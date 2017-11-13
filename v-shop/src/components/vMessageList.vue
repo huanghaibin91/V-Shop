@@ -5,15 +5,14 @@
             <Button @click.native="changeSetMessageFlag" type="primary" icon="settings" size="small">消息通知设置</Button>
         </h3>
         <Table :columns="messageTable" :data="messageList"></Table>
-        <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
         <!-- 消息通知设置弹窗 -->
-        <Modal title="设置消息通知" v-model="setMessageFlag" width="300"> 
-            <Form ref="newLimit" :model="setMessage" :label-width="80"> 
-                <FormItem label="商品名称" prop="limitNumber"> 
-                    <Input v-model.number="setMessage.limitNumber" placeholder="输入要设置的库存限制"></Input> 
+        <Modal title="设置消息通知" v-model="setMessageFlag" width="320"> 
+            <Form ref="newLimit" :model="setMessage" :label-width="100"> 
+                <FormItem label="商品库存限制" prop="limitNumber"> 
+                    <Input v-model.number="setMessage.limitNumber" placeholder="输入要弹出通知的库存限制"></Input> 
                 </FormItem> 
-                <FormItem label="商品单价" prop="limitDate"> 
-                    <Input v-model.number="setMessage.limitDate" placeholder="输入要设置的保质期时间限制"></Input> 
+                <FormItem label="商品距离到期" prop="limitDate"> 
+                    <Input v-model.number="setMessage.limitDate" placeholder="输入要弹出通知的保质期限制"></Input> 
                 </FormItem> 
             </Form>
             <div slot="footer">
@@ -32,7 +31,7 @@ export default {
     data () {
         return {
             setMessageFlag: false,
-            pageFlag: false,
+            pageNum: 1,
             setMessage: {
                 limitNumber: '',
                 limitDate: ''
@@ -82,22 +81,7 @@ export default {
                     }
                 }
             ],
-            allMessageList: this.$store.state.messages.messageList,
-            // messageList: this.$store.state.messages.messageList
-        }
-    },
-    computed: {
-        messageList: function () {
-            return this.allMessageList.slice(0, 20);
-        },
-        pageTotal: function () {
-            let page = this.allMessageList.length;
-            if (page / 20 > 1) {
-                this.pageFlag = true;
-            } else {
-                this.pageFlag = false;
-            }
-            return page;
+            messageList: this.$store.state.messages.messageList
         }
     },
     methods: {
@@ -130,15 +114,7 @@ export default {
         // 重置表单
         resetChangeMessage () {
             this.$refs['newLimit'].resetFields(); 
-        },
-        // 切换分页
-        changePage (num) {
-            if (num === 1) {
-                this.messageList = this.allMessageList.slice(0, 20);
-            } else {
-                this.messageList = this.allMessageList.slice((num - 1) * 20, num * 20);
-            }
-        },
+        }
     }
 }
 </script>

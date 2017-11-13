@@ -12,7 +12,7 @@
         </div>
         <div class="checkout-list">
             <Table :columns="cashRegisterTable" :data="cashRegisterList"></Table>
-            <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
+            <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
         </div>
     </div>
 </template>
@@ -100,28 +100,37 @@ export default {
                 }
             ],
             allCashRegisterList: this.$store.state.cashRegister.cashRegisterList,
-            // cashRegisterList: this.$store.state.cashRegister.cashRegisterList.slice(0, 20),
-            pageFlag: false
+            currPage: 1
         }
     },
     computed: {
+        pageFlag: function () {
+            if (this.allCashRegisterList.length > 20) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         cashRegisterList: function () {
-            return this.allCashRegisterList.slice(0, 20);
+            let cashRegisterList = [];
+            let i = (this.currPage - 1) * 20;
+            while (i < this.currPage * 20) {
+                if (this.allCashRegisterList[i]) {
+                    cashRegisterList.push(this.allCashRegisterList[i]);
+                }
+                i++;
+            }
+            return cashRegisterList;
         },
         pageTotal: function () {
-            let page = this.allCashRegisterList.length;
-            if (page > 1) {
-                this.pageFlag = true;
-            } else {
-                this.pageFlag = false;
-            }
-            return page;
+            return this.allCashRegisterList.length;
         }
     },
     methods: {
         // 搜索收银记录
         searchCashRegister () {
             let _this = this;
+            this.currPage = 1;
             if (this.user === '' || this.user === '所有用户') {
                 if (this.date.length === 0) {
                     this.allCashRegisterList = this.$store.state.cashRegister.cashRegisterList;
@@ -156,11 +165,7 @@ export default {
         },
         // 切换分页
         changePage (num) {
-            if (num === 1) {
-                this.cashRegisterList = this.allCashRegisterList.slice(0, 20);
-            } else {
-                this.gcashRegisterList = this.allCashRegisterList.slice((num - 1) * 20, num * 20);
-            }
+            this.currPage = num;
         },
     }
 }

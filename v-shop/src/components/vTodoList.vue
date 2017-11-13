@@ -7,7 +7,6 @@
         </div>
         <div class="todo-list">
             <Table :columns="todoTable" :data="todoList"></Table>
-            <Page @on-change="changePage" v-if="pageFlag" :total="pageTotal" :page-size="20" show-elevator class="page"></Page>
         </div>
     </div>
 </template>
@@ -19,7 +18,6 @@ import IndexedDB from '../indexedDB/IndexedDB'
 export default {
     data () {
         return {
-            pageFlag: false,
             todo: {
                 time: '',
                 content: '',
@@ -56,46 +54,44 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.deleteTodo(params.index);
+                                    this.$store.commit('deleteTodo', params.index);
+                                    this.$Message.success('待办事件删除成功');
+                                    let _this = this;
+                                    let vshopDB = null;
+                                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                                        name: 'vshop',
+                                        key: 'name'
+                                    }, function (db) {
+                                        let vshopDB = db;
+                                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.todo]);
+                                    });
                                 }
                             }
                         }, '删除');
                     }
                 },
             ],
-            todoList: this.$store.state.todo.todoList.slice(0, 20),
-        }
-    },
-    computed: {
-        pageTotal: function () {
-            let page = this.todoList.length;
-            if (page > 1) {
-                this.pageFlag = true;
-            } else {
-                this.pageFlag = false;
-            }
-            return page;
+            todoList: this.$store.state.todo.todoList,
         }
     },
     methods: {
         // 添加待办事件
         addTodo () {
             let _this = this;
-            let year = this.todo.time.getFullYear();
-            let month = this.todo.time.getMonth() + 1;
-            let day = this.todo.time.getDate();
-            let hour = this.todo.time.getHours();
-            let min = this.todo.time.getMinutes();
-            function addZero(val) {
-                if (val < 10) {
-                    val = '0' + val;
-                } 
-                return val;
-            }
-            this.todo.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
             if (this.todo.time && this.todo.content) {
+                let year = this.todo.time.getFullYear();
+                let month = this.todo.time.getMonth() + 1;
+                let day = this.todo.time.getDate();
+                let hour = this.todo.time.getHours();
+                let min = this.todo.time.getMinutes();
+                function addZero(val) {
+                    if (val < 10) {
+                        val = '0' + val;
+                    } 
+                    return val;
+                }
+                this.todo.time = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
                 this.$store.commit('addNewTodo', this.todo);
-                let _this = this;
                 let vshopDB = null;
                 IndexedDB.openDB('vshopDB', 1, vshopDB, {
                     name: 'vshop',
@@ -137,28 +133,6 @@ export default {
                 };
             } else {
                 this.$Message.error('待办事件添加出错');
-            }
-        },
-        // 删除待办事件
-        deleteTodo (index) {
-            this.$store.commit('deleteTodo', index);
-            this.$Message.success('待办事件删除成功');
-            let _this = this;
-            let vshopDB = null;
-            IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                name: 'vshop',
-                key: 'name'
-            }, function (db) {
-                let vshopDB = db;
-                IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.todo]);
-            });
-        },
-        // 切换分页
-        changePage (num) {
-            if (num === 1) {
-                this.todoList = this.$store.state.todo.todoList.slice(0, 20);
-            } else {
-                this.todoList = this.$store.state.todo.todoList.slice((num - 1) * 20, num * 20);
             }
         },
     }

@@ -261,6 +261,7 @@ export default {
                                 address: '',
                                 avatar: ''
                             };
+                            document.querySelector('.img-place').innerHTML = '';
                             let _this = this;
                             let vshopDB = null;
                             IndexedDB.openDB('vshopDB', 1, vshopDB, {

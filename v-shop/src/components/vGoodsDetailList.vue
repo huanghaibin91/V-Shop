@@ -49,13 +49,13 @@ export default {
                 }
             ],
             allGoodsList: this.$store.state.goods.goodsList,
-            goodsList: this.$store.state.goods.goodsList.slice(0, 20),
-            pageFlag: true
+            pageNum: 1
         }
     },
     watch: {
         searchValue: function (val) {
-            this.goodsList = this.allGoodsList.filter(function (goods) {
+            this.pageNum = 1;
+            this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
                 if (goods.name.includes(val) || goods.coding.includes(val)) {
                     return goods;
                 }  
@@ -63,32 +63,41 @@ export default {
         }
     },
     computed: {
-        pageTotal: function () {
-            let page = this.allGoodsList.length;
-            if (page / 20 > 1) {
-                this.pageFlag = true;
+        pageFlag: function () {
+            if (this.allGoodsList.length > 20) {
+                return true;
             } else {
-                this.pageFlag = false;
+                return false;
             }
-            return page;
-        }
+        },
+        pageTotal: function () {
+            return this.allGoodsList.length;
+        },
+        goodsList: function () {
+            let goodsList = [];
+            let i = (this.pageNum - 1) * 20;
+            while (i < this.pageNum * 20) {
+                if (this.allGoodsList[i]) {
+                    goodsList.push(this.allGoodsList[i]);
+                }
+                i++;
+            }
+            return  goodsList;
+        },
     },
     methods: {
         // 搜索商品
         searchGoods: function () {
-            this.goodsList = this.allGoodsList.filter(function (goods) {
+            this.pageNum = 1;
+            this.allGoodsList =this.$store.state.goods.goodsList.filter(function (goods) {
                 if (goods.name.includes(this.searchValue) || goods.coding.includes(this.searchValue)) {
                     return goods;
-                }  
+                }
             });
         },
         // 切换分页
         changePage (num) {
-            if (num === 1) {
-                this.goodsList = this.allGoodsList.slice(0, 20);
-            } else {
-                this.goodsList = this.allGoodsList.slice((num - 1) * 20, num * 20);
-            }
+            this.pageNum = num;
         }
     }
 }
