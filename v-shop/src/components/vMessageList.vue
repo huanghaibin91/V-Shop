@@ -81,7 +81,11 @@ export default {
                     }
                 }
             ],
-            messageList: this.$store.state.messages.messageList
+        }
+    },
+    computed: {
+        messageList: function () {
+            return this.$store.state.messages.messageList;
         }
     },
     methods: {

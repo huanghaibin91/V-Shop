@@ -89,8 +89,10 @@ export default {
           data.name = 'goods';
           data.result = result;
           _this.$store.commit('getData', data);
-          // 检查商品保质期
-          _this.$store.commit('checkGoodsDate');
+          setTimeout(function () {
+            // 检查商品保质期
+            _this.$store.commit('checkGoodsDate');
+          }, 0);
         } else {
           let goods = {
             name: 'goods',

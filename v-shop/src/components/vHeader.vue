@@ -22,19 +22,31 @@
 </template>
 
 <script>
-    export default {
-        data () {
-            return {
-                
-            }
-        },
-        methods: {
-            // 重置消息通知
-            resetMessageNumber () {
-                this.$store.commit('resetMessageNumber');
-            }
+
+import IndexedDB from '../indexedDB/IndexedDB'
+
+export default {
+    data () {
+        return {
+            
+        }
+    },
+    methods: {
+        // 重置消息通知
+        resetMessageNumber () {
+            this.$store.commit('resetMessageNumber');
+            let _this = this;
+            let vshopDB = null;
+            IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                name: 'vshop',
+                key: 'name'
+            }, function (db) {
+                let vshopDB = db;
+                IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.messages]);
+            });
         }
     }
+}
 </script>
 
 <style>

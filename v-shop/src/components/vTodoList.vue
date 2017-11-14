@@ -71,7 +71,11 @@ export default {
                     }
                 },
             ],
-            todoList: this.$store.state.todo.todoList,
+        }
+    },
+    computed: {
+        todoList: function () {
+            return this.$store.state.todo.todoList;
         }
     },
     methods: {

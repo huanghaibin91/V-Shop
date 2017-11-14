@@ -2,7 +2,7 @@
     <div class="goods-list">
         <div class="search-box">
             <div class="search-input">
-                <Input v-model="value" placeholder="请输入商品编码或名称..."></Input>
+                <Input v-model="searchValue" placeholder="请输入商品编码或名称..."></Input>
                 <Button @click="goShoppingCart" type="primary" icon="ios-cart">购物车</Button>
             </div>
             <div @click="quickSearch" class="quick-search">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <Tabs type="card" @on-click="changeTab">
-            <TabPane label="默认" v-if="defaultTab"  class="goods-list-box">
+            <TabPane label="默认" v-if="defaultTab" name="defaultTab"  class="goods-list-box">
                 <Row>
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
@@ -37,7 +37,7 @@
                 </Row>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
-            <TabPane label="价格" v-if="priceTab" class="goods-list-box">
+            <TabPane label="价格" v-if="priceTab" name="priceTab" class="goods-list-box">
                 <Row>
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
@@ -57,7 +57,7 @@
                 </Row>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
-            <TabPane label="销量" v-if="priceTab" class="goods-list-box">
+            <TabPane label="销量" v-if="salesTab" name="salesTab" class="goods-list-box">
                 <Row>
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
@@ -77,7 +77,7 @@
                 </Row>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
-            <TabPane label="库存" v-if="numberTab" class="goods-list-box">
+            <TabPane label="库存" v-if="numberTab" name="numberTab" class="goods-list-box">
                 <Row>
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
@@ -108,8 +108,7 @@ import IndexedDB from '../indexedDB/IndexedDB'
 export default {
     data () {
         return {
-            value: '',
-            // allGoodsList: this.$store.state.goods.goodsList,
+            searchValue: '',
             defaultTab: true,
             priceTab: true,
             salesTab: true,
@@ -120,17 +119,17 @@ export default {
     },
     watch: {
         // 监听搜索栏输入
-        value: function (val) {
-            this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                if (goods.name.includes(val) || goods.coding.includes(val)) {
-                    return goods;
-                }  
-            });
+        searchValue: function (val) {
+            this.$store.commit('searchGoods', val);
         }
     },
     computed: {
         allGoodsList: function () {
-            return this.$store.state.goods.goodsList;
+            if (this.$store.state.filterGoodsList.length === 0) {
+                return this.$store.state.goods.goodsList;
+            } else {
+                return this.$store.state.filterGoodsList;
+            }
         },
         pageFlag: function () {
             if (this.allGoodsList.length > 24) {
@@ -157,89 +156,13 @@ export default {
     methods: {
         // 快捷搜索
         quickSearch (event) {
-            let cls = event.target.className;
             this.currPage = 1;
-            switch (cls) {
-                case 'allgoods':
-                    this.allGoodsList = this.$store.state.goods.goodsList;
-                    break;
-                case 'snacks':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '休闲零食') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                case 'drink':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '酒水饮料') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                case 'food':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '粮油副食') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                case 'fruit':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '生鲜水果') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                case 'toiletries':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '日常洗护') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                case 'kitchen':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '厨卫用品') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                case 'another':
-                    this.allGoodsList = this.$store.state.goods.goodsList.filter(function (goods) {
-                        if (goods.category === '其它品类') {
-                            return goods;
-                        }  
-                    });
-                    break;
-                default: break;
-            }
+            this.$store.commit('categoryGoods', event.target.className);
         },
         // 切换Tab
         changeTab (name) {
             this.currPage = 1;
-            switch(name) {
-                case 0:
-                    this.allGoodsList = this.$store.state.goods.goodsList;
-                    break;
-                case 1:
-                    this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
-                        return b.price - a.price;
-                    });
-                    break;
-                case 2:
-                    this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
-                        let nowMonth = new Date().getMonth();
-                        return b.sales[nowMonth] - a.sales[nowMonth];
-                    });
-                    break;
-                case 3:
-                    this.allGoodsList = this.$store.state.goods.goodsList.sort(function (a, b) {
-                        return b.number - a.number;
-                    });
-                    break;
-                default: break;
-            }
+            this.$store.commit('sortGoods', name);
         },
         // 切换分页
         changePage (num) {

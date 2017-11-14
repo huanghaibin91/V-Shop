@@ -66,6 +66,8 @@
 
 <script>
 
+import IndexedDB from '../indexedDB/IndexedDB'
+
 export default {
     data () {
         // 检查员工工号
@@ -131,6 +133,15 @@ export default {
                     break;
                 case 'message-list':
                     this.$store.commit('resetMessageNumber');
+                    let _this = this;
+                    let vshopDB = null;
+                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                        name: 'vshop',
+                        key: 'name'
+                    }, function (db) {
+                        let vshopDB = db;
+                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.messages]);
+                    });
                     this.$router.push({
                         path: '/messageList'
                     });

@@ -15,6 +15,8 @@ export default {
             }
         ]
     },
+    // 筛选商品列表
+    filterGoodsList: [],
     // 商品列表
     goods: {
         name: 'goods',
