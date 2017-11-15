@@ -123,7 +123,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     h3 {
         padding: 10px;
     }
@@ -133,9 +133,7 @@ export default {
     .warning {
         color: red;
     }
-    .page {
-        margin: 10px 0;
-        display: flex;
-        justify-content: center;
+    .new-message span {
+        color: red;
     }
 </style>

@@ -156,9 +156,4 @@ export default {
     .state-change span {
         color: red;
     }
-    .page {
-        margin: 10px 0;
-        display: flex;
-        justify-content: center;
-    }
 </style>

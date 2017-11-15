@@ -184,6 +184,11 @@ export default {
                 if (goodsList[i].coding === state.goods.goodsList[z].coding) {
                     state.goods.goodsList[z].number -= goodsList[i].count;
                     state.goods.goodsList[z].sales[new Date().getMonth()] += goodsList[i].count;
+                    // 重置新消息提醒
+                    state.messages.messageList.forEach(element => {
+                        element.cellClassName = '';
+                    });
+                    // 检查商品库存
                     if (state.goods.goodsList[z].number <= state.messages.limitNumber) {
                         let message = new Object();
                         let date = new Date();
@@ -198,6 +203,9 @@ export default {
                             } 
                             return val;
                         }
+                        message.cellClassName = {
+                            date: 'new-message'
+                        };
                         message.date = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
                         message.content = '商品：' + state.goods.goodsList[z].name + '，编码：' + state.goods.goodsList[z].coding + '，仅剩 ' + state.goods.goodsList[z].number + ' 件，请尽快补充！';
                         state.messages.messageList.unshift(message);
@@ -229,9 +237,16 @@ export default {
             } 
             return val;
         }
+        // 重置新消息提醒
+        state.messages.messageList.forEach(element => {
+            element.cellClassName = '';
+        });
         for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
             if (state.goods.goodsList[i].number <= state.messages.limitNumber) {
                 let message = new Object();
+                message.cellClassName = {
+                    date: 'new-message'
+                };
                 message.date = year + '-' + addZero(month) + '-' + addZero(day) + ' ' + addZero(hour) + ':' + addZero(min);
                 message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，仅剩 ' + state.goods.goodsList[i].number + ' 件，请尽快补充！';
                 state.messages.messageList.unshift(message);
@@ -265,11 +280,18 @@ export default {
         }
         let today = year + '-' + addZero(month) + '-' + addZero(day);
         if (today !== state.messages.today) {
+            // 重置新消息提醒
+            state.messages.messageList.forEach(element => {
+                element.cellClassName = '';
+            });
             for (let i = 0, len = state.goods.goodsList.length; i < len; i++) {
                 let goodsTime = state.goods.goodsList[i].date.getTime();
                 let dateRange = Math.floor((goodsTime - nowTime) / 1000 / 60 / 60 / 24);
                 if (dateRange <= state.messages.limitDate) {
                     let message = new Object();
+                    message.cellClassName = {
+                        date: 'new-message'
+                    };
                     message.date = today + ' ' + addZero(hour) + ':' + addZero(min);
                     message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' + dateRange + ' 天，请尽快销售或处理！';
                     state.messages.messageList.unshift(message);

@@ -32,8 +32,6 @@ export default {
     // 收银记录列表
     cashRegister: {
         name: 'cashRegister',
-        year: '2017',
-        month: 10,
         name: 'cashRegister',
         cashRegisterList: []
     },
