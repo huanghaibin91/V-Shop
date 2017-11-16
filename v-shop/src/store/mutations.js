@@ -293,7 +293,11 @@ export default {
                         date: 'new-message'
                     };
                     message.date = today + ' ' + addZero(hour) + ':' + addZero(min);
-                    message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' + dateRange + ' 天，请尽快销售或处理！';
+                    if (dateRange > 0) {
+                        message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，保质期仅剩 ' + dateRange + ' 天，请尽快销售或处理！';
+                    } else {
+                        message.content = '商品：' + state.goods.goodsList[i].name + '，编码：' + state.goods.goodsList[i].coding + '，已过期，请立即下架处理！';
+                    }
                     state.messages.messageList.unshift(message);
                     state.messages.number += 1;
                 }

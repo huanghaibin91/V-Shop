@@ -182,17 +182,21 @@ export default {
                     return this.$Message.error('商品已加入购物车中');
                 }
             }
-            this.$store.commit('addShoppingCart', goods);
-            this.$Message.success('商品加入购物车');
-            let _this = this;
-            let vshopDB = null;
-            IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                name: 'vshop',
-                key: 'name'
-            }, function (db) {
-                let vshopDB = db;
-                IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
-            });
+            if (goods.number > 0) {
+                this.$store.commit('addShoppingCart', goods);
+                this.$Message.success('商品加入购物车');
+                let _this = this;
+                let vshopDB = null;
+                IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                    name: 'vshop',
+                    key: 'name'
+                }, function (db) {
+                    let vshopDB = db;
+                    IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.shoppingCart]);
+                });
+            } else {
+                this.$Message.error('商品已售罄');
+            }
         }
     }
 }
