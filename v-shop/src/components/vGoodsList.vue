@@ -35,6 +35,7 @@
                         </Card>
                     </Col>
                 </Row>
+                <p class="no-goods" v-if="!allGoodsList.length">当前没有商品，请去<router-link to="/goodsStorage" tag="a">商品操作 / 新商品入库</router-link>添加商品</p>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="价格" v-if="priceTab" name="priceTab" class="goods-list-box">
@@ -55,6 +56,7 @@
                         </Card>
                     </Col>
                 </Row>
+                <p class="no-goods" v-if="!allGoodsList.length">当前没有商品，请去<router-link to="/goodsStorage" tag="a">商品操作 / 新商品入库</router-link>添加商品</p>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="销量" v-if="salesTab" name="salesTab" class="goods-list-box">
@@ -75,6 +77,7 @@
                         </Card>
                     </Col>
                 </Row>
+                <p class="no-goods" v-if="!allGoodsList.length">当前没有商品，请去<router-link to="/goodsStorage" tag="a">商品操作 / 新商品入库</router-link>添加商品</p>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
             <TabPane label="库存" v-if="numberTab" name="numberTab" class="goods-list-box">
@@ -95,6 +98,7 @@
                         </Card>
                     </Col>
                 </Row>
+                <p class="no-goods" v-if="!allGoodsList.length">当前没有商品，请去<router-link to="/goodsStorage" tag="a">商品操作 / 新商品入库</router-link>添加商品</p>
                 <Page @on-change="changePage" v-if="pageFlag" :current="currPage" :total="pageTotal" :page-size="24" show-elevator class="page"></Page>
             </TabPane>
         </Tabs>
@@ -231,6 +235,10 @@ export default {
     .quick-search button:hover {
         border: 1px solid #5cadff;
         color: #5cadff;
+    }
+    .no-goods {
+        text-align: center;
+        font-size: 1.2em;
     }
     .page {
         margin: 10px 0;
