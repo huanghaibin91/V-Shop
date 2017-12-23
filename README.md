@@ -1,6 +1,8 @@
 # V-Shop  #
 Vue构建的小商店管理系统
 
+### [项目线上预览地址](https://huanghaibin91.github.io/V-Shop-Preview/#/) ###
+
 在项目中主要使用：
 
 - vue-cli 构建项目
