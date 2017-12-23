@@ -361,16 +361,16 @@ export default {
 </script>
 
 <style scoped>
-    h1 {
+    .data-statistics h1 {
         text-align: center;
     }
-    h1 span {
+    .data-statistics h1 span {
         color: #ff9900;
     }
-    h2 {
+    .data-statistics h2 {
         padding: 10px;
     }
-    h3 {
+    .data-statistics h3 {
         padding: 10px;
     }
     .month-turnover-box {

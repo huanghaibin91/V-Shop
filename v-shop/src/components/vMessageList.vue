@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="message">
         <h3>
             消息通知
             <Button @click.native="changeSetMessageFlag" type="primary" icon="settings" size="small">消息通知设置</Button>
@@ -124,10 +124,10 @@ export default {
 </script>
 
 <style>
-    h3 {
+    .message h3 {
         padding: 10px;
     }
-    h3 button {
+    .message h3 button {
         margin-left: 20px;
     }
     .warning {

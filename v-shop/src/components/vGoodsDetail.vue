@@ -303,10 +303,12 @@ export default {
 </script>
 
 <style>
-    h3 {
+    .goods-detail h3 {
         padding: 10px;
     } 
-    .goods-img div img {
+    .goods-detail .goods-img div img {
+        width: 100%;
+        height: 100%;
         max-width: 300px;
         max-height: 300px;
     }

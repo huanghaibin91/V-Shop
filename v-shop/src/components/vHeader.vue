@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="header">
         <h5 class="logo">
             V-SHOP
         </h5>
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style>
-    header {
+    .header {
         min-width: 400px;
         height: 50px;
         background-color: #1c2438;
@@ -69,7 +69,7 @@ export default {
     .inform>span {
         margin-right: 1em;
     }
-    .ivu-badge-count {
+    .header .ivu-badge-count {
         box-shadow: none;
     }
 </style>

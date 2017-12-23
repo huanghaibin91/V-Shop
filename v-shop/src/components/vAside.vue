@@ -251,6 +251,6 @@ export default {
         margin-left: 2em;
     }
     .login-in {
-        background: url('../assets/login-bg.jpg') no-repeat center fixed;
+        background: url('http://pic2016.ytqmx.com:82/2016/0817/6/3.jpg') no-repeat center fixed;
     }
 </style>

@@ -22,7 +22,9 @@
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
-                                <img :src="goods.image" />
+                                <div class="img-box">
+                                    <img :src="goods.image" />
+                                </div>
                                 <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
@@ -43,7 +45,9 @@
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
-                                <img :src="goods.image" />
+                                <div class="img-box">
+                                    <img :src="goods.image" />
+                                </div>
                                 <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
@@ -64,7 +68,9 @@
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
-                                <img :src="goods.image" />
+                                <div class="img-box">
+                                    <img :src="goods.image" />
+                                </div>
                                 <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
@@ -85,7 +91,9 @@
                     <Col v-for="goods in goodsList" :key="goods.coding" :xs="8" :sm="6" :md="4" :lg="4">
                         <Card class="goods" :padding="0"> 
                             <div class="goods-box"> 
-                                <img :src="goods.image" />
+                                <div class="img-box">
+                                    <img :src="goods.image" />
+                                </div>
                                 <p class="goods-name">{{ goods.name }}</p>
                                 <div class="goods-message">
                                     <p>￥&nbsp;<span>{{ goods.price }}</span></p>
@@ -253,7 +261,15 @@ export default {
     .goods-box {
         padding: 10px;
     }
-    .goods-box img {
+    .goods-box .img-box {
+        width: 100%;
+        height: 0px;
+        padding-bottom: 100%;
+        overflow: hidden;
+        margin: 0;
+        position: relative;
+    }
+    .goods-box .img-box img {
         width: 100%;
     }
     .goods-name {

@@ -179,16 +179,24 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.$store.commit('deleteUser', params.index);
-                                    let _this = this;
-                                    let vshopDB = null;
-                                    IndexedDB.openDB('vshopDB', 1, vshopDB, {
-                                        name: 'vshop',
-                                        key: 'name'
-                                    }, function (db) {
-                                        let vshopDB = db;
-                                        IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.users]);
-                                    });
+                                    if (this.$store.state.currUser.coding) {
+                                        if (this.$store.state.currUser.jurisdiction === '一级') {
+                                            this.$store.commit('deleteUser', params.index);
+                                            let _this = this;
+                                            let vshopDB = null;
+                                            IndexedDB.openDB('vshopDB', 1, vshopDB, {
+                                                name: 'vshop',
+                                                key: 'name'
+                                            }, function (db) {
+                                                let vshopDB = db;
+                                                IndexedDB.putData(vshopDB, 'vshop', [_this.$store.state.users]);
+                                            });
+                                        } else {
+                                            this.$Message.error('当前用户没有删除员工权限');
+                                        }
+                                    } else {
+                                        this.$Message.error('用户未登录无法进行此项操作，请登录后再试');
+                                    }
                                 }
                             }
                         }, '删除');

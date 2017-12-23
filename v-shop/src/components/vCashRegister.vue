@@ -186,7 +186,7 @@ export default {
         display: flex;
         justify-content: center;
     }
-    td.ivu-table-expanded-cell {
+    .cash-register td.ivu-table-expanded-cell {
         padding: 10px;
         margin: 0px;
     }

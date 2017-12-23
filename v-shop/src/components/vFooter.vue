@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="footer">
         <a href="https://github.com/huanghaibin91/V-Shop" target="_black">
             <Icon type="social-github"></Icon>&nbsp;Writed By Huang Haibin
         </a>
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style scoped>
-    footer {
+    .footer {
         height: 30px;
         background-color: #495060;
         color: white;

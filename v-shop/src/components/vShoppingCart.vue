@@ -210,7 +210,11 @@ export default {
         // 弹出结算框
         changeCheckoutFlag  () {
             this.countCheckoutGoods();
-            this.checkoutFlag = true;
+            if (this.checkoutCount.goodsList.length === 0) {
+                this.$Message.error('没有待结算商品，请添加后再操作');
+            } else {
+                this.checkoutFlag = true;
+            }
         },
         // 返回商品列表
         gobackGoodsList () {
