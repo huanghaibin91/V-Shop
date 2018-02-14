@@ -1,5 +1,5 @@
 # V-Shop  #
-Vue构建的小商店管理系统
+Vue构建的小商店管理系统Web APP
 
 ### [项目线上预览地址](https://huanghaibin91.github.io/V-Shop-Preview/#/) ###
 
